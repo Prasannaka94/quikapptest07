@@ -2034,7 +2034,7 @@ workflows:
     environment:
       flutter: 3.32.2
       java: 17
-      xcode: 15.4
+      xcode: 16.0
       cocoapods: 1.16.2
       vars:
         <<: *common_vars
@@ -2610,7 +2610,7 @@ workflows:
     environment:
       flutter: 3.32.2
       java: 17
-      xcode: 15.4
+      xcode: 16.0
       cocoapods: 1.16.2
       ruby: 3.2.2
       vars:
@@ -2699,7 +2699,7 @@ workflows:
     environment:
       flutter: 3.32.2
       java: 17
-      xcode: 15.4
+      xcode: 16.0
       cocoapods: 1.16.2
       vars:
         <<: *common_vars
@@ -2872,7 +2872,7 @@ workflows:
     environment:
       flutter: 3.32.2
       java: 17
-      xcode: 15.4
+      xcode: 16.0
       cocoapods: 1.16.2
       vars:
         <<: *common_vars

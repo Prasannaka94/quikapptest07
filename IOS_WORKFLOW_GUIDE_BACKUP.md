@@ -41,7 +41,7 @@ ios-workflow:
   environment:
     flutter: 3.32.2
     java: 17
-    xcode: 15.4
+    xcode: 16.0
     cocoapods: 1.16.2
 ```
 
