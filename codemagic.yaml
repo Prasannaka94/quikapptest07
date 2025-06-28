@@ -2584,6 +2584,7 @@ workflows:
 
       # 📋 Build Documentation
       - output/ios/ARTIFACTS_SUMMARY.txt
+      - output/ios/TROUBLESHOOTING_GUIDE.txt
       - output/ios/PERMISSIONS_SUMMARY.txt
       - ios/ExportOptions.plist
 
@@ -2842,6 +2843,7 @@ workflows:
 
       # 📋 Build Documentation
       - output/ios/ARTIFACTS_SUMMARY.txt
+      - output/ios/TROUBLESHOOTING_GUIDE.txt
       - output/ios/PERMISSIONS_SUMMARY.txt
       - ios/ExportOptions.plist
 
@@ -3269,6 +3271,7 @@ workflows:
 
       # 📋 Build Documentation
       - output/ios/ARTIFACTS_SUMMARY.txt
+      - output/ios/TROUBLESHOOTING_GUIDE.txt
       - output/ios/PERMISSIONS_SUMMARY.txt
       - ios/ExportOptions.plist
 

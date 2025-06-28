@@ -123,6 +123,10 @@ export_with_app_store_connect_api() {
     # Validate App Store Connect API credentials
     if [ -z "${APP_STORE_CONNECT_API_KEY_PATH:-}" ] || [ -z "${APP_STORE_CONNECT_KEY_IDENTIFIER:-}" ] || [ -z "${APP_STORE_CONNECT_ISSUER_ID:-}" ]; then
         log_warn "App Store Connect API credentials incomplete, skipping..."
+        log_info "Required variables:"
+        log_info "  - APP_STORE_CONNECT_API_KEY_PATH: ${APP_STORE_CONNECT_API_KEY_PATH:-NOT_SET}"
+        log_info "  - APP_STORE_CONNECT_KEY_IDENTIFIER: ${APP_STORE_CONNECT_KEY_IDENTIFIER:-NOT_SET}"
+        log_info "  - APP_STORE_CONNECT_ISSUER_ID: ${APP_STORE_CONNECT_ISSUER_ID:-NOT_SET}"
         return 1
     fi
     
@@ -134,7 +138,11 @@ export_with_app_store_connect_api() {
         chmod 600 "$api_key_path"
         log_success "API key downloaded successfully"
     else
-        log_error "Failed to download API key"
+        log_error "Failed to download API key from: ${APP_STORE_CONNECT_API_KEY_PATH}"
+        log_info "Please check:"
+        log_info "  1. API key URL is accessible"
+        log_info "  2. API key has correct permissions"
+        log_info "  3. Network connectivity"
         return 1
     fi
     
@@ -167,7 +175,21 @@ export_with_automatic_signing() {
     local export_path="${OUTPUT_DIR:-output/ios}"
     local export_options_path="ios/ExportOptions.plist"
     
+    # Check if we have the required environment variables for automatic signing
+    if [ -z "${APPLE_TEAM_ID:-}" ]; then
+        log_warn "APPLE_TEAM_ID not set, automatic signing may fail"
+        log_info "Please set APPLE_TEAM_ID environment variable"
+    fi
+    
+    if [ -z "${BUNDLE_ID:-}" ]; then
+        log_warn "BUNDLE_ID not set, automatic signing may fail"
+        log_info "Please set BUNDLE_ID environment variable"
+    fi
+    
     log_info "Running xcodebuild export with automatic signing..."
+    log_info "Team ID: ${APPLE_TEAM_ID:-NOT_SET}"
+    log_info "Bundle ID: ${BUNDLE_ID:-NOT_SET}"
+    
     if xcodebuild -exportArchive \
         -archivePath "$archive_path" \
         -exportPath "$export_path" \
@@ -178,6 +200,11 @@ export_with_automatic_signing() {
         return 0
     else
         log_warn "Automatic signing export failed"
+        log_info "Common causes:"
+        log_info "  1. No Apple Developer account configured in Xcode"
+        log_info "  2. Missing provisioning profiles for bundle ID: ${BUNDLE_ID:-unknown}"
+        log_info "  3. Invalid team ID: ${APPLE_TEAM_ID:-unknown}"
+        log_info "  4. App Store Connect API credentials required for app-store distribution"
         return 1
     fi
 }
@@ -193,6 +220,11 @@ export_with_manual_certificates() {
     # Validate manual certificate credentials
     if [ -z "${CERT_P12_URL:-}" ] || [ -z "${PROFILE_URL:-}" ] || [ -z "${CERT_PASSWORD:-}" ]; then
         log_warn "Manual certificate credentials incomplete, skipping..."
+        log_info "Required variables:"
+        log_info "  - CERT_P12_URL: ${CERT_P12_URL:-NOT_SET}"
+        log_info "  - PROFILE_URL: ${PROFILE_URL:-NOT_SET}"
+        log_info "  - CERT_PASSWORD: ${CERT_PASSWORD:+SET}"
+        log_info "For manual certificate export, please provide all three variables"
         return 1
     fi
     
@@ -201,21 +233,21 @@ export_with_manual_certificates() {
     mkdir -p "$cert_dir"
     
     # Download provisioning profile
-    log_info "Downloading provisioning profile..."
+    log_info "Downloading provisioning profile from: ${PROFILE_URL}"
     if curl -L -o "$cert_dir/profile.mobileprovision" "${PROFILE_URL}" 2>/dev/null; then
         log_success "Provisioning profile downloaded"
     else
-        log_error "Failed to download provisioning profile"
+        log_error "Failed to download provisioning profile from: ${PROFILE_URL}"
         rm -rf "$cert_dir"
         return 1
     fi
     
     # Download certificate
-    log_info "Downloading certificate..."
+    log_info "Downloading certificate from: ${CERT_P12_URL}"
     if curl -L -o "$cert_dir/certificate.p12" "${CERT_P12_URL}" 2>/dev/null; then
         log_success "Certificate downloaded"
     else
-        log_error "Failed to download certificate"
+        log_error "Failed to download certificate from: ${CERT_P12_URL}"
         rm -rf "$cert_dir"
         return 1
     fi
@@ -230,7 +262,11 @@ export_with_manual_certificates() {
     if security import "$cert_dir/certificate.p12" -k "$keychain_path" -P "${CERT_PASSWORD}" -T /usr/bin/codesign 2>/dev/null; then
         log_success "Certificate installed successfully"
     else
-        log_error "Failed to install certificate"
+        log_error "Failed to install certificate in keychain"
+        log_info "Please check:"
+        log_info "  1. Certificate password is correct"
+        log_info "  2. Certificate file is valid"
+        log_info "  3. Keychain permissions"
         rm -rf "$cert_dir"
         return 1
     fi
@@ -254,6 +290,10 @@ export_with_manual_certificates() {
         return 0
     else
         log_warn "Manual certificate export failed"
+        log_info "Please check:"
+        log_info "  1. Certificate matches provisioning profile"
+        log_info "  2. Bundle ID matches provisioning profile"
+        log_info "  3. Certificate is valid and not expired"
         rm -rf "$cert_dir"
         return 1
     fi
@@ -470,26 +510,36 @@ export_ipa() {
     
     # Try export methods in order of preference
     local export_success=false
+    local method_attempted=""
     
     # Method 1: App Store Connect API (for app-store profile type)
-    if [ "${PROFILE_TYPE:-app-store}" = "app-store" ] && ! export_with_app_store_connect_api; then
-        log_warn "App Store Connect API export failed, trying automatic signing..."
-    else
-        export_success=true
+    if [ "${PROFILE_TYPE:-app-store}" = "app-store" ]; then
+        method_attempted="App Store Connect API"
+        if ! export_with_app_store_connect_api; then
+            log_warn "App Store Connect API export failed, trying automatic signing..."
+        else
+            export_success=true
+        fi
     fi
     
     # Method 2: Automatic signing
-    if [ "$export_success" = false ] && ! export_with_automatic_signing; then
-        log_warn "Automatic signing export failed, trying manual certificates..."
-    else
-        export_success=true
+    if [ "$export_success" = false ]; then
+        method_attempted="Automatic Signing"
+        if ! export_with_automatic_signing; then
+            log_warn "Automatic signing export failed, trying manual certificates..."
+        else
+            export_success=true
+        fi
     fi
     
     # Method 3: Manual certificates
-    if [ "$export_success" = false ] && ! export_with_manual_certificates; then
-        log_warn "Manual certificate export failed"
-    else
-        export_success=true
+    if [ "$export_success" = false ]; then
+        method_attempted="Manual Certificates"
+        if ! export_with_manual_certificates; then
+            log_warn "Manual certificate export failed"
+        else
+            export_success=true
+        fi
     fi
     
     # Check if any export method succeeded
@@ -505,8 +555,178 @@ export_ipa() {
         fi
     else
         log_error "All export methods failed"
+        log_info "Export methods attempted:"
+        log_info "  1. App Store Connect API: ${APP_STORE_CONNECT_API_KEY_PATH:+Available}"
+        log_info "  2. Automatic Signing: Available"
+        log_info "  3. Manual Certificates: ${CERT_P12_URL:+Available}"
+        
+        # Create detailed troubleshooting information
+        create_detailed_troubleshooting_guide
         return 1
     fi
+}
+
+# Function to create detailed troubleshooting guide
+create_detailed_troubleshooting_guide() {
+    log_info "Creating detailed troubleshooting guide..."
+    
+    local troubleshooting_file="${OUTPUT_DIR:-output/ios}/TROUBLESHOOTING_GUIDE.txt"
+    
+    cat > "$troubleshooting_file" << EOF
+=== iOS IPA Export Troubleshooting Guide ===
+Build Date: $(date)
+Profile Type: ${PROFILE_TYPE:-unknown}
+Bundle ID: ${BUNDLE_ID:-unknown}
+Team ID: ${APPLE_TEAM_ID:-unknown}
+
+=== Export Methods Attempted ===
+1. App Store Connect API: ${APP_STORE_CONNECT_API_KEY_PATH:+Available}
+2. Automatic Signing: Available
+3. Manual Certificates: ${CERT_P12_URL:+Available}
+
+=== Environment Variables Status ===
+PROFILE_TYPE: ${PROFILE_TYPE:-NOT_SET}
+BUNDLE_ID: ${BUNDLE_ID:-NOT_SET}
+APPLE_TEAM_ID: ${APPLE_TEAM_ID:-NOT_SET}
+
+App Store Connect API:
+- APP_STORE_CONNECT_ISSUER_ID: ${APP_STORE_CONNECT_ISSUER_ID:+SET}
+- APP_STORE_CONNECT_KEY_IDENTIFIER: ${APP_STORE_CONNECT_KEY_IDENTIFIER:+SET}
+- APP_STORE_CONNECT_API_KEY_PATH: ${APP_STORE_CONNECT_API_KEY_PATH:+SET}
+
+Manual Certificates:
+- CERT_P12_URL: ${CERT_P12_URL:+SET}
+- PROFILE_URL: ${PROFILE_URL:+SET}
+- CERT_PASSWORD: ${CERT_PASSWORD:+SET}
+
+=== Solutions by Profile Type ===
+
+EOF
+
+    case "${PROFILE_TYPE:-app-store}" in
+        "app-store")
+            cat >> "$troubleshooting_file" << EOF
+For App Store Distribution:
+1. App Store Connect API (Recommended):
+   - Set APP_STORE_CONNECT_ISSUER_ID
+   - Set APP_STORE_CONNECT_KEY_IDENTIFIER
+   - Set APP_STORE_CONNECT_API_KEY_PATH to a valid URL
+   - Ensure API key has App Manager role
+
+2. Manual Certificates (Alternative):
+   - Set CERT_P12_URL to your distribution certificate
+   - Set PROFILE_URL to your App Store provisioning profile
+   - Set CERT_PASSWORD to your certificate password
+   - Ensure certificate matches provisioning profile
+
+3. Automatic Signing (Limited):
+   - Requires Apple Developer account in Xcode
+   - Requires valid App Store provisioning profile
+   - May not work in CI/CD environments
+
+Common Issues:
+- "No Accounts": Apple Developer account not configured
+- "No profiles found": Missing App Store provisioning profile
+- "API key download failed": Check URL accessibility and permissions
+EOF
+            ;;
+        "ad-hoc")
+            cat >> "$troubleshooting_file" << EOF
+For Ad Hoc Distribution:
+1. Manual Certificates (Recommended):
+   - Set CERT_P12_URL to your distribution certificate
+   - Set PROFILE_URL to your Ad Hoc provisioning profile
+   - Set CERT_PASSWORD to your certificate password
+   - Ensure profile includes target device UDIDs
+
+2. Automatic Signing (Alternative):
+   - Requires Apple Developer account in Xcode
+   - Requires valid Ad Hoc provisioning profile
+   - May not work in CI/CD environments
+
+Common Issues:
+- "No profiles found": Missing Ad Hoc provisioning profile
+- "Device not registered": Add device UDIDs to provisioning profile
+- "Certificate mismatch": Ensure certificate matches profile
+EOF
+            ;;
+        "enterprise")
+            cat >> "$troubleshooting_file" << EOF
+For Enterprise Distribution:
+1. Manual Certificates (Required):
+   - Set CERT_P12_URL to your enterprise distribution certificate
+   - Set PROFILE_URL to your enterprise provisioning profile
+   - Set CERT_PASSWORD to your certificate password
+   - Ensure enterprise account is active
+
+2. Automatic Signing (Limited):
+   - Requires enterprise Apple Developer account
+   - Requires valid enterprise provisioning profile
+   - May not work in CI/CD environments
+
+Common Issues:
+- "Enterprise account required": Need enterprise Apple Developer account
+- "No profiles found": Missing enterprise provisioning profile
+- "Certificate expired": Renew enterprise distribution certificate
+EOF
+            ;;
+        "development")
+            cat >> "$troubleshooting_file" << EOF
+For Development Distribution:
+1. Manual Certificates (Recommended):
+   - Set CERT_P12_URL to your development certificate
+   - Set PROFILE_URL to your development provisioning profile
+   - Set CERT_PASSWORD to your certificate password
+   - Ensure profile includes target device UDIDs
+
+2. Automatic Signing (Alternative):
+   - Requires Apple Developer account in Xcode
+   - Requires valid development provisioning profile
+   - May not work in CI/CD environments
+
+Common Issues:
+- "No profiles found": Missing development provisioning profile
+- "Device not registered": Add device UDIDs to provisioning profile
+- "Certificate mismatch": Ensure certificate matches profile
+EOF
+            ;;
+    esac
+    
+    cat >> "$troubleshooting_file" << EOF
+
+=== Manual Export Instructions ===
+1. Download Runner.xcarchive from this build
+2. Open Xcode on a Mac with Apple Developer account
+3. Go to Window > Organizer
+4. Click "+" and select "Import"
+5. Select Runner.xcarchive
+6. Click "Distribute App"
+7. Choose distribution method: $PROFILE_TYPE
+8. Follow the signing wizard
+
+=== Alternative Solutions ===
+1. Use Fastlane (if available):
+   - Install fastlane: gem install fastlane
+   - Run: fastlane gym --archive_path Runner.xcarchive
+
+2. Use Xcode Command Line:
+   - xcodebuild -exportArchive -archivePath Runner.xcarchive -exportPath . -exportOptionsPlist ExportOptions.plist
+
+3. Use Transporter App:
+   - Download archive
+   - Use Apple Transporter app for upload
+
+=== Contact Support ===
+If you need assistance:
+1. Check build logs for detailed error messages
+2. Verify all environment variables are set correctly
+3. Ensure certificates and profiles are valid
+4. Contact your development team with build ID
+
+Build completed at: $(date)
+EOF
+    
+    log_success "Detailed troubleshooting guide created: $troubleshooting_file"
 }
 
 # Main execution
