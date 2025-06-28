@@ -2342,7 +2342,19 @@ workflows:
           fi
 
           # Run the main iOS build script
-          echo "🚀 Starting iOS build process with profile type: $PROFILE_TYPE"
+          # 🔧 Apply Firebase Xcode 16.0 fixes
+          echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+              echo "✅ Firebase Xcode 16.0 fixes applied successfully"
+            else
+              echo "⚠️ Firebase fixes failed, continuing with build..."
+            fi
+          else
+            echo "⚠️ Firebase fix script not found, continuing with build..."
+          fi
+                    echo "🚀 Starting iOS build process with profile type: $PROFILE_TYPE"
           ./lib/scripts/ios/main.sh
 
       - name: Enhanced IPA Export (if needed)
@@ -2672,7 +2684,19 @@ workflows:
 
           # Make scripts executable
           chmod +x lib/scripts/ios/auto_main.sh
-          chmod +x lib/scripts/utils/*.sh
+          # 🔧 Apply Firebase Xcode 16.0 fixes
+          echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+              echo "✅ Firebase Xcode 16.0 fixes applied successfully"
+            else
+              echo "⚠️ Firebase fixes failed, continuing with build..."
+            fi
+          else
+            echo "⚠️ Firebase fix script not found, continuing with build..."
+          fi
+                    chmod +x lib/scripts/utils/*.sh
 
           # Run the auto iOS build script
           bash lib/scripts/ios/auto_main.sh
@@ -2814,7 +2838,19 @@ workflows:
             echo "🏗️ Build attempt $((RETRY_COUNT + 1)) of $MAX_RETRIES"
 
             if ./lib/scripts/combined/main.sh; then
-              echo "✅ Build completed successfully!"
+          # 🔧 Apply Firebase Xcode 16.0 fixes for iOS part
+          echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+              echo "✅ Firebase Xcode 16.0 fixes applied successfully"
+            else
+              echo "⚠️ Firebase fixes failed, continuing with build..."
+            fi
+          else
+            echo "⚠️ Firebase fix script not found, continuing with build..."
+          fi
+                        echo "✅ Build completed successfully!"
               break
             else
               RETRY_COUNT=$((RETRY_COUNT + 1))
