@@ -2343,7 +2343,31 @@ workflows:
 
           # Run the main iOS build script
           # 🔧 Apply Firebase Xcode 16.0 fixes
-          echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
+          # 🔧 Apply Bundle Identifier Collision Fixes
+          echo "🔧 Applying Bundle Identifier Collision fixes..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"; then
+              echo "✅ Bundle Identifier Collision fixes applied successfully"
+            else
+              echo "⚠️ Bundle Identifier Collision fixes failed, continuing with build..."
+            fi
+          else
+            echo "⚠️ Bundle Identifier Collision fix script not found, continuing with build..."
+          fi
+                    # 🔧 Apply Bundle Identifier Collision Fixes
+          echo "🔧 Applying Bundle Identifier Collision fixes..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"; then
+              echo "✅ Bundle Identifier Collision fixes applied successfully"
+            else
+              echo "⚠️ Bundle Identifier Collision fixes failed, continuing with build..."
+            fi
+          else
+            echo "⚠️ Bundle Identifier Collision fix script not found, continuing with build..."
+          fi
+                    echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
           if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
             chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
             if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
@@ -2685,7 +2709,31 @@ workflows:
           # Make scripts executable
           chmod +x lib/scripts/ios/auto_main.sh
           # 🔧 Apply Firebase Xcode 16.0 fixes
-          echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
+          # 🔧 Apply Bundle Identifier Collision Fixes
+          echo "🔧 Applying Bundle Identifier Collision fixes..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"; then
+              echo "✅ Bundle Identifier Collision fixes applied successfully"
+            else
+              echo "⚠️ Bundle Identifier Collision fixes failed, continuing with build..."
+            fi
+          else
+            echo "⚠️ Bundle Identifier Collision fix script not found, continuing with build..."
+          fi
+                    # 🔧 Apply Bundle Identifier Collision Fixes
+          echo "🔧 Applying Bundle Identifier Collision fixes..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"; then
+              echo "✅ Bundle Identifier Collision fixes applied successfully"
+            else
+              echo "⚠️ Bundle Identifier Collision fixes failed, continuing with build..."
+            fi
+          else
+            echo "⚠️ Bundle Identifier Collision fix script not found, continuing with build..."
+          fi
+                    echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
           if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
             chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
             if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
@@ -2839,7 +2887,31 @@ workflows:
 
             if ./lib/scripts/combined/main.sh; then
           # 🔧 Apply Firebase Xcode 16.0 fixes for iOS part
-          echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
+          # 🔧 Apply Bundle Identifier Collision Fixes
+          echo "🔧 Applying Bundle Identifier Collision fixes..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"; then
+              echo "✅ Bundle Identifier Collision fixes applied successfully"
+            else
+              echo "⚠️ Bundle Identifier Collision fixes failed, continuing with build..."
+            fi
+          else
+            echo "⚠️ Bundle Identifier Collision fix script not found, continuing with build..."
+          fi
+                    # 🔧 Apply Bundle Identifier Collision Fixes
+          echo "🔧 Applying Bundle Identifier Collision fixes..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"; then
+              echo "✅ Bundle Identifier Collision fixes applied successfully"
+            else
+              echo "⚠️ Bundle Identifier Collision fixes failed, continuing with build..."
+            fi
+          else
+            echo "⚠️ Bundle Identifier Collision fix script not found, continuing with build..."
+          fi
+                    echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
           if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
             chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
             if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
