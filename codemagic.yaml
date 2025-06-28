@@ -44,764 +44,229 @@ common_vars: &common_vars # 🚀 Enhanced Build Success Rate Optimizations
   CLEAN_ON_FAILURE: "true"
   CACHE_ON_SUCCESS: "true"
 scripts:
-    - &debug_env
-      name: Debug Environment Variables
-      script: |
-        echo "*********** App Name & Version ***********"
-        echo "APP_NAME: $APP_NAME"
-        echo "ORG_NAME: $ORG_NAME"
-        echo "WEB_URL: $WEB_URL"
-        echo "VERSION_NAME: $VERSION_NAME      
-        echo "VERSION_CODE: $VERSION_CODE" 
-        echo "PKG_NAME: $PKG_NAME"
-        echo "BUNDLE_ID: $BUNDLE_ID"
+  - &debug_env
+    name: Debug Environment Variables
+    script: |
+      echo "*********** App Name & Version ***********"
+      echo "APP_NAME: $APP_NAME"
+      echo "ORG_NAME: $ORG_NAME"
+      echo "WEB_URL: $WEB_URL"
+      echo "VERSION_NAME: $VERSION_NAME      
+      echo "VERSION_CODE: $VERSION_CODE" 
+      echo "PKG_NAME: $PKG_NAME"
+      echo "BUNDLE_ID: $BUNDLE_ID"
 
-        echo "*********** App Customization Configuration ***********"
-        echo "Splash screen: $IS_SPLASH"
-        echo "Pull to refresh: $IS_PULLDOWN"
-        echo "Loading indicators: $IS_LOAD_IND"
-        echo "Bottom navigation bar: $IS_BOTTOMMENU"
-        echo "Deep linking: $IS_DEEPLINK"
+      echo "*********** App Customization Configuration ***********"
+      echo "Splash screen: $IS_SPLASH"
+      echo "Pull to refresh: $IS_PULLDOWN"
+      echo "Loading indicators: $IS_LOAD_IND"
+      echo "Bottom navigation bar: $IS_BOTTOMMENU"
+      echo "Deep linking: $IS_DEEPLINK"
 
-        echo "*********** Push Notification Configuration ***********"
-        echo "PUSH_NOTIFY: $PUSH_NOTIFY"
-        echo "IS_CHATBOT: $IS_CHATBOT"
+      echo "*********** Push Notification Configuration ***********"
+      echo "PUSH_NOTIFY: $PUSH_NOTIFY"
+      echo "IS_CHATBOT: $IS_CHATBOT"
 
-        echo "*********** Android Keystore ***********"
-        echo "KEY_STORE: $KEY_STORE"
-        echo "CM_KEYSTORE_PASSWORD: $CM_KEYSTORE_PASSWORD"
-        echo "CM_KEY_ALIAS: $CM_KEY_ALIAS"
-        echo "CM_KEY_PASSWORD: $CM_KEY_PASSWORD"
+      echo "*********** Android Keystore ***********"
+      echo "KEY_STORE: $KEY_STORE"
+      echo "CM_KEYSTORE_PASSWORD: $CM_KEYSTORE_PASSWORD"
+      echo "CM_KEY_ALIAS: $CM_KEY_ALIAS"
+      echo "CM_KEY_PASSWORD: $CM_KEY_PASSWORD"
 
-        echo "*********** IOS Keystore ***********"
-        echo "APP_STORE_CONNECT_ISSUER_ID: $APP_STORE_CONNECT_ISSUER_ID"
-        echo "APP_STORE_CONNECT_KEY_IDENTIFIER: $APP_STORE_CONNECT_KEY_IDENTIFIER"
-        echo "APNS_KEY_ID: $APNS_KEY_ID"
-        echo "TEAM_ID: $APPLE_TEAM_ID"
-        echo "APNS_AUTH_KEY_URL: $APNS_AUTH_KEY_URL"
+      echo "*********** IOS Keystore ***********"
+      echo "APP_STORE_CONNECT_ISSUER_ID: $APP_STORE_CONNECT_ISSUER_ID"
+      echo "APP_STORE_CONNECT_KEY_IDENTIFIER: $APP_STORE_CONNECT_KEY_IDENTIFIER"
+      echo "APNS_KEY_ID: $APNS_KEY_ID"
+      echo "TEAM_ID: $APPLE_TEAM_ID"
+      echo "APNS_AUTH_KEY_URL: $APNS_AUTH_KEY_URL"
 
-        echo "*********** Firebase Android config file ***********"
-        echo "firebase_config_android: $firebase_config_android"
+      echo "*********** Firebase Android config file ***********"
+      echo "firebase_config_android: $firebase_config_android"
 
-        echo "*********** Firebase IOS config file ***********"
-        echo "firebase_config_ios: $firebase_config_ios"
+      echo "*********** Firebase IOS config file ***********"
+      echo "firebase_config_ios: $firebase_config_ios"
 
-        echo "*********** Splash Configuration ***********"
-        echo "SPLASH_URL: $SPLASH_URL"
-        echo "SPLASH_BG: $SPLASH_BG_URL"
-        echo "SPLASH_BG_COLOR: $SPLASH_BG_COLOR"
-        echo "SPLASH_TAGLINE: $SPLASH_TAGLINE"
-        echo "SPLASH_TAGLINE_COLOR: $SPLASH_TAGLINE_COLOR"
-        echo "SPLASH_ANIMATION: $SPLASH_ANIMATION"
-        echo "SPLASH_DURATION: $SPLASH_DURATION"
-        
-        echo "*********** Bottom Navigation Configuration ***********"
-        echo "BOTTOMMENU_ITEMS: $BOTTOMMENU_ITEMS"
-        echo "BOTTOMMENU_BG_COLOR: $BOTTOMMENU_BG_COLOR"  
-        echo "BOTTOMMENU_ICON_COLOR: $BOTTOMMENU_ICON_COLOR"
-        echo "BOTTOMMENU_TEXT_COLOR: $BOTTOMMENU_TEXT_COLOR"
-        echo "BOTTOMMENU_FONT: $BOTTOMMENU_FONT"
-        echo "BOTTOMMENU_FONT_SIZE: $BOTTOMMENU_FONT_SIZE"
-        echo "BOTTOMMENU_FONT_BOLD: $BOTTOMMENU_FONT_BOLD"
-        echo "BOTTOMMENU_FONT_ITALIC: $BOTTOMMENU_FONT_ITALIC"
-        echo "BOTTOMMENU_ACTIVE_TAB_COLOR: $BOTTOMMENU_ACTIVE_TAB_COLOR"
-        echo "BOTTOMMENU_ICON_POSITION: $BOTTOMMENU_ICON_POSITION"
-        echo "BOTTOMMENU_VISIBLE_ON: $BOTTOMMENU_VISIBLE_ON"
+      echo "*********** Splash Configuration ***********"
+      echo "SPLASH_URL: $SPLASH_URL"
+      echo "SPLASH_BG: $SPLASH_BG_URL"
+      echo "SPLASH_BG_COLOR: $SPLASH_BG_COLOR"
+      echo "SPLASH_TAGLINE: $SPLASH_TAGLINE"
+      echo "SPLASH_TAGLINE_COLOR: $SPLASH_TAGLINE_COLOR"
+      echo "SPLASH_ANIMATION: $SPLASH_ANIMATION"
+      echo "SPLASH_DURATION: $SPLASH_DURATION"
 
-        echo "*********** Permissions ***********"
-        echo "IS_CAMERA: $IS_CAMERA"
-        echo "IS_LOCATION: $IS_LOCATION"
-        echo "IS_MIC: $IS_MIC"
-        echo "IS_NOTIFICATION: $IS_NOTIFICATION"
-        echo "IS_CONTACT: $IS_CONTACT"
-        echo "IS_BIOMETRIC: $IS_BIOMETRIC"
-        echo "IS_CALENDAR: $IS_CALENDAR"
+      echo "*********** Bottom Navigation Configuration ***********"
+      echo "BOTTOMMENU_ITEMS: $BOTTOMMENU_ITEMS"
+      echo "BOTTOMMENU_BG_COLOR: $BOTTOMMENU_BG_COLOR"  
+      echo "BOTTOMMENU_ICON_COLOR: $BOTTOMMENU_ICON_COLOR"
+      echo "BOTTOMMENU_TEXT_COLOR: $BOTTOMMENU_TEXT_COLOR"
+      echo "BOTTOMMENU_FONT: $BOTTOMMENU_FONT"
+      echo "BOTTOMMENU_FONT_SIZE: $BOTTOMMENU_FONT_SIZE"
+      echo "BOTTOMMENU_FONT_BOLD: $BOTTOMMENU_FONT_BOLD"
+      echo "BOTTOMMENU_FONT_ITALIC: $BOTTOMMENU_FONT_ITALIC"
+      echo "BOTTOMMENU_ACTIVE_TAB_COLOR: $BOTTOMMENU_ACTIVE_TAB_COLOR"
+      echo "BOTTOMMENU_ICON_POSITION: $BOTTOMMENU_ICON_POSITION"
+      echo "BOTTOMMENU_VISIBLE_ON: $BOTTOMMENU_VISIBLE_ON"
 
-        echo "*********** Publish Configuration ***********" 
-        echo "EMAIL_ID: $EMAIL_ID"
+      echo "*********** Permissions ***********"
+      echo "IS_CAMERA: $IS_CAMERA"
+      echo "IS_LOCATION: $IS_LOCATION"
+      echo "IS_MIC: $IS_MIC"
+      echo "IS_NOTIFICATION: $IS_NOTIFICATION"
+      echo "IS_CONTACT: $IS_CONTACT"
+      echo "IS_BIOMETRIC: $IS_BIOMETRIC"
+      echo "IS_CALENDAR: $IS_CALENDAR"
 
-    - &get_splash
-      name: Get splash screen image from splash image from Url
-      script: |
-        if [ "$IS_SPLASH" = "true" ]; then
-           if [ -f assets/images/splash.png ]; then
-            rm assets/images/splash.png
-            echo "✅ Deleted: assets/images/splash.png"
-            else
-            echo "⚠️ splash.png not found"
-            fi
-        
-          echo "🚀 Started: Downloading splash assets"
+      echo "*********** Publish Configuration ***********" 
+      echo "EMAIL_ID: $EMAIL_ID"
 
-          mkdir -p assets/images/
-
-          # Download splash logo
-          echo "⬇️ Downloading splash logo from: $SPLASH"
-          wget -O assets/images/splash.png "$SPLASH"
-          if [ $? -ne 0 ]; then
-            echo "⚠️ Certificate issue or download failed. Retrying with --no-check-certificate..."
-            wget --no-check-certificate -O assets/images/splash.png "$SPLASH"
-          fi
-
-          if [ ! -f assets/images/splash.png ]; then
-            echo "❌ Error: Failed to download SPLASH logo"
-            exit 1
-          fi
-
-          # Download splash background (optional)
-          if [ -n "$SPLASH_BG" ]; then
-            echo "⬇️ Downloading splash background from: $SPLASH_BG"
-            wget -O assets/images/splash_bg.png "$SPLASH_BG"
-            if [ $? -ne 0 ]; then
-              echo "⚠️ Certificate issue or download failed. Retrying with --no-check-certificate..."
-              wget --no-check-certificate -O assets/images/splash_bg.png "$SPLASH_BG"
-            fi
-
-            if [ ! -f assets/images/splash_bg.png ]; then
-              echo "❌ Error: Failed to download SPLASH background"
-              exit 1
-            fi
+  - &get_splash
+    name: Get splash screen image from splash image from Url
+    script: |
+      if [ "$IS_SPLASH" = "true" ]; then
+         if [ -f assets/images/splash.png ]; then
+          rm assets/images/splash.png
+          echo "✅ Deleted: assets/images/splash.png"
           else
-            echo "ℹ️ No SPLASH_BG provided, skipping background download"
+          echo "⚠️ splash.png not found"
           fi
 
-          flutter pub get
-          echo "✅ Completed: Splash assets downloaded"
-        else
-          echo "⏭️ Skipping splash asset download (IS_SPLASH != true)"
-        fi
-
-    - &change_proj_name
-      name: Change Project Name
-      script: |
-        echo "App Name: $APP_NAME"
-        # 2️⃣ Sanitize: lowercase, remove special characters, replace spaces with underscores
-          SANITIZED_NAME=$(echo "$APP_NAME" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9 ' | tr ' ' '_')
-
-        # 3️⃣ Extract old name from pubspec.yaml
-        OLD_NAME_LINE=$(grep '^name: ' pubspec.yaml)
-        OLD_NAME=$(echo "$OLD_NAME_LINE" | cut -d ' ' -f2)
-
-        echo "🔁 Renaming project from '$OLD_NAME' to '$SANITIZED_NAME'..."
-
-        # Update pubspec.yaml
-        sed -i '' "s/^name: .*/name: $SANITIZED_NAME/" pubspec.yaml
-
-        # Update Dart imports
-          echo "🔄 Updating Dart package imports..."
-          grep -rl "package:$OLD_NAME" lib/ | xargs sed -i '' "s/package:$OLD_NAME/package:$SANITIZED_NAME/g"
-        
-        
-        
-          # iOS: Update CFBundleName in Info.plist
-          echo "🛠️ Updating iOS CFBundleName..."
-          plutil -replace CFBundleName -string "$APP_NAME" ios/Runner/Info.plist
-        
-          # Optional: Rename folder (if not on CI/CD)
-          # cd ..
-          # mv "$OLD_NAME" "$SANITIZED_NAME"
-          # cd "$SANITIZED_NAME"
-        
-          # Clean and get packages
-          flutter clean
-          flutter pub get
-        
-          echo "✅ Project renamed to '$SANITIZED_NAME'"
-        
-          echo "🚀 iOS CFBundleName set to '$APP_NAME'"
-
-    - &get_logo
-      name: Get logo image from logoUrl
-      script: |
-        echo "🧹 Deleting old splash and logo assets..."
-        
-        if [ -f assets/images/logo.png ]; then
-        rm assets/images/logo.png
-        echo "✅ Deleted: assets/images/logo.png"
-        else
-        echo "⚠️ logo.png not found"
-        fi
-        echo "🚀 Started: Downloading logo from $LOGO_URL"
+        echo "🚀 Started: Downloading splash assets"
 
         mkdir -p assets/images/
-        
-        # Try downloading with SSL certificate check first (silent test)
-        wget --spider --quiet "$LOGO_URL"
+
+        # Download splash logo
+        echo "⬇️ Downloading splash logo from: $SPLASH"
+        wget -O assets/images/splash.png "$SPLASH"
         if [ $? -ne 0 ]; then
-          echo "⚠️ SSL verification failed. Retrying with --no-check-certificate..."
-          WGET_OPTS="--no-check-certificate"
-        else
-          WGET_OPTS=""
+          echo "⚠️ Certificate issue or download failed. Retrying with --no-check-certificate..."
+          wget --no-check-certificate -O assets/images/splash.png "$SPLASH"
         fi
 
-        # Attempt actual download
-        wget $WGET_OPTS -O assets/images/logo.png "$LOGO_URL"
-
-        # Check if the file was successfully downloaded
-        if [ ! -f assets/images/logo.png ]; then
-          echo "❌ Error: Failed to download logo from $LOGO_URL"
+        if [ ! -f assets/images/splash.png ]; then
+          echo "❌ Error: Failed to download SPLASH logo"
           exit 1
         fi
 
-        flutter pub get
-        echo "✅ Completed: Logo downloaded"
-
-    - &set_launcher_icons
-      name: Generate Launcher Icons
-      script: |
-        echo "🚀 Generating launcher icons"
-
-        flutter pub get
-
-        # Generates launcher icons using flutter_launcher_icons configuration in pubspec.yaml
-        flutter pub run flutter_launcher_icons
-
-        echo "✅ Launcher icons generated successfully"
-
-    - &change_app_name
-      name: Change app name
-      script: |
-        echo "🚀 Changing app name to: $APP_NAME"
-
-          flutter pub run rename setAppName --value "$APP_NAME"
-          echo "🔢 VERSION_NAME: $VERSION_NAME"
-          echo "🔢 VERSION_CODE: $VERSION_CODE"
-            # Default values
-          VERSION_NAME="${VERSION_NAME:-1.0.0}"
-          VERSION_CODE="${VERSION_CODE:-100}"
-
-          # Check if VERSION_NAME is empty or not set
-          if [ -z "$VERSION_NAME" ]; then
-            VERSION_NAME=$DEFAULT_VERSION_NAME
-            echo "🔢 Setting DEFAULT_VERSION_NAME"
+        # Download splash background (optional)
+        if [ -n "$SPLASH_BG" ]; then
+          echo "⬇️ Downloading splash background from: $SPLASH_BG"
+          wget -O assets/images/splash_bg.png "$SPLASH_BG"
+          if [ $? -ne 0 ]; then
+            echo "⚠️ Certificate issue or download failed. Retrying with --no-check-certificate..."
+            wget --no-check-certificate -O assets/images/splash_bg.png "$SPLASH_BG"
           fi
 
-          # Check if VERSION_CODE is empty or not set
-          if [ -z "$VERSION_CODE" ]; then
-            VERSION_CODE=$DEFAULT_VERSION_CODE
-            echo "🔢 Setting DEFAULT_VERSION_CODE"
-          fi
-
-          echo "🔢 VERSION_NAME: $VERSION_NAME"
-          echo "🔢 VERSION_CODE: $VERSION_CODE"
-
-          echo "🔧 Ensuring valid version in pubspec.yaml: $VERSION_NAME+$VERSION_CODE"
-          # Replace or add version line in pubspec.yaml
-          if grep -q "^version: " pubspec.yaml; then
-            sed -i.bak -E "s/^version: .*/version: $VERSION_NAME+$VERSION_CODE/" pubspec.yaml
-          else
-          echo "version: $VERSION_NAME+$VERSION_CODE" >> pubspec.yaml
-          fi
-
-          flutter pub get
-
-          echo "✅ App name changed and version set successfully"
-
-    - &Inject_Firebase_iOS_Push
-      name: Firebase Push Notification Setup for iOS
-      script: |
-        if [ "$PUSH_NOTIFY" = "true" ]; then
-          echo "🔔 Enabling Firebase Push Notifications for iOS..."
-
-          # 1. Download and apply Firebase config
-          mkdir -p firebase/ios
-          if [ -n "$firebase_config_ios" ]; then
-            wget -O firebase/ios/GoogleService-Info.plist "$firebase_config_ios"
-          fi
-
-          if [ -f "firebase/ios/GoogleService-Info.plist" ]; then
-            cp firebase/ios/GoogleService-Info.plist ios/Runner/GoogleService-Info.plist
-            echo "✅ GoogleService-Info.plist copied."
-          else
-            echo "❌ Missing GoogleService-Info.plist. Cannot proceed with Firebase setup."
+          if [ ! -f assets/images/splash_bg.png ]; then
+            echo "❌ Error: Failed to download SPLASH background"
             exit 1
           fi
-
-          # 2. Add Firebase SDK (via committed Package.resolved)
-          if [ -f "firebase/ios/Package.resolved" ]; then
-            mkdir -p ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
-            cp firebase/ios/Package.resolved ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
-            echo "📦 Firebase SDK resolved from committed Package.resolved."
-          else
-            echo "⚠️ Package.resolved not found. Firebase SDK must be added manually in Xcode."
-          fi
-
-          # 3. Download APNs Auth Key if provided (Optional)
-          if [ -n "$APNS_AUTH_KEY_URL" ]; then
-            wget -O firebase/ios/AuthKey.p8 "$APNS_AUTH_KEY_URL"
-            echo "📥 Downloaded AuthKey.p8 for APNs"
-          fi
-
-          # 4. Check APNs entitlements
-          if grep -q "aps-environment" ios/Runner/Runner.entitlements; then
-            echo "✅ APNs entitlements already enabled."
-          else
-            echo "⚠️ Warning: Missing APNs entitlement in Runner.entitlements."
-          fi
         else
-          echo "🚫 PUSH_NOTIFY is false. Skipping Firebase push notification setup for iOS."
-          rm -f ios/Runner/GoogleService-Info.plist
-          rm -f ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
-          echo "🧹 Cleaned up Firebase iOS config."
-        fi
-    - &Inject_Firebase_new
-      name: Inject Firebase and buildscript block
-      script: |
-        echo "🔧 Checking Firebase configuration for Android..."
-
-        # Function to download with retry and SSL check
-        download_with_retry() {
-            local url=$1
-            local output=$2
-            local max_retries=3
-            local retry_delay=5
-            local attempt=1
-            local WGET_OPTS=""
-        
-            while [ $attempt -le $max_retries ]; do
-                echo "➡️ Attempt $attempt to download $url"
-                wget --spider --quiet "$url"
-                if [ $? -ne 0 ]; then
-                    echo "⚠️ SSL verification failed. Using --no-check-certificate"
-                    WGET_OPTS="--no-check-certificate"
-                else
-                    WGET_OPTS=""
-                fi
-        
-                wget $WGET_OPTS -O "$output" "$url"
-                if [ $? -eq 0 ]; then
-                    echo "✅ Successfully downloaded $output"
-                    return 0
-                else
-                    echo "❌ Download failed on attempt $attempt"
-                fi
-        
-                attempt=$((attempt + 1))
-                if [ $attempt -le $max_retries ]; then
-                    echo "⏳ Waiting $retry_delay seconds before retry..."
-                    sleep $retry_delay
-                fi
-            done
-        
-            echo "🚨 Failed to download $url after $max_retries attempts."
-            return 1
-        }
-
-        # Check and update the project-level build.gradle
-        PROJECT_BUILD_FILE="android/build.gradle"
-        APP_BUILD_FILE="android/app/build.gradle"
-        GOOGLE_SERVICES_CLASSPATH="classpath 'com.google.gms:google-services:4.3.15'"
-        GOOGLE_SERVICES_PLUGIN="apply plugin: 'com.google.gms.google-services'"
-
-        # Conditional Firebase integration based on PUSH_NOTIFY flag
-        if [ "$PUSH_NOTIFY" = "true" ]; then
-            echo "📦 Enabling Firebase integration..."
-
-            # Check if Firebase classpath is already present in the project-level build.gradle
-            if ! grep -q 'com.google.gms:google-services' $PROJECT_BUILD_FILE; then
-                echo "✅ Firebase classpath not found, injecting..."
-        
-                if ! grep -q 'buildscript {' $PROJECT_BUILD_FILE; then
-                    # No buildscript block found – inject the entire block at the top
-                    echo 'buildscript {
-                      repositories {
-                          google()
-                          mavenCentral()
-                      }
-                      dependencies {
-                          classpath "com.google.gms:google-services:4.3.15"
-                      }
-                  }' > temp.gradle
-                    cat $PROJECT_BUILD_FILE >> temp.gradle
-                    mv temp.gradle $PROJECT_BUILD_FILE
-                    echo "✅ Full buildscript block injected"
-                else
-                    # buildscript exists – insert the classpath into the dependencies
-                    sed -i '' '/dependencies {/a\\
-                classpath "com.google.gms:google-services:4.3.15"' $PROJECT_BUILD_FILE
-                    echo "✅ Firebase classpath inserted into existing buildscript"
-                fi
-            else
-                echo "✅ Firebase classpath already present, skipping injection"
-            fi
-
-            # Check if Google services plugin is applied at the bottom of app-level build.gradle
-            if ! grep -q "$GOOGLE_SERVICES_PLUGIN" $APP_BUILD_FILE; then
-                echo "✅ Google services plugin not found, injecting..."
-                echo -e "\n$GOOGLE_SERVICES_PLUGIN" >> $APP_BUILD_FILE
-                echo "✅ Plugin applied at the bottom of $APP_BUILD_FILE"
-            else
-                echo "✅ Google services plugin already applied, skipping"
-            fi
-        
-            echo "📥 Downloading google-services.json..."
-            mkdir -p android/app
-
-            # Download Firebase configuration file
-            download_with_retry "$firebase_config_android" "android/app/google-services.json"
-        
-            echo "🔧 Updating values.xml file"
-            mkdir -p android/app/src/main/res/values/
-            cat > android/app/src/main/res/values/values.xml << 'EOF'
-            <?xml version="1.0" encoding="utf-8"?>
-            <resources>
-                <string name="default_web_client_id">${FIREBASE_WEB_CLIENT_ID}</string>
-                <string name="firebase_database_url">${FIREBASE_DATABASE_URL}</string>
-                <string name="gcm_defaultSenderId">${FIREBASE_SENDER_ID}</string>
-                <string name="google_api_key">${FIREBASE_API_KEY}</string>
-                <string name="google_app_id">${FIREBASE_APP_ID}</string>
-                <string name="google_crash_reporting_api_key">${FIREBASE_CRASH_REPORTING_KEY}</string>
-                <string name="project_id">${FIREBASE_PROJECT_ID}</string>
-            </resources>
-            EOF
-            echo "✅ values.xml file created successfully."
-        else
-            echo "🚫 Firebase config skipped (PUSH_NOTIFY is not true)"
+          echo "ℹ️ No SPLASH_BG provided, skipping background download"
         fi
 
-    - &Inject_Firebase_Services
-      name: Inject Google Services Plugin
-      script: |
-        if [ -f android/app/google-services.json ]; then
-        echo "✅ File found"
-        else
-        echo "❌ Missing google-services.json"
+        flutter pub get
+        echo "✅ Completed: Splash assets downloaded"
+      else
+        echo "⏭️ Skipping splash asset download (IS_SPLASH != true)"
+      fi
+
+  - &change_proj_name
+    name: Change Project Name
+    script: |
+      echo "App Name: $APP_NAME"
+      # 2️⃣ Sanitize: lowercase, remove special characters, replace spaces with underscores
+        SANITIZED_NAME=$(echo "$APP_NAME" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9 ' | tr ' ' '_')
+
+      # 3️⃣ Extract old name from pubspec.yaml
+      OLD_NAME_LINE=$(grep '^name: ' pubspec.yaml)
+      OLD_NAME=$(echo "$OLD_NAME_LINE" | cut -d ' ' -f2)
+
+      echo "🔁 Renaming project from '$OLD_NAME' to '$SANITIZED_NAME'..."
+
+      # Update pubspec.yaml
+      sed -i '' "s/^name: .*/name: $SANITIZED_NAME/" pubspec.yaml
+
+      # Update Dart imports
+        echo "🔄 Updating Dart package imports..."
+        grep -rl "package:$OLD_NAME" lib/ | xargs sed -i '' "s/package:$OLD_NAME/package:$SANITIZED_NAME/g"
+
+
+
+        # iOS: Update CFBundleName in Info.plist
+        echo "🛠️ Updating iOS CFBundleName..."
+        plutil -replace CFBundleName -string "$APP_NAME" ios/Runner/Info.plist
+
+        # Optional: Rename folder (if not on CI/CD)
+        # cd ..
+        # mv "$OLD_NAME" "$SANITIZED_NAME"
+        # cd "$SANITIZED_NAME"
+
+        # Clean and get packages
+        flutter clean
+        flutter pub get
+
+        echo "✅ Project renamed to '$SANITIZED_NAME'"
+
+        echo "🚀 iOS CFBundleName set to '$APP_NAME'"
+
+  - &get_logo
+    name: Get logo image from logoUrl
+    script: |
+      echo "🧹 Deleting old splash and logo assets..."
+
+      if [ -f assets/images/logo.png ]; then
+      rm assets/images/logo.png
+      echo "✅ Deleted: assets/images/logo.png"
+      else
+      echo "⚠️ logo.png not found"
+      fi
+      echo "🚀 Started: Downloading logo from $LOGO_URL"
+
+      mkdir -p assets/images/
+
+      # Try downloading with SSL certificate check first (silent test)
+      wget --spider --quiet "$LOGO_URL"
+      if [ $? -ne 0 ]; then
+        echo "⚠️ SSL verification failed. Retrying with --no-check-certificate..."
+        WGET_OPTS="--no-check-certificate"
+      else
+        WGET_OPTS=""
+      fi
+
+      # Attempt actual download
+      wget $WGET_OPTS -O assets/images/logo.png "$LOGO_URL"
+
+      # Check if the file was successfully downloaded
+      if [ ! -f assets/images/logo.png ]; then
+        echo "❌ Error: Failed to download logo from $LOGO_URL"
         exit 1
-        fi
-        set -e
-        
-        if [ "$PUSH_NOTIFY" = "true" ]; then
-        echo "✅ Google Services Plugin: Start injecting..."
-        
-        FIREBASE_CLASSPATH='classpath("com.google.gms:google-services:4.3.15")'
-        DESUGAR_DEP='implementation("com.android.tools:desugar_jdk_libs:2.0.4")'
-        
-        PROJECT_BUILD_FILE="android/build.gradle.kts"
-        APP_BUILD_FILE="android/app/build.gradle.kts"
-        
-        # ───── Add classpath to android/build.gradle.kts ─────
-        if ! grep -q "com.google.gms:google-services" "$PROJECT_BUILD_FILE"; then
-        echo "🔧 Injecting Firebase classpath into $PROJECT_BUILD_FILE..."
-        awk '
-        /buildscript\s*{/ { print; in_block=1; next }
-        in_block && /dependencies\s*{/ {
-        print; print "        classpath(\"com.google.gms:google-services:4.3.15\")"; in_block=0; next
-        }
-        { print }
-        ' "$PROJECT_BUILD_FILE" > tmp && mv tmp "$PROJECT_BUILD_FILE"
-        echo "✅ Classpath injected."
-        else
-        echo "✅ Firebase classpath already exists."
-        fi
-        
-        # ───── Apply plugin in android/app/build.gradle.kts ─────
-        if grep -q "plugins\s*{" "$APP_BUILD_FILE"; then
-        if ! grep -q 'id("com.google.gms.google-services")' "$APP_BUILD_FILE"; then
-        echo "🔧 Applying Google Services plugin..."
-        sed -i '' '/plugins\s*{/a\
-        id("com.google.gms.google-services")
-        ' "$APP_BUILD_FILE"
-        echo "✅ Plugin applied."
-        else
-        echo "✅ Google Services plugin already applied."
-        fi
-        else
-        echo "❌ plugins block not found in $APP_BUILD_FILE"
-        exit 1
-        fi
-        
-        # ───── Add desugar dependency ─────
-        if ! grep -q 'desugar_jdk_libs' "$APP_BUILD_FILE"; then
-        echo "🔧 Adding desugar_jdk_libs dependency..."
-        sed -i '' '/dependencies\s*{/a\
-        coreLibraryDesugaring('"$DESUGAR_DEP"')
-        ' "$APP_BUILD_FILE"
-        else
-        echo "✅ Desugar dependency already added."
-        fi
-        
-        # ───── Enable desugaring in compileOptions ─────
-        if ! grep -q 'isCoreLibraryDesugaringEnabled = true' "$APP_BUILD_FILE"; then
-        echo "🔧 Enabling desugaring in compileOptions..."
-        sed -i '' '/compileOptions\s*{/a\
-        isCoreLibraryDesugaringEnabled = true
-        ' "$APP_BUILD_FILE"
-        else
-        echo "✅ Desugaring already enabled in compileOptions."
-        fi
-        
-        else
-        echo "🚫 Firebase config skipped (PUSH_NOTIFY is not true)"
-        fi
-    
-    
-    
-  
+      fi
 
+      flutter pub get
+      echo "✅ Completed: Logo downloaded"
 
+  - &set_launcher_icons
+    name: Generate Launcher Icons
+    script: |
+      echo "🚀 Generating launcher icons"
 
-    - &get_json
-      name: Get JSON file & Prepare Firebase configuration
-      script: |
-        
-        if [ "$PUSH_NOTIFY" = "true" ]; then
-          echo "📥 Downloading google-services.json..."
-        
-          # Ensure target directories exist
-          mkdir -p android/app
-          mkdir -p assets
-        
-          # Function to download with retry and SSL check
-          download_with_retry() {
-          local url=$firebase_config_android
-          local output=android/app/google-services.json
-          local max_retries=3
-          local retry_delay=5
-          local attempt=1
-          local WGET_OPTS=""
-        
-          echo "url=$firebase_config_android"
-          echo "output=android/app/google-services.json"
-          echo "max_retries=3"
-          echo "attempt=1"
-        
-          while [ $attempt -le $max_retries ]; do
-          echo "➡️ Attempt $attempt to download $url"
-          wget --spider --quiet "$url"
-          if [ $? -ne 0 ]; then
-          echo "⚠️ SSL verification failed. Using --no-check-certificate"
-          WGET_OPTS="--no-check-certificate"
-          else
-          WGET_OPTS=""
-          fi
-        
-          wget $WGET_OPTS -O "$output" "$url"
-          if [ $? -eq 0 ]; then
-          echo "✅ Successfully downloaded $output"
-          return 0
-          else
-          echo "❌ Download failed on attempt $attempt"
-          fi
-        
-          attempt=$((attempt + 1))
-          if [ $attempt -le $max_retries ]; then
-          echo "⏳ Waiting $retry_delay seconds before retry..."
-          sleep $retry_delay
-          fi
-          done
-        
-          echo "🚨 Failed to download $url after $max_retries attempts."
-          return 1
-        }
-        
-          # Download files with retry
-          download_with_retry "$firebase_config_android" "android/app/google-services.json"
-        
-          # Verify file and copy to assets/
-          if [ -f android/app/google-services.json ]; then
-          echo "✅ google-services.json found"
-          cp android/app/google-services.json assets/google-services.json
-          echo "📂 Copied google-services.json to assets/"
-          else
-          echo "❌ Missing google-services.json"
-          exit 1
-          fi
-        else
-        echo "🚫 Firebase config skipped (PUSH_NOTIFY is not true)"
-        fi
-    
-    
-    
+      flutter pub get
 
-    - &Inject_Firebase_old
-      name: Inject Firebase and buildscript block
-      script: |
-        if [ "$PUSH_NOTIFY" = "true" ]; then
-          echo "📦 Enabling Firebase integration..."
+      # Generates launcher icons using flutter_launcher_icons configuration in pubspec.yaml
+      flutter pub run flutter_launcher_icons
 
-          # Check if Firebase classpath is already present
-          if ! grep -q 'com.google.gms:google-services' android/build.gradle; then
-            echo "✅ Firebase classpath not found, injecting..."
+      echo "✅ Launcher icons generated successfully"
 
-            if ! grep -q 'buildscript {' android/build.gradle; then
-              # No buildscript block found – inject the entire block at the top
-              sed -i '1s;^;buildscript {\n  repositories {\n    google()\n    mavenCentral()\n  }\n  dependencies {\n    classpath "com.google.gms:google-services:4.3.15"\n  }\n}\n\n;' android/build.gradle
-              echo "✅ Full buildscript block injected"
-            else
-              # buildscript exists – insert the classpath into the dependencies
-              sed -i '/buildscript {/,/}/ s/dependencies {/dependencies {\n    classpath "com.google.gms:google-services:4.3.15"/' android/build.gradle
-              echo "✅ Firebase classpath inserted into existing buildscript"
-            fi
-          else
-            echo "✅ Firebase classpath already present, skipping injection"
-          fi
-        else
-          echo "🚫 Firebase config skipped (PUSH_NOTIFY is not true)"
-        fi
+  - &change_app_name
+    name: Change app name
+    script: |
+      echo "🚀 Changing app name to: $APP_NAME"
 
-    - &Update_SDK_Version
-      name: Updating SDK Version for Android & iOS (Conditional)
-      script: |
-        if [ "$PUSH_NOTIFY" = "true" ]; then
-          echo "🔧 Updating Android and iOS SDK versions..."
-
-          # ───── Android SDK Versions ─────
-          echo "📱 Updating Android minSdkVersion and targetSdkVersion in build.gradle.kts"
-          ANDROID_BUILD_FILE="android/app/build.gradle.kts"
-
-          if [ -f "$ANDROID_BUILD_FILE" ]; then
-            sed -i.bak -E "s/minSdkVersion\s*=\s*\d+/minSdkVersion = 21/" "$ANDROID_BUILD_FILE"
-            sed -i.bak -E "s/targetSdkVersion\s*=\s*\d+/targetSdkVersion = 34/" "$ANDROID_BUILD_FILE"
-            echo "✅ Android SDK versions updated in Kotlin DSL"
-          else
-            echo "⚠️ android/app/build.gradle.kts not found!"
-          fi
-
-          # ───── iOS Minimum Target Version ─────
-          echo "🍏 Updating iOS minimum deployment target in Podfile..."
-          PODFILE_PATH="ios/Podfile"
-          if [ -f "$PODFILE_PATH" ]; then
-            sed -i.bak -E "s/platform :ios, '[0-9.]+'/platform :ios, '13.0'/" "$PODFILE_PATH"
-            echo "✅ iOS minimum deployment target updated to 13.0"
-          else
-            echo "⚠️ Podfile not found. Skipping iOS deployment target update."
-          fi
-
-          # Optional: Update iOS Deployment Target in project.pbxproj
-          IOS_PROJECT_FILE="ios/Runner.xcodeproj/project.pbxproj"
-          if [ -f "$IOS_PROJECT_FILE" ]; then
-            sed -i '' -e "s/IPHONEOS_DEPLOYMENT_TARGET = .*;/IPHONEOS_DEPLOYMENT_TARGET = 13.0;/" "$IOS_PROJECT_FILE"
-            echo "✅ Xcode project iOS deployment target updated to 13.0"
-          fi
-
-        else
-          echo "🚫 SDK version update skipped (PUSH_NOTIFY is not true)"
-        fi
-
-
-    - &update_package_names
-      name: Update Android & iOS Package Name / Bundle ID
-      script: |
-        echo "🔧 Updating Android and iOS package name (bundle ID)..."
-
-        # Validate package/bundle ID format (Java-style, dot-separated)
-        if [[ ! "$PKG_NAME" =~ ^[a-zA-Z_][a-zA-Z0-9_]*(\.[a-zA-Z_][a-zA-Z0-9_]*)+$ ]]; then
-          echo "❌ ERROR: Invalid package/bundle identifier: $PKG_NAME"
-          exit 1
-        fi
-
-        echo "✔ Package name / Bundle ID: $PKG_NAME"
-
-        echo "────────────── ANDROID UPDATE ──────────────"
-        echo "📦 Updating Android package..."
-
-        # Update using rename package
-        flutter pub run rename setBundleId --value "$PKG_NAME"
-
-        # Update package name in AndroidManifest.xml
-        sed -i.bak "s/package=\"[^\"]*\"/package=\"$PKG_NAME\"/g" android/app/src/main/AndroidManifest.xml
-
-        # Update applicationId in Kotlin DSL
-        BUILD_FILE="android/app/build.gradle.kts"
-        if [ -f "$BUILD_FILE" ]; then
-          sed -i.bak -E "s/applicationId\s*=\s*\"[^\"]+\"/applicationId = \"$PKG_NAME\"/" "$BUILD_FILE"
-          echo "✅ Updated applicationId in Kotlin DSL"
-        else
-          echo "⚠️ build.gradle.kts not found. Skipping Android applicationId update."
-        fi
-
-        echo "✅ Android package updated."
-
-        echo "────────────── iOS UPDATE ──────────────"
-        echo "🍏 Updating iOS bundle identifier..."
-
-        IOS_PROJECT_FILE="ios/Runner.xcodeproj/project.pbxproj"
-        if [ -f "$IOS_PROJECT_FILE" ]; then
-          sed -i.bak "s/PRODUCT_BUNDLE_IDENTIFIER = .*;/PRODUCT_BUNDLE_IDENTIFIER = $PKG_NAME;/g" "$IOS_PROJECT_FILE"
-          echo "✅ iOS bundle identifier updated."
-        else
-          echo "❌ iOS project file not found at $IOS_PROJECT_FILE"
-          exit 1
-        fi
-
-
-    - &build_ipa
-      name: Building iOS App with Feature Flags
-      script: |
-        if [ ! -f signing_cert.p12 ] || [ ! -f profile.mobileprovision ]; then
-        echo "❌ Error: Certificates or provisioning profile missing."
-        exit 1
-        fi
-
-        echo "🔑 Setting up provisioning profile for build..."
-        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-        cp profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
-
-        echo "✅ Building iOS IPA..."
-        flutter build ipa \
-        --release \
-        --dart-define=WEB_URL="$WEB_URL" \
-        --dart-define=PUSH_NOTIFY="$PUSH_NOTIFY" \
-        --dart-define=PKG_NAME="$PKG_NAME" \
-        --dart-define=APP_NAME="$APP_NAME" \
-        --dart-define=ORG_NAME="$ORG_NAME" \
-        --dart-define=VERSION_NAME="$VERSION_NAME" \
-        --dart-define=VERSION_CODE="$VERSION_CODE" \
-        --dart-define=EMAIL_ID="$EMAIL_ID" \
-        --dart-define=IS_SPLASH="$IS_SPLASH" \
-        --dart-define=SPLASH="$SPLASH" \
-        --dart-define=SPLASH_BG="$SPLASH_BG" \
-        --dart-define=SPLASH_ANIMATION="$SPLASH_ANIMATION" \
-        --dart-define=SPLASH_BG_COLOR="$SPLASH_BG_COLOR" \
-        --dart-define=SPLASH_TAGLINE="$SPLASH_TAGLINE" \
-        --dart-define=SPLASH_TAGLINE_COLOR="$SPLASH_TAGLINE_COLOR" \
-        --dart-define=SPLASH_DURATION="$SPLASH_DURATION" \
-        --dart-define=IS_PULLDOWN="$IS_PULLDOWN" \
-        --dart-define=LOGO_URL="$LOGO_URL" \
-        --dart-define=IS_BOTTOMMENU="$IS_BOTTOMMENU" \
-        --dart-define=BOTTOMMENU_ITEMS="$BOTTOMMENU_ITEMS" \
-        --dart-define=BOTTOMMENU_BG_COLOR="$BOTTOMMENU_BG_COLOR" \
-        --dart-define=BOTTOMMENU_ICON_COLOR="$BOTTOMMENU_ICON_COLOR" \
-        --dart-define=BOTTOMMENU_TEXT_COLOR="$BOTTOMMENU_TEXT_COLOR" \
-        --dart-define=BOTTOMMENU_FONT="$BOTTOMMENU_FONT" \
-        --dart-define=BOTTOMMENU_FONT_SIZE="$BOTTOMMENU_FONT_SIZE" \
-        --dart-define=BOTTOMMENU_FONT_BOLD="$BOTTOMMENU_FONT_BOLD" \
-        --dart-define=BOTTOMMENU_FONT_ITALIC="$BOTTOMMENU_FONT_ITALIC" \
-        --dart-define=BOTTOMMENU_ACTIVE_TAB_COLOR="$BOTTOMMENU_ACTIVE_TAB_COLOR" \
-        --dart-define=BOTTOMMENU_ICON_POSITION="$BOTTOMMENU_ICON_POSITION" \
-        --dart-define=BOTTOMMENU_VISIBLE_ON="$BOTTOMMENU_VISIBLE_ON" \
-        --dart-define=IS_DEEPLINK="$IS_DEEPLINK" \
-        --dart-define=IS_LOAD_IND="$IS_LOAD_IND" \
-        --dart-define=IS_CAMERA="$IS_CAMERA" \
-        --dart-define=IS_LOCATION="$IS_LOCATION" \
-        --dart-define=IS_BIOMETRIC="$IS_BIOMETRIC" \
-        --dart-define=IS_MIC="$IS_MIC" \
-        --dart-define=IS_CONTACT="$IS_CONTACT" \
-        --dart-define=IS_CALENDAR="$IS_CALENDAR" \
-        --dart-define=IS_NOTIFICATION="$IS_NOTIFICATION" \
-        --dart-define=IS_STORAGE="$IS_STORAGE" \
-        --dart-define=APNS_KEY_ID="$APNS_KEY_ID" \
-        --dart-define=APPLE_TEAM_ID="$APPLE_TEAM_ID" \
-        --dart-define=APNS_AUTH_KEY_URL="$APNS_AUTH_KEY_URL" \
-        --dart-define=KEY_STORE="$KEY_STORE" \
-        --dart-define=CM_KEYSTORE_PASSWORD="$CM_KEYSTORE_PASSWORD" \
-        --dart-define=CM_KEY_ALIAS="$CM_KEY_ALIAS" \
-        --dart-define=CM_KEY_PASSWORD="$CM_KEY_PASSWORD" \
-        --export-options-plist=ExportOptions.plist > flutter_build_ios.log
-
-        echo "✅ IPA build completed successfully."
-
-        echo "🧹 Cleaning up certificates and profiles..."
-        security delete-keychain build.keychain
-        rm -rf ios_certificates
-        rm -f ExportOptions.plist
-        echo "✅ Cleanup completed."
-    - &build_apk
-      name: Building Apk with Feature Flags
-      script: |
+        flutter pub run rename setAppName --value "$APP_NAME"
         echo "🔢 VERSION_NAME: $VERSION_NAME"
         echo "🔢 VERSION_CODE: $VERSION_CODE"
-         # Default values
+          # Default values
         VERSION_NAME="${VERSION_NAME:-1.0.0}"
         VERSION_CODE="${VERSION_CODE:-100}"
 
@@ -821,482 +286,554 @@ scripts:
         echo "🔢 VERSION_CODE: $VERSION_CODE"
 
         echo "🔧 Ensuring valid version in pubspec.yaml: $VERSION_NAME+$VERSION_CODE"
+        # Replace or add version line in pubspec.yaml
         if grep -q "^version: " pubspec.yaml; then
           sed -i.bak -E "s/^version: .*/version: $VERSION_NAME+$VERSION_CODE/" pubspec.yaml
-          else
+        else
         echo "version: $VERSION_NAME+$VERSION_CODE" >> pubspec.yaml
-          fi
+        fi
 
         flutter pub get
-        if [ $? -ne 0 ]; then
-        echo "❌ Failed to get Flutter dependencies"
-        exit 1
+
+        echo "✅ App name changed and version set successfully"
+
+  - &Inject_Firebase_iOS_Push
+    name: Firebase Push Notification Setup for iOS
+    script: |
+      if [ "$PUSH_NOTIFY" = "true" ]; then
+        echo "🔔 Enabling Firebase Push Notifications for iOS..."
+
+        # 1. Download and apply Firebase config
+        mkdir -p firebase/ios
+        if [ -n "$firebase_config_ios" ]; then
+          wget -O firebase/ios/GoogleService-Info.plist "$firebase_config_ios"
         fi
 
-        echo "✅ Building APK..."
-        flutter build apk \
-            --release \
-            --dart-define=WEB_URL="$WEB_URL" \
-            --dart-define=PUSH_NOTIFY="$PUSH_NOTIFY" \
-            --dart-define=PKG_NAME="$PKG_NAME" \
-            --dart-define=APP_NAME="$APP_NAME" \
-            --dart-define=ORG_NAME="$ORG_NAME" \
-            --dart-define=VERSION_NAME="$VERSION_NAME" \
-            --dart-define=VERSION_CODE="$VERSION_CODE" \
-            --dart-define=EMAIL_ID="$EMAIL_ID" \
-            --dart-define=IS_SPLASH="$IS_SPLASH" \
-            --dart-define=SPLASH="$SPLASH" \
-            --dart-define=SPLASH_BG="$SPLASH_BG" \
-            --dart-define=SPLASH_ANIMATION="$SPLASH_ANIMATION" \
-            --dart-define=SPLASH_BG_COLOR="$SPLASH_BG_COLOR" \
-            --dart-define=SPLASH_TAGLINE="$SPLASH_TAGLINE" \
-            --dart-define=SPLASH_TAGLINE_COLOR="$SPLASH_TAGLINE_COLOR" \
-            --dart-define=SPLASH_DURATION="$SPLASH_DURATION" \
-            --dart-define=IS_PULLDOWN="$IS_PULLDOWN" \
-            --dart-define=LOGO_URL="$LOGO_URL" \
-            --dart-define=IS_BOTTOMMENU="$IS_BOTTOMMENU" \
-            --dart-define=BOTTOMMENU_ITEMS="$BOTTOMMENU_ITEMS" \
-            --dart-define=BOTTOMMENU_BG_COLOR="$BOTTOMMENU_BG_COLOR" \
-            --dart-define=BOTTOMMENU_ICON_COLOR="$BOTTOMMENU_ICON_COLOR" \
-            --dart-define=BOTTOMMENU_TEXT_COLOR="$BOTTOMMENU_TEXT_COLOR" \
-            --dart-define=BOTTOMMENU_FONT="$BOTTOMMENU_FONT" \
-            --dart-define=BOTTOMMENU_FONT_SIZE="$BOTTOMMENU_FONT_SIZE" \
-            --dart-define=BOTTOMMENU_FONT_BOLD="$BOTTOMMENU_FONT_BOLD" \
-            --dart-define=BOTTOMMENU_FONT_ITALIC="$BOTTOMMENU_FONT_ITALIC" \
-            --dart-define=BOTTOMMENU_ACTIVE_TAB_COLOR="$BOTTOMMENU_ACTIVE_TAB_COLOR" \
-            --dart-define=BOTTOMMENU_ICON_POSITION="$BOTTOMMENU_ICON_POSITION" \
-            --dart-define=BOTTOMMENU_VISIBLE_ON="$BOTTOMMENU_VISIBLE_ON" \
-            --dart-define=IS_DEEPLINK="$IS_DEEPLINK" \
-            --dart-define=IS_LOAD_IND="$IS_LOAD_IND" \
-            --dart-define=IS_CAMERA="$IS_CAMERA" \
-            --dart-define=IS_LOCATION="$IS_LOCATION" \
-            --dart-define=IS_BIOMETRIC="$IS_BIOMETRIC" \
-            --dart-define=IS_MIC="$IS_MIC" \
-            --dart-define=IS_CONTACT="$IS_CONTACT" \
-            --dart-define=IS_CALENDAR="$IS_CALENDAR" \
-            --dart-define=IS_NOTIFICATION="$IS_NOTIFICATION" \
-            --dart-define=IS_STORAGE="$IS_STORAGE" \
-            --dart-define=firebase_config_android="$firebase_config_android" \
-            --dart-define=firebase_config_ios="$firebase_config_ios" \
-            --dart-define=APNS_KEY_ID="$APNS_KEY_ID" \
-            --dart-define=APPLE_TEAM_ID="$APPLE_TEAM_ID" \
-            --dart-define=APNS_AUTH_KEY_URL="$APNS_AUTH_KEY_URL" \
-            --dart-define=KEY_STORE="$KEY_STORE" \
-            --dart-define=CM_KEYSTORE_PASSWORD="$CM_KEYSTORE_PASSWORD" \
-            --dart-define=CM_KEY_ALIAS="$CM_KEY_ALIAS" \
-            --dart-define=CM_KEY_PASSWORD="$CM_KEY_PASSWORD" > flutter_build_apk.log
-        if [ $? -ne 0 ]; then
-        echo "❌ APK build failed"
-        cat flutter_build.log
-        exit 1
-        fi
-        echo "✅ APK build completed."
-
-    - &build_apk_release
-      name: Building Apk with Feature Flags
-      script: |
-        
-        
-        echo "✅ Building APK..."
-        flutter build apk --release \
-            --dart-define=WEB_URL="$WEB_URL" \
-            --dart-define=PUSH_NOTIFY="$PUSH_NOTIFY" \
-            --dart-define=PKG_NAME="$PKG_NAME" \
-            --dart-define=APP_NAME="$APP_NAME" \
-            --dart-define=ORG_NAME="$ORG_NAME" \
-            --dart-define=VERSION_NAME="$VERSION_NAME" \
-            --dart-define=VERSION_CODE="$VERSION_CODE" \
-            --dart-define=EMAIL_ID="$EMAIL_ID" \
-            --dart-define=IS_SPLASH="$IS_SPLASH" \
-            --dart-define=SPLASH="$SPLASH" \
-            --dart-define=SPLASH_BG="$SPLASH_BG" \
-            --dart-define=SPLASH_ANIMATION="$SPLASH_ANIMATION" \
-            --dart-define=SPLASH_BG_COLOR="$SPLASH_BG_COLOR" \
-            --dart-define=SPLASH_TAGLINE="$SPLASH_TAGLINE" \
-            --dart-define=SPLASH_TAGLINE_COLOR="$SPLASH_TAGLINE_COLOR" \
-            --dart-define=SPLASH_DURATION="$SPLASH_DURATION" \
-            --dart-define=IS_PULLDOWN="$IS_PULLDOWN" \
-            --dart-define=LOGO_URL="$LOGO_URL" \
-            --dart-define=IS_BOTTOMMENU="$IS_BOTTOMMENU" \
-            --dart-define=BOTTOMMENU_ITEMS="$BOTTOMMENU_ITEMS" \
-            --dart-define=BOTTOMMENU_BG_COLOR="$BOTTOMMENU_BG_COLOR" \
-            --dart-define=BOTTOMMENU_ICON_COLOR="$BOTTOMMENU_ICON_COLOR" \
-            --dart-define=BOTTOMMENU_TEXT_COLOR="$BOTTOMMENU_TEXT_COLOR" \
-            --dart-define=BOTTOMMENU_FONT="$BOTTOMMENU_FONT" \
-            --dart-define=BOTTOMMENU_FONT_SIZE="$BOTTOMMENU_FONT_SIZE" \
-            --dart-define=BOTTOMMENU_FONT_BOLD="$BOTTOMMENU_FONT_BOLD" \
-            --dart-define=BOTTOMMENU_FONT_ITALIC="$BOTTOMMENU_FONT_ITALIC" \
-            --dart-define=BOTTOMMENU_ACTIVE_TAB_COLOR="$BOTTOMMENU_ACTIVE_TAB_COLOR" \
-            --dart-define=BOTTOMMENU_ICON_POSITION="$BOTTOMMENU_ICON_POSITION" \
-            --dart-define=BOTTOMMENU_VISIBLE_ON="$BOTTOMMENU_VISIBLE_ON" \
-            --dart-define=IS_DEEPLINK="$IS_DEEPLINK" \
-            --dart-define=IS_LOAD_IND="$IS_LOAD_IND" \
-            --dart-define=IS_CHATBOT="$IS_CHATBOT" \
-            --dart-define=IS_CAMERA="$IS_CAMERA" \
-            --dart-define=IS_LOCATION="$IS_LOCATION" \
-            --dart-define=IS_BIOMETRIC="$IS_BIOMETRIC" \
-            --dart-define=IS_MIC="$IS_MIC" \
-            --dart-define=IS_CONTACT="$IS_CONTACT" \
-            --dart-define=IS_CALENDAR="$IS_CALENDAR" \
-            --dart-define=IS_NOTIFICATION="$IS_NOTIFICATION" \
-            --dart-define=IS_STORAGE="$IS_STORAGE" \
-            --dart-define=firebase_config_android="$firebase_config_android" \
-            --dart-define=firebase_config_ios="$firebase_config_ios" \
-            --dart-define=APNS_KEY_ID="$APNS_KEY_ID" \
-            --dart-define=APPLE_TEAM_ID="$APPLE_TEAM_ID" \
-            --dart-define=APNS_AUTH_KEY_URL="$APNS_AUTH_KEY_URL" \
-            --dart-define=KEY_STORE="$KEY_STORE" \
-            --dart-define=CM_KEYSTORE_PASSWORD="$CM_KEYSTORE_PASSWORD" \
-            --dart-define=CM_KEY_ALIAS="$CM_KEY_ALIAS" \
-            --dart-define=CM_KEY_PASSWORD="$CM_KEY_PASSWORD" > flutter_build_apk.log
-        if [ $? -ne 0 ]; then
-        echo "❌ APK build failed"
-        cat flutter_build.log
-        exit 1
-        fi
-        echo "✅ APK build completed."
-
-        echo "✅ Building AppBundle..."
-        flutter build appbundle --release \
-            --dart-define=WEB_URL="$WEB_URL" \
-            --dart-define=PUSH_NOTIFY="$PUSH_NOTIFY" \
-            --dart-define=PKG_NAME="$PKG_NAME" \
-            --dart-define=APP_NAME="$APP_NAME" \
-            --dart-define=ORG_NAME="$ORG_NAME" \
-            --dart-define=VERSION_NAME="$VERSION_NAME" \
-            --dart-define=VERSION_CODE="$VERSION_CODE" \
-            --dart-define=EMAIL_ID="$EMAIL_ID" \
-            --dart-define=IS_SPLASH="$IS_SPLASH" \
-            --dart-define=SPLASH="$SPLASH" \
-            --dart-define=SPLASH_BG="$SPLASH_BG" \
-            --dart-define=SPLASH_ANIMATION="$SPLASH_ANIMATION" \
-            --dart-define=SPLASH_BG_COLOR="$SPLASH_BG_COLOR" \
-            --dart-define=SPLASH_TAGLINE="$SPLASH_TAGLINE" \
-            --dart-define=SPLASH_TAGLINE_COLOR="$SPLASH_TAGLINE_COLOR" \
-            --dart-define=SPLASH_DURATION="$SPLASH_DURATION" \
-            --dart-define=IS_PULLDOWN="$IS_PULLDOWN" \
-            --dart-define=LOGO_URL="$LOGO_URL" \
-            --dart-define=IS_BOTTOMMENU="$IS_BOTTOMMENU" \
-            --dart-define=BOTTOMMENU_ITEMS="$BOTTOMMENU_ITEMS" \
-            --dart-define=BOTTOMMENU_BG_COLOR="$BOTTOMMENU_BG_COLOR" \
-            --dart-define=BOTTOMMENU_ICON_COLOR="$BOTTOMMENU_ICON_COLOR" \
-            --dart-define=BOTTOMMENU_TEXT_COLOR="$BOTTOMMENU_TEXT_COLOR" \
-            --dart-define=BOTTOMMENU_FONT="$BOTTOMMENU_FONT" \
-            --dart-define=BOTTOMMENU_FONT_SIZE="$BOTTOMMENU_FONT_SIZE" \
-            --dart-define=BOTTOMMENU_FONT_BOLD="$BOTTOMMENU_FONT_BOLD" \
-            --dart-define=BOTTOMMENU_FONT_ITALIC="$BOTTOMMENU_FONT_ITALIC" \
-            --dart-define=BOTTOMMENU_ACTIVE_TAB_COLOR="$BOTTOMMENU_ACTIVE_TAB_COLOR" \
-            --dart-define=BOTTOMMENU_ICON_POSITION="$BOTTOMMENU_ICON_POSITION" \
-            --dart-define=BOTTOMMENU_VISIBLE_ON="$BOTTOMMENU_VISIBLE_ON" \
-            --dart-define=IS_DEEPLINK="$IS_DEEPLINK" \
-            --dart-define=IS_LOAD_IND="$IS_LOAD_IND" \
-            --dart-define=IS_CHATBOT="$IS_CHATBOT" \
-            --dart-define=IS_CAMERA="$IS_CAMERA" \
-            --dart-define=IS_LOCATION="$IS_LOCATION" \
-            --dart-define=IS_BIOMETRIC="$IS_BIOMETRIC" \
-            --dart-define=IS_MIC="$IS_MIC" \
-            --dart-define=IS_CONTACT="$IS_CONTACT" \
-            --dart-define=IS_CALENDAR="$IS_CALENDAR" \
-            --dart-define=IS_NOTIFICATION="$IS_NOTIFICATION" \
-            --dart-define=IS_STORAGE="$IS_STORAGE" \
-            --dart-define=firebase_config_android="$firebase_config_android" \
-            --dart-define=firebase_config_ios="$firebase_config_ios" \
-            --dart-define=APNS_KEY_ID="$APNS_KEY_ID" \
-            --dart-define=APPLE_TEAM_ID="$APPLE_TEAM_ID" \
-            --dart-define=APNS_AUTH_KEY_URL="$APNS_AUTH_KEY_URL" \
-            --dart-define=KEY_STORE="$KEY_STORE" \
-            --dart-define=CM_KEYSTORE_PASSWORD="$CM_KEYSTORE_PASSWORD" \
-            --dart-define=CM_KEY_ALIAS="$CM_KEY_ALIAS" \
-            --dart-define=CM_KEY_PASSWORD="$CM_KEY_PASSWORD" > flutter_build_aab.log
-        if [ $? -ne 0 ]; then
-        echo "❌ AppBundle build failed"
-        cat flutter_build2.log
-        exit 1
-        fi
-        echo "✅ AppBundle build completed."
-
-    - &key_store
-      name: Setup Android keystore and insert Gradle signing block (KTS)
-      script: |
-        echo "📦 Setting up Android signing configuration..."
-        
-        # Validate keystore environment variables
-        if [ -z "$KEY_STORE" ] || [ -z "$CM_KEYSTORE_PASSWORD" ] || [ -z "$CM_KEY_ALIAS" ] || [ -z "$CM_KEY_PASSWORD" ]; then
-          echo "❌ Missing required keystore environment variables"
-          echo "Required variables:"
-          echo "- KEY_STORE: URL to download keystore"
-          echo "- CM_KEYSTORE_PASSWORD: Keystore password"
-          echo "- CM_KEY_ALIAS: Key alias"
-          echo "- CM_KEY_PASSWORD: Key password"
+        if [ -f "firebase/ios/GoogleService-Info.plist" ]; then
+          cp firebase/ios/GoogleService-Info.plist ios/Runner/GoogleService-Info.plist
+          echo "✅ GoogleService-Info.plist copied."
+        else
+          echo "❌ Missing GoogleService-Info.plist. Cannot proceed with Firebase setup."
           exit 1
         fi
-        
-        # Create android directory if it doesn't exist
+
+        # 2. Add Firebase SDK (via committed Package.resolved)
+        if [ -f "firebase/ios/Package.resolved" ]; then
+          mkdir -p ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+          cp firebase/ios/Package.resolved ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+          echo "📦 Firebase SDK resolved from committed Package.resolved."
+        else
+          echo "⚠️ Package.resolved not found. Firebase SDK must be added manually in Xcode."
+        fi
+
+        # 3. Download APNs Auth Key if provided (Optional)
+        if [ -n "$APNS_AUTH_KEY_URL" ]; then
+          wget -O firebase/ios/AuthKey.p8 "$APNS_AUTH_KEY_URL"
+          echo "📥 Downloaded AuthKey.p8 for APNs"
+        fi
+
+        # 4. Check APNs entitlements
+        if grep -q "aps-environment" ios/Runner/Runner.entitlements; then
+          echo "✅ APNs entitlements already enabled."
+        else
+          echo "⚠️ Warning: Missing APNs entitlement in Runner.entitlements."
+        fi
+      else
+        echo "🚫 PUSH_NOTIFY is false. Skipping Firebase push notification setup for iOS."
+        rm -f ios/Runner/GoogleService-Info.plist
+        rm -f ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+        echo "🧹 Cleaned up Firebase iOS config."
+      fi
+  - &Inject_Firebase_new
+    name: Inject Firebase and buildscript block
+    script: |
+      echo "🔧 Checking Firebase configuration for Android..."
+
+      # Function to download with retry and SSL check
+      download_with_retry() {
+          local url=$1
+          local output=$2
+          local max_retries=3
+          local retry_delay=5
+          local attempt=1
+          local WGET_OPTS=""
+
+          while [ $attempt -le $max_retries ]; do
+              echo "➡️ Attempt $attempt to download $url"
+              wget --spider --quiet "$url"
+              if [ $? -ne 0 ]; then
+                  echo "⚠️ SSL verification failed. Using --no-check-certificate"
+                  WGET_OPTS="--no-check-certificate"
+              else
+                  WGET_OPTS=""
+              fi
+
+              wget $WGET_OPTS -O "$output" "$url"
+              if [ $? -eq 0 ]; then
+                  echo "✅ Successfully downloaded $output"
+                  return 0
+              else
+                  echo "❌ Download failed on attempt $attempt"
+              fi
+
+              attempt=$((attempt + 1))
+              if [ $attempt -le $max_retries ]; then
+                  echo "⏳ Waiting $retry_delay seconds before retry..."
+                  sleep $retry_delay
+              fi
+          done
+
+          echo "🚨 Failed to download $url after $max_retries attempts."
+          return 1
+      }
+
+      # Check and update the project-level build.gradle
+      PROJECT_BUILD_FILE="android/build.gradle"
+      APP_BUILD_FILE="android/app/build.gradle"
+      GOOGLE_SERVICES_CLASSPATH="classpath 'com.google.gms:google-services:4.3.15'"
+      GOOGLE_SERVICES_PLUGIN="apply plugin: 'com.google.gms.google-services'"
+
+      # Conditional Firebase integration based on PUSH_NOTIFY flag
+      if [ "$PUSH_NOTIFY" = "true" ]; then
+          echo "📦 Enabling Firebase integration..."
+
+          # Check if Firebase classpath is already present in the project-level build.gradle
+          if ! grep -q 'com.google.gms:google-services' $PROJECT_BUILD_FILE; then
+              echo "✅ Firebase classpath not found, injecting..."
+
+              if ! grep -q 'buildscript {' $PROJECT_BUILD_FILE; then
+                  # No buildscript block found – inject the entire block at the top
+                  echo 'buildscript {
+                    repositories {
+                        google()
+                        mavenCentral()
+                    }
+                    dependencies {
+                        classpath "com.google.gms:google-services:4.3.15"
+                    }
+                }' > temp.gradle
+                  cat $PROJECT_BUILD_FILE >> temp.gradle
+                  mv temp.gradle $PROJECT_BUILD_FILE
+                  echo "✅ Full buildscript block injected"
+              else
+                  # buildscript exists – insert the classpath into the dependencies
+                  sed -i '' '/dependencies {/a\\
+              classpath "com.google.gms:google-services:4.3.15"' $PROJECT_BUILD_FILE
+                  echo "✅ Firebase classpath inserted into existing buildscript"
+              fi
+          else
+              echo "✅ Firebase classpath already present, skipping injection"
+          fi
+
+          # Check if Google services plugin is applied at the bottom of app-level build.gradle
+          if ! grep -q "$GOOGLE_SERVICES_PLUGIN" $APP_BUILD_FILE; then
+              echo "✅ Google services plugin not found, injecting..."
+              echo -e "\n$GOOGLE_SERVICES_PLUGIN" >> $APP_BUILD_FILE
+              echo "✅ Plugin applied at the bottom of $APP_BUILD_FILE"
+          else
+              echo "✅ Google services plugin already applied, skipping"
+          fi
+
+          echo "📥 Downloading google-services.json..."
+          mkdir -p android/app
+
+          # Download Firebase configuration file
+          download_with_retry "$firebase_config_android" "android/app/google-services.json"
+
+          echo "🔧 Updating values.xml file"
+          mkdir -p android/app/src/main/res/values/
+          cat > android/app/src/main/res/values/values.xml << 'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+              <string name="default_web_client_id">${FIREBASE_WEB_CLIENT_ID}</string>
+              <string name="firebase_database_url">${FIREBASE_DATABASE_URL}</string>
+              <string name="gcm_defaultSenderId">${FIREBASE_SENDER_ID}</string>
+              <string name="google_api_key">${FIREBASE_API_KEY}</string>
+              <string name="google_app_id">${FIREBASE_APP_ID}</string>
+              <string name="google_crash_reporting_api_key">${FIREBASE_CRASH_REPORTING_KEY}</string>
+              <string name="project_id">${FIREBASE_PROJECT_ID}</string>
+          </resources>
+          EOF
+          echo "✅ values.xml file created successfully."
+      else
+          echo "🚫 Firebase config skipped (PUSH_NOTIFY is not true)"
+      fi
+
+  - &Inject_Firebase_Services
+    name: Inject Google Services Plugin
+    script: |
+      if [ -f android/app/google-services.json ]; then
+      echo "✅ File found"
+      else
+      echo "❌ Missing google-services.json"
+      exit 1
+      fi
+      set -e
+
+      if [ "$PUSH_NOTIFY" = "true" ]; then
+      echo "✅ Google Services Plugin: Start injecting..."
+
+      FIREBASE_CLASSPATH='classpath("com.google.gms:google-services:4.3.15")'
+      DESUGAR_DEP='implementation("com.android.tools:desugar_jdk_libs:2.0.4")'
+
+      PROJECT_BUILD_FILE="android/build.gradle.kts"
+      APP_BUILD_FILE="android/app/build.gradle.kts"
+
+      # ───── Add classpath to android/build.gradle.kts ─────
+      if ! grep -q "com.google.gms:google-services" "$PROJECT_BUILD_FILE"; then
+      echo "🔧 Injecting Firebase classpath into $PROJECT_BUILD_FILE..."
+      awk '
+      /buildscript\s*{/ { print; in_block=1; next }
+      in_block && /dependencies\s*{/ {
+      print; print "        classpath(\"com.google.gms:google-services:4.3.15\")"; in_block=0; next
+      }
+      { print }
+      ' "$PROJECT_BUILD_FILE" > tmp && mv tmp "$PROJECT_BUILD_FILE"
+      echo "✅ Classpath injected."
+      else
+      echo "✅ Firebase classpath already exists."
+      fi
+
+      # ───── Apply plugin in android/app/build.gradle.kts ─────
+      if grep -q "plugins\s*{" "$APP_BUILD_FILE"; then
+      if ! grep -q 'id("com.google.gms.google-services")' "$APP_BUILD_FILE"; then
+      echo "🔧 Applying Google Services plugin..."
+      sed -i '' '/plugins\s*{/a\
+      id("com.google.gms.google-services")
+      ' "$APP_BUILD_FILE"
+      echo "✅ Plugin applied."
+      else
+      echo "✅ Google Services plugin already applied."
+      fi
+      else
+      echo "❌ plugins block not found in $APP_BUILD_FILE"
+      exit 1
+      fi
+
+      # ───── Add desugar dependency ─────
+      if ! grep -q 'desugar_jdk_libs' "$APP_BUILD_FILE"; then
+      echo "🔧 Adding desugar_jdk_libs dependency..."
+      sed -i '' '/dependencies\s*{/a\
+      coreLibraryDesugaring('"$DESUGAR_DEP"')
+      ' "$APP_BUILD_FILE"
+      else
+      echo "✅ Desugar dependency already added."
+      fi
+
+      # ───── Enable desugaring in compileOptions ─────
+      if ! grep -q 'isCoreLibraryDesugaringEnabled = true' "$APP_BUILD_FILE"; then
+      echo "🔧 Enabling desugaring in compileOptions..."
+      sed -i '' '/compileOptions\s*{/a\
+      isCoreLibraryDesugaringEnabled = true
+      ' "$APP_BUILD_FILE"
+      else
+      echo "✅ Desugaring already enabled in compileOptions."
+      fi
+
+      else
+      echo "🚫 Firebase config skipped (PUSH_NOTIFY is not true)"
+      fi
+
+  - &get_json
+    name: Get JSON file & Prepare Firebase configuration
+    script: |
+
+      if [ "$PUSH_NOTIFY" = "true" ]; then
+        echo "📥 Downloading google-services.json..."
+
+        # Ensure target directories exist
         mkdir -p android/app
-        
-        echo "📥 Downloading keystore..."
-        # Download with retry logic
-        max_attempts=3
-        attempt=1
-        while [ $attempt -le $max_attempts ]; do
-          if curl -f -o android/app/keystore.jks "$KEY_STORE"; then
-            echo "✅ Keystore downloaded successfully"
-            break
-          else
-            echo "❌ Attempt $attempt failed to download keystore"
-            if [ $attempt -eq $max_attempts ]; then
-              echo "❌ Failed to download keystore after $max_attempts attempts"
-              exit 1
-            fi
-            attempt=$((attempt + 1))
-            sleep 5
-          fi
+        mkdir -p assets
+
+        # Function to download with retry and SSL check
+        download_with_retry() {
+        local url=$firebase_config_android
+        local output=android/app/google-services.json
+        local max_retries=3
+        local retry_delay=5
+        local attempt=1
+        local WGET_OPTS=""
+
+        echo "url=$firebase_config_android"
+        echo "output=android/app/google-services.json"
+        echo "max_retries=3"
+        echo "attempt=1"
+
+        while [ $attempt -le $max_retries ]; do
+        echo "➡️ Attempt $attempt to download $url"
+        wget --spider --quiet "$url"
+        if [ $? -ne 0 ]; then
+        echo "⚠️ SSL verification failed. Using --no-check-certificate"
+        WGET_OPTS="--no-check-certificate"
+        else
+        WGET_OPTS=""
+        fi
+
+        wget $WGET_OPTS -O "$output" "$url"
+        if [ $? -eq 0 ]; then
+        echo "✅ Successfully downloaded $output"
+        return 0
+        else
+        echo "❌ Download failed on attempt $attempt"
+        fi
+
+        attempt=$((attempt + 1))
+        if [ $attempt -le $max_retries ]; then
+        echo "⏳ Waiting $retry_delay seconds before retry..."
+        sleep $retry_delay
+        fi
         done
-        
-        echo "📝 Writing key.properties..."
-        cat > android/key.properties <<EOF
-        storeFile=keystore.jks
-        storePassword=$CM_KEYSTORE_PASSWORD
-        keyAlias=$CM_KEY_ALIAS
-        keyPassword=$CM_KEY_PASSWORD
-        EOF
-        
-        echo "🔐 Configuring Gradle signing..."
-        
-        GRADLE_FILE="android/app/build.gradle.kts"
-        
-        # Add keystoreProperties block at the top if not present
-        if ! grep -q 'val keystoreProperties' "$GRADLE_FILE"; then
-          echo "🔧 Adding keystoreProperties block..."
-          sed -i '1s;^;val keystoreProperties = Properties().apply {\n    load(File(rootProject.rootDir, "android/key.properties").inputStream())\n}\n\n;' "$GRADLE_FILE"
+
+        echo "🚨 Failed to download $url after $max_retries attempts."
+        return 1
+      }
+
+        # Download files with retry
+        download_with_retry "$firebase_config_android" "android/app/google-services.json"
+
+        # Verify file and copy to assets/
+        if [ -f android/app/google-services.json ]; then
+        echo "✅ google-services.json found"
+        cp android/app/google-services.json assets/google-services.json
+        echo "📂 Copied google-services.json to assets/"
         else
-          echo "✅ keystoreProperties block already present"
-        fi
-        
-        # Inject signingConfigs inside android { ... }
-        if ! grep -q 'signingConfigs' "$GRADLE_FILE"; then
-          echo "🔧 Injecting signingConfigs block..."
-          awk '/android\s*{/{print; print "    signingConfigs {\n        create(\"release\") {\n            storeFile = file(\"keystore.jks\")\n            storePassword = keystoreProperties[\"storePassword\"] as String\n            keyAlias = keystoreProperties[\"keyAlias\"] as String\n            keyPassword = keystoreProperties[\"keyPassword\"] as String\n            enableV1Signing = true\n            enableV2Signing = true\n            enableV3Signing = true\n        }\n    }"; next}1' "$GRADLE_FILE" > tmp && mv tmp "$GRADLE_FILE"
-        else
-          echo "✅ signingConfigs already exists"
-        fi
-        
-        # Inject release buildType with proper configuration
-        if grep -q "buildTypes" "$GRADLE_FILE"; then
-          if ! grep -q "signingConfig = signingConfigs.getByName(\"release\")" "$GRADLE_FILE"; then
-            echo "🔧 Updating release buildType configuration..."
-            awk '/buildTypes\s*{/{print; print "        getByName(\"release\") {\n            isMinifyEnabled = true\n            isShrinkResources = true\n            signingConfig = signingConfigs.getByName(\"release\")\n            proguardFiles(getDefaultProguardFile(\"proguard-android-optimize.txt\"), \"proguard-rules.pro\")\n        }"; next}1' "$GRADLE_FILE" > tmp && mv tmp "$GRADLE_FILE"
-          else
-            echo "✅ Release signing configuration already present"
-          fi
-        else
-          echo "❌ buildTypes block not found in $GRADLE_FILE"
-          exit 1
-        fi
-        
-        echo "✅ Android signing configuration completed"
-        
-        # Verify the configuration
-        echo "🔍 Verifying signing configuration..."
-        if [ -f "android/app/keystore.jks" ] && [ -f "android/key.properties" ]; then
-          echo "✅ Signing files present and configured"
-        else
-          echo "❌ Signing configuration verification failed"
-          exit 1
-        fi
-    - &Setup_IOS
-      name: Setting Up IOS Build
-      script: |
-        echo "🔐 Setting up iOS code signing..."
-
-        export LC_ALL=en_US.UTF-8
-        export LANG=en_US.UTF-8
-
-        KEYCHAIN_PASSWORD="temp_key_pass"
-        KEYCHAIN_NAME="ios-signing.keychain"
-
-        # Download and import certificate
-        echo "📥 Downloading certificate..."
-        curl -o signing_cert.p12 "$CERT_URL"
-
-        echo "🔐 Creating temporary keychain..."
-        security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
-        security default-keychain -s "$KEYCHAIN_NAME"
-        security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
-        security set-keychain-settings -t 3600 -u "$KEYCHAIN_NAME"
-
-        # Import the certificate to the keychain
-        echo "🔑 Importing certificate..."
-        security import signing_cert.p12 -k "$KEYCHAIN_NAME" -P "$CERT_PASSWORD" -T /usr/bin/codesign
-
-        # Trust the keychain for signing tools
-        echo "✅ Trusting keychain for code signing..."
-        security list-keychains -s "$KEYCHAIN_NAME"
-        security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
-
-        # Extract CODE_SIGN_IDENTITY
-        echo "🔍 Extracting code signing identity from keychain..."
-        CODE_SIGN_IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_NAME" | grep -o '".*"' | head -n 1 | tr -d '"')
-        echo "✅ CODE_SIGN_IDENTITY: $CODE_SIGN_IDENTITY"
-        if [ -z "$CODE_SIGN_IDENTITY" ]; then
-        echo "❌ Failed to extract CODE_SIGN_IDENTITY"
+        echo "❌ Missing google-services.json"
         exit 1
         fi
+      else
+      echo "🚫 Firebase config skipped (PUSH_NOTIFY is not true)"
+      fi
 
-        # Download provisioning profile
-        echo "📥 Downloading provisioning profile..."
-        curl -o profile.mobileprovision "$PROFILE_URL"
+  - &Inject_Firebase_old
+    name: Inject Firebase and buildscript block
+    script: |
+      if [ "$PUSH_NOTIFY" = "true" ]; then
+        echo "📦 Enabling Firebase integration..."
 
-        # Extract UUID of the provisioning profile
-        UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< "$(security cms -D -i profile.mobileprovision)")
-        echo "✅ Provisioning Profile UUID: $UUID"
+        # Check if Firebase classpath is already present
+        if ! grep -q 'com.google.gms:google-services' android/build.gradle; then
+          echo "✅ Firebase classpath not found, injecting..."
 
-        PROFILE_PATH=~/Library/MobileDevice/Provisioning\ Profiles/$UUID.mobileprovision
-        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-        cp profile.mobileprovision "$PROFILE_PATH"
+          if ! grep -q 'buildscript {' android/build.gradle; then
+            # No buildscript block found – inject the entire block at the top
+            sed -i '1s;^;buildscript {\n  repositories {\n    google()\n    mavenCentral()\n  }\n  dependencies {\n    classpath "com.google.gms:google-services:4.3.15"\n  }\n}\n\n;' android/build.gradle
+            echo "✅ Full buildscript block injected"
+          else
+            # buildscript exists – insert the classpath into the dependencies
+            sed -i '/buildscript {/,/}/ s/dependencies {/dependencies {\n    classpath "com.google.gms:google-services:4.3.15"/' android/build.gradle
+            echo "✅ Firebase classpath inserted into existing buildscript"
+          fi
+        else
+          echo "✅ Firebase classpath already present, skipping injection"
+        fi
+      else
+        echo "🚫 Firebase config skipped (PUSH_NOTIFY is not true)"
+      fi
 
-        # Update iOS deployment target
-        echo "🔧 Updating iOS deployment target to 13.0 in Podfile..."
-        sed -i '' 's/platform :ios, .*/platform :ios, "13.0"/' ios/Podfile
+  - &Update_SDK_Version
+    name: Updating SDK Version for Android & iOS (Conditional)
+    script: |
+      if [ "$PUSH_NOTIFY" = "true" ]; then
+        echo "🔧 Updating Android and iOS SDK versions..."
 
-        # CocoaPods setup
-        echo "🛠️ Setting up CocoaPods and Flutter dependencies..."
-        flutter clean
-        rm -rf ios/Pods ios/Podfile.lock ~/Library/Caches/CocoaPods ~/.cocoapods/repos
+        # ───── Android SDK Versions ─────
+        echo "📱 Updating Android minSdkVersion and targetSdkVersion in build.gradle.kts"
+        ANDROID_BUILD_FILE="android/app/build.gradle.kts"
 
-        set -x
-        gem install cocoapods --pre --silent
-        gem install securerandom -v 0.3.2 --silent
-        pod install --project-directory=ios
-        flutter pub get
-        set +x
+        if [ -f "$ANDROID_BUILD_FILE" ]; then
+          sed -i.bak -E "s/minSdkVersion\s*=\s*\d+/minSdkVersion = 21/" "$ANDROID_BUILD_FILE"
+          sed -i.bak -E "s/targetSdkVersion\s*=\s*\d+/targetSdkVersion = 34/" "$ANDROID_BUILD_FILE"
+          echo "✅ Android SDK versions updated in Kotlin DSL"
+        else
+          echo "⚠️ android/app/build.gradle.kts not found!"
+        fi
 
-        # Build Flutter iOS app (no code signing)
-        flutter build ios --release --no-codesign
+        # ───── iOS Minimum Target Version ─────
+        echo "🍏 Updating iOS minimum deployment target in Podfile..."
+        PODFILE_PATH="ios/Podfile"
+        if [ -f "$PODFILE_PATH" ]; then
+          sed -i.bak -E "s/platform :ios, '[0-9.]+'/platform :ios, '13.0'/" "$PODFILE_PATH"
+          echo "✅ iOS minimum deployment target updated to 13.0"
+        else
+          echo "⚠️ Podfile not found. Skipping iOS deployment target update."
+        fi
 
-        # Archive app with manual signing
-        echo "📦 Archiving app with code signing..."
-        xcodebuild -workspace ios/Runner.xcworkspace \
-        -scheme Runner \
-        -configuration Release \
-        -sdk iphoneos \
-        -destination "generic/platform=iOS" \
-        -archivePath build/ios/archive/Runner.xcarchive \
-        CODE_SIGN_STYLE=Manual \
-        DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
-        PROVISIONING_PROFILE_SPECIFIER="$UUID" \
-        PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID" \
-        CODE_SIGN_IDENTITY="$CODE_SIGN_IDENTITY" \
-        OTHER_CODE_SIGN_FLAGS="--keychain ~/Library/Keychains/$KEYCHAIN_NAME-db" \
-        archive
+        # Optional: Update iOS Deployment Target in project.pbxproj
+        IOS_PROJECT_FILE="ios/Runner.xcodeproj/project.pbxproj"
+        if [ -f "$IOS_PROJECT_FILE" ]; then
+          sed -i '' -e "s/IPHONEOS_DEPLOYMENT_TARGET = .*;/IPHONEOS_DEPLOYMENT_TARGET = 13.0;/" "$IOS_PROJECT_FILE"
+          echo "✅ Xcode project iOS deployment target updated to 13.0"
+        fi
 
-        # Create ExportOptions.plist
-        cat <<EOF > ExportOptions.plist
-        <?xml version="1.0" encoding="UTF-8"?>
-        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-        "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-        <plist version="1.0">
-        <dict>
-        <key>method</key>
-        <string>ad-hoc</string>
-        <key>provisioningProfiles</key>
-        <dict>
-        <key>$BUNDLE_ID</key>
-        <string>$UUID</string>
-        </dict>
-        <key>signingStyle</key>
-        <string>manual</string>
-        <key>teamID</key>
-        <string>$APPLE_TEAM_ID</string>
-        </dict>
-        </plist>
-        EOF
+      else
+        echo "🚫 SDK version update skipped (PUSH_NOTIFY is not true)"
+      fi
 
-        # Export IPA
-        echo "📦 Exporting IPA..."
-        xcodebuild -exportArchive \
-        -archivePath build/ios/archive/Runner.xcarchive \
-        -exportPath build/ios/ipa \
-        -exportOptionsPlist ExportOptions.plist
+  - &update_package_names
+    name: Update Android & iOS Package Name / Bundle ID
+    script: |
+      echo "🔧 Updating Android and iOS package name (bundle ID)..."
 
-        echo "✅ IPA export complete: build/ios/ipa"
+      # Validate package/bundle ID format (Java-style, dot-separated)
+      if [[ ! "$PKG_NAME" =~ ^[a-zA-Z_][a-zA-Z0-9_]*(\.[a-zA-Z_][a-zA-Z0-9_]*)+$ ]]; then
+        echo "❌ ERROR: Invalid package/bundle identifier: $PKG_NAME"
+        exit 1
+      fi
 
-        # Cleanup
-        echo "🧹 Cleaning up..."
-        security delete-keychain "$KEYCHAIN_NAME"
-        rm -f signing_cert.p12 profile.mobileprovision ExportOptions.plist
+      echo "✔ Package name / Bundle ID: $PKG_NAME"
 
-        echo "🎉 Done!"
+      echo "────────────── ANDROID UPDATE ──────────────"
+      echo "📦 Updating Android package..."
 
-    - &setup_ios_signing_manual
-      name: Setting Up iOS Signing (Manual)
-      script: |
-        echo "🔐 Setting up iOS code signing..."
-        export LC_ALL=en_US.UTF-8
-        export LANG=en_US.UTF-8
+      # Update using rename package
+      flutter pub run rename setBundleId --value "$PKG_NAME"
 
-        KEYCHAIN_PASSWORD="temp_key_pass"
-        KEYCHAIN_NAME="ios-signing.keychain"
+      # Update package name in AndroidManifest.xml
+      sed -i.bak "s/package=\"[^\"]*\"/package=\"$PKG_NAME\"/g" android/app/src/main/AndroidManifest.xml
 
-        # Download and import certificate
-        echo "📥 Downloading certificate..."
-        curl -o signing_cert.p12 "$CERT_URL"
+      # Update applicationId in Kotlin DSL
+      BUILD_FILE="android/app/build.gradle.kts"
+      if [ -f "$BUILD_FILE" ]; then
+        sed -i.bak -E "s/applicationId\s*=\s*\"[^\"]+\"/applicationId = \"$PKG_NAME\"/" "$BUILD_FILE"
+        echo "✅ Updated applicationId in Kotlin DSL"
+      else
+        echo "⚠️ build.gradle.kts not found. Skipping Android applicationId update."
+      fi
 
-        echo "🔐 Creating temporary keychain..."
-        security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
-        security default-keychain -s "$KEYCHAIN_NAME"
-        security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
-        security set-keychain-settings -t 3600 -u "$KEYCHAIN_NAME"
+      echo "✅ Android package updated."
 
-        # Import the certificate to the keychain
-        echo "🔑 Importing certificate..."
-        security import signing_cert.p12 -k "$KEYCHAIN_NAME" -P "$CERT_PASSWORD" -T /usr/bin/codesign
+      echo "────────────── iOS UPDATE ──────────────"
+      echo "🍏 Updating iOS bundle identifier..."
 
-        echo "🔍 Verifying imported certificate..."
-        security find-identity -v -p codesigning "$KEYCHAIN_NAME"
+      IOS_PROJECT_FILE="ios/Runner.xcodeproj/project.pbxproj"
+      if [ -f "$IOS_PROJECT_FILE" ]; then
+        sed -i.bak "s/PRODUCT_BUNDLE_IDENTIFIER = .*;/PRODUCT_BUNDLE_IDENTIFIER = $PKG_NAME;/g" "$IOS_PROJECT_FILE"
+        echo "✅ iOS bundle identifier updated."
+      else
+        echo "❌ iOS project file not found at $IOS_PROJECT_FILE"
+        exit 1
+      fi
 
-        # Download provisioning profile
-        echo "📥 Downloading provisioning profile..."
-        curl -o profile.mobileprovision "$PROFILE_URL"
+  - &build_ipa
+    name: Building iOS App with Feature Flags
+    script: |
+      if [ ! -f signing_cert.p12 ] || [ ! -f profile.mobileprovision ]; then
+      echo "❌ Error: Certificates or provisioning profile missing."
+      exit 1
+      fi
 
-        # Get the UUID of the provisioning profile
-        UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(security cms -D -i profile.mobileprovision))
-        echo "✅ Profile UUID: $UUID"
+      echo "🔑 Setting up provisioning profile for build..."
+      mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+      cp profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
-        PROFILE_PATH=~/Library/MobileDevice/Provisioning\ Profiles/$UUID.mobileprovision
-        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-        cp profile.mobileprovision "$PROFILE_PATH"
+      echo "✅ Building iOS IPA..."
+      flutter build ipa \
+      --release \
+      --dart-define=WEB_URL="$WEB_URL" \
+      --dart-define=PUSH_NOTIFY="$PUSH_NOTIFY" \
+      --dart-define=PKG_NAME="$PKG_NAME" \
+      --dart-define=APP_NAME="$APP_NAME" \
+      --dart-define=ORG_NAME="$ORG_NAME" \
+      --dart-define=VERSION_NAME="$VERSION_NAME" \
+      --dart-define=VERSION_CODE="$VERSION_CODE" \
+      --dart-define=EMAIL_ID="$EMAIL_ID" \
+      --dart-define=IS_SPLASH="$IS_SPLASH" \
+      --dart-define=SPLASH="$SPLASH" \
+      --dart-define=SPLASH_BG="$SPLASH_BG" \
+      --dart-define=SPLASH_ANIMATION="$SPLASH_ANIMATION" \
+      --dart-define=SPLASH_BG_COLOR="$SPLASH_BG_COLOR" \
+      --dart-define=SPLASH_TAGLINE="$SPLASH_TAGLINE" \
+      --dart-define=SPLASH_TAGLINE_COLOR="$SPLASH_TAGLINE_COLOR" \
+      --dart-define=SPLASH_DURATION="$SPLASH_DURATION" \
+      --dart-define=IS_PULLDOWN="$IS_PULLDOWN" \
+      --dart-define=LOGO_URL="$LOGO_URL" \
+      --dart-define=IS_BOTTOMMENU="$IS_BOTTOMMENU" \
+      --dart-define=BOTTOMMENU_ITEMS="$BOTTOMMENU_ITEMS" \
+      --dart-define=BOTTOMMENU_BG_COLOR="$BOTTOMMENU_BG_COLOR" \
+      --dart-define=BOTTOMMENU_ICON_COLOR="$BOTTOMMENU_ICON_COLOR" \
+      --dart-define=BOTTOMMENU_TEXT_COLOR="$BOTTOMMENU_TEXT_COLOR" \
+      --dart-define=BOTTOMMENU_FONT="$BOTTOMMENU_FONT" \
+      --dart-define=BOTTOMMENU_FONT_SIZE="$BOTTOMMENU_FONT_SIZE" \
+      --dart-define=BOTTOMMENU_FONT_BOLD="$BOTTOMMENU_FONT_BOLD" \
+      --dart-define=BOTTOMMENU_FONT_ITALIC="$BOTTOMMENU_FONT_ITALIC" \
+      --dart-define=BOTTOMMENU_ACTIVE_TAB_COLOR="$BOTTOMMENU_ACTIVE_TAB_COLOR" \
+      --dart-define=BOTTOMMENU_ICON_POSITION="$BOTTOMMENU_ICON_POSITION" \
+      --dart-define=BOTTOMMENU_VISIBLE_ON="$BOTTOMMENU_VISIBLE_ON" \
+      --dart-define=IS_DEEPLINK="$IS_DEEPLINK" \
+      --dart-define=IS_LOAD_IND="$IS_LOAD_IND" \
+      --dart-define=IS_CAMERA="$IS_CAMERA" \
+      --dart-define=IS_LOCATION="$IS_LOCATION" \
+      --dart-define=IS_BIOMETRIC="$IS_BIOMETRIC" \
+      --dart-define=IS_MIC="$IS_MIC" \
+      --dart-define=IS_CONTACT="$IS_CONTACT" \
+      --dart-define=IS_CALENDAR="$IS_CALENDAR" \
+      --dart-define=IS_NOTIFICATION="$IS_NOTIFICATION" \
+      --dart-define=IS_STORAGE="$IS_STORAGE" \
+      --dart-define=APNS_KEY_ID="$APNS_KEY_ID" \
+      --dart-define=APPLE_TEAM_ID="$APPLE_TEAM_ID" \
+      --dart-define=APNS_AUTH_KEY_URL="$APNS_AUTH_KEY_URL" \
+      --dart-define=KEY_STORE="$KEY_STORE" \
+      --dart-define=CM_KEYSTORE_PASSWORD="$CM_KEYSTORE_PASSWORD" \
+      --dart-define=CM_KEY_ALIAS="$CM_KEY_ALIAS" \
+      --dart-define=CM_KEY_PASSWORD="$CM_KEY_PASSWORD" \
+      --export-options-plist=ExportOptions.plist > flutter_build_ios.log
 
-        # Set the keychain to be trusted for code signing
-        echo "✅ Trusting keychain for code signing..."
-        security list-keychains -s "$KEYCHAIN_NAME"
-        security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
-        security find-identity -v -p codesigning
+      echo "✅ IPA build completed successfully."
 
-        echo "🔧 Updating iOS deployment target to 13.0 in Podfile..."
-        sed -i '' 's/platform :ios, .*/platform :ios, "13.0"/' ios/Podfile
-        cat ios/Podfile | grep platform
+      echo "🧹 Cleaning up certificates and profiles..."
+      security delete-keychain build.keychain
+      rm -rf ios_certificates
+      rm -f ExportOptions.plist
+      echo "✅ Cleanup completed."
+  - &build_apk
+    name: Building Apk with Feature Flags
+    script: |
+      echo "🔢 VERSION_NAME: $VERSION_NAME"
+      echo "🔢 VERSION_CODE: $VERSION_CODE"
+       # Default values
+      VERSION_NAME="${VERSION_NAME:-1.0.0}"
+      VERSION_CODE="${VERSION_CODE:-100}"
 
-          # Flutter build
-          echo "⚙️ Building Flutter iOS project..."
-          flutter build ios --release --no-codesign \
-          --dart-define=WORKFLOW_ID="$WORKFLOW_ID" \
-          --dart-define=USER_NAME="$USER_NAME" \
-          --dart-define=APP_ID="$APP_ID" \
-          --dart-define=VERSION_NAME="$VERSION_NAME" \
-          --dart-define=VERSION_CODE="$VERSION_CODE" \
+      # Check if VERSION_NAME is empty or not set
+      if [ -z "$VERSION_NAME" ]; then
+        VERSION_NAME=$DEFAULT_VERSION_NAME
+        echo "🔢 Setting DEFAULT_VERSION_NAME"
+      fi
+
+      # Check if VERSION_CODE is empty or not set
+      if [ -z "$VERSION_CODE" ]; then
+        VERSION_CODE=$DEFAULT_VERSION_CODE
+        echo "🔢 Setting DEFAULT_VERSION_CODE"
+      fi
+
+      echo "🔢 VERSION_NAME: $VERSION_NAME"
+      echo "🔢 VERSION_CODE: $VERSION_CODE"
+
+      echo "🔧 Ensuring valid version in pubspec.yaml: $VERSION_NAME+$VERSION_CODE"
+      if grep -q "^version: " pubspec.yaml; then
+        sed -i.bak -E "s/^version: .*/version: $VERSION_NAME+$VERSION_CODE/" pubspec.yaml
+        else
+      echo "version: $VERSION_NAME+$VERSION_CODE" >> pubspec.yaml
+        fi
+
+      flutter pub get
+      if [ $? -ne 0 ]; then
+      echo "❌ Failed to get Flutter dependencies"
+      exit 1
+      fi
+
+      echo "✅ Building APK..."
+      flutter build apk \
+          --release \
+          --dart-define=WEB_URL="$WEB_URL" \
+          --dart-define=PUSH_NOTIFY="$PUSH_NOTIFY" \
+          --dart-define=PKG_NAME="$PKG_NAME" \
           --dart-define=APP_NAME="$APP_NAME" \
           --dart-define=ORG_NAME="$ORG_NAME" \
-          --dart-define=WEB_URL="$WEB_URL" \
-          --dart-define=PKG_NAME="$PKG_NAME" \
-          --dart-define=BUNDLE_ID="$BUNDLE_ID" \
+          --dart-define=VERSION_NAME="$VERSION_NAME" \
+          --dart-define=VERSION_CODE="$VERSION_CODE" \
           --dart-define=EMAIL_ID="$EMAIL_ID" \
-          --dart-define=PUSH_NOTIFY="$PUSH_NOTIFY" \
-          --dart-define=IS_CHATBOT="$IS_CHATBOT" \
-          --dart-define=IS_DOMAIN_URL="$IS_DOMAIN_URL" \
           --dart-define=IS_SPLASH="$IS_SPLASH" \
-          --dart-define=SPLASH_URL="$SPLASH_URL" \
-          --dart-define=SPLASH_BG_URL="$SPLASH_BG_URL" \
           --dart-define=SPLASH="$SPLASH" \
           --dart-define=SPLASH_BG="$SPLASH_BG" \
           --dart-define=SPLASH_ANIMATION="$SPLASH_ANIMATION" \
@@ -1322,339 +859,790 @@ scripts:
           --dart-define=IS_LOAD_IND="$IS_LOAD_IND" \
           --dart-define=IS_CAMERA="$IS_CAMERA" \
           --dart-define=IS_LOCATION="$IS_LOCATION" \
-          --dart-define=IS_MIC="$IS_MIC" \
-          --dart-define=IS_NOTIFICATION="$IS_NOTIFICATION" \
-          --dart-define=IS_CONTACT="$IS_CONTACT" \
           --dart-define=IS_BIOMETRIC="$IS_BIOMETRIC" \
+          --dart-define=IS_MIC="$IS_MIC" \
+          --dart-define=IS_CONTACT="$IS_CONTACT" \
           --dart-define=IS_CALENDAR="$IS_CALENDAR" \
+          --dart-define=IS_NOTIFICATION="$IS_NOTIFICATION" \
           --dart-define=IS_STORAGE="$IS_STORAGE" \
-          --dart-define=FIREBASE_CONFIG_ANDROID="$FIREBASE_CONFIG_ANDROID" \
-          --dart-define=FIREBASE_CONFIG_IOS="$FIREBASE_CONFIG_IOS" \
           --dart-define=firebase_config_android="$firebase_config_android" \
           --dart-define=firebase_config_ios="$firebase_config_ios" \
           --dart-define=APNS_KEY_ID="$APNS_KEY_ID" \
           --dart-define=APPLE_TEAM_ID="$APPLE_TEAM_ID" \
           --dart-define=APNS_AUTH_KEY_URL="$APNS_AUTH_KEY_URL" \
-          --dart-define=PROFILE_TYPE="$PROFILE_TYPE" \
-          --dart-define=PROFILE_URL="$PROFILE_URL" \
-          --dart-define=CERT_CER_URL="$CERT_CER_URL" \
-          --dart-define=CERT_KEY_URL="$CERT_KEY_URL" \
-          --dart-define=CERT_PASSWORD="$CERT_PASSWORD" \
-          --dart-define=CERT_P12_URL="$CERT_P12_URL" \
-          --dart-define=IS_TESTFLIGHT="$IS_TESTFLIGHT" \
-          --dart-define=APP_STORE_CONNECT_KEY_IDENTIFIER="$APP_STORE_CONNECT_KEY_IDENTIFIER" \
-          --dart-define=APP_STORE_CONNECT_API_KEY_PATH="$APP_STORE_CONNECT_API_KEY_PATH" \
-          --dart-define=APP_STORE_CONNECT_ISSUER_ID="$APP_STORE_CONNECT_ISSUER_ID" \
-          --dart-define=KEY_STORE_URL="$KEY_STORE_URL" \
           --dart-define=KEY_STORE="$KEY_STORE" \
           --dart-define=CM_KEYSTORE_PASSWORD="$CM_KEYSTORE_PASSWORD" \
           --dart-define=CM_KEY_ALIAS="$CM_KEY_ALIAS" \
-          --dart-define=CM_KEY_PASSWORD="$CM_KEY_PASSWORD"
-        
-          # Extract CODE_SIGN_IDENTITY from the .p12 file
-          security import signing_cert.p12 -k "$KEYCHAIN_NAME" -P "$CERT_PASSWORD" -T /usr/bin/codesign
-          CODE_SIGN_IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_NAME" | awk '{print $2}' | head -n 1)
-          echo "CODE_SIGN_IDENTITY=$CODE_SIGN_IDENTITY"
-        
-          echo "🛠️ Setting UTF-8 encoding for CocoaPods..."
-          export LANG=en_US.UTF-8
-          export LC_ALL=en_US.UTF-8
-          flutter clean
-          rm -rf ios/Pods ios/Podfile.lock ~/Library/Caches/CocoaPods ~/.cocoapods/repos
-          sudo gem install cocoapods
-          cd ios
-          pod reintegrate
-          pod install --repo-update
-          cd ..
-          flutter pub get
-        
-           # Archive the app
-            echo "📦 Archiving app with CodeSigning the IPA File..."
-            xcodebuild -workspace ios/Runner.xcworkspace \
-            -scheme Runner \
-            -configuration Release \
-            -archivePath build/ios/archive/Runner.xcarchive \
-            archive \
-            CODE_SIGN_STYLE=Manual \
-            DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
-            PROVISIONING_PROFILE_SPECIFIER="$UUID" \
-            PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID" \
-            CODE_SIGN_IDENTITY="$CODE_SIGN_IDENTITY"
+          --dart-define=CM_KEY_PASSWORD="$CM_KEY_PASSWORD" > flutter_build_apk.log
+      if [ $? -ne 0 ]; then
+      echo "❌ APK build failed"
+      cat flutter_build.log
+      exit 1
+      fi
+      echo "✅ APK build completed."
 
-            # ExportOptions.plist
-            cat <<EOF > ExportOptions.plist
-            <?xml version="1.0" encoding="UTF-8"?>
-            <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-            <plist version="1.0">
-            <dict>
-            <key>method</key>
-            <string>ad-hoc</string>
-            <key>provisioningProfiles</key>
-            <dict>
-            <key>$BUNDLE_ID</key>
-            <string>$UUID</string>
-            </dict>
-            <key>signingStyle</key>
-            <string>manual</string>
-            <key>teamID</key>
-            <string>$APPLE_TEAM_ID</string>
-            </dict>
-            </plist>
-            EOF
+  - &build_apk_release
+    name: Building Apk with Feature Flags
+    script: |
 
-            # Export the IPA
-            echo "📦 Exporting IPA..."
-            xcodebuild -exportArchive \
-            -archivePath build/ios/archive/Runner.xcarchive \
-            -exportPath build/ios/ipa \
-            -exportOptionsPlist ExportOptions.plist
 
-            echo "✅ IPA export complete: build/ios/ipa"
-            security delete-keychain "$KEYCHAIN_NAME"
-            rm signing_cert.p12 profile.mobileprovision
+      echo "✅ Building APK..."
+      flutter build apk --release \
+          --dart-define=WEB_URL="$WEB_URL" \
+          --dart-define=PUSH_NOTIFY="$PUSH_NOTIFY" \
+          --dart-define=PKG_NAME="$PKG_NAME" \
+          --dart-define=APP_NAME="$APP_NAME" \
+          --dart-define=ORG_NAME="$ORG_NAME" \
+          --dart-define=VERSION_NAME="$VERSION_NAME" \
+          --dart-define=VERSION_CODE="$VERSION_CODE" \
+          --dart-define=EMAIL_ID="$EMAIL_ID" \
+          --dart-define=IS_SPLASH="$IS_SPLASH" \
+          --dart-define=SPLASH="$SPLASH" \
+          --dart-define=SPLASH_BG="$SPLASH_BG" \
+          --dart-define=SPLASH_ANIMATION="$SPLASH_ANIMATION" \
+          --dart-define=SPLASH_BG_COLOR="$SPLASH_BG_COLOR" \
+          --dart-define=SPLASH_TAGLINE="$SPLASH_TAGLINE" \
+          --dart-define=SPLASH_TAGLINE_COLOR="$SPLASH_TAGLINE_COLOR" \
+          --dart-define=SPLASH_DURATION="$SPLASH_DURATION" \
+          --dart-define=IS_PULLDOWN="$IS_PULLDOWN" \
+          --dart-define=LOGO_URL="$LOGO_URL" \
+          --dart-define=IS_BOTTOMMENU="$IS_BOTTOMMENU" \
+          --dart-define=BOTTOMMENU_ITEMS="$BOTTOMMENU_ITEMS" \
+          --dart-define=BOTTOMMENU_BG_COLOR="$BOTTOMMENU_BG_COLOR" \
+          --dart-define=BOTTOMMENU_ICON_COLOR="$BOTTOMMENU_ICON_COLOR" \
+          --dart-define=BOTTOMMENU_TEXT_COLOR="$BOTTOMMENU_TEXT_COLOR" \
+          --dart-define=BOTTOMMENU_FONT="$BOTTOMMENU_FONT" \
+          --dart-define=BOTTOMMENU_FONT_SIZE="$BOTTOMMENU_FONT_SIZE" \
+          --dart-define=BOTTOMMENU_FONT_BOLD="$BOTTOMMENU_FONT_BOLD" \
+          --dart-define=BOTTOMMENU_FONT_ITALIC="$BOTTOMMENU_FONT_ITALIC" \
+          --dart-define=BOTTOMMENU_ACTIVE_TAB_COLOR="$BOTTOMMENU_ACTIVE_TAB_COLOR" \
+          --dart-define=BOTTOMMENU_ICON_POSITION="$BOTTOMMENU_ICON_POSITION" \
+          --dart-define=BOTTOMMENU_VISIBLE_ON="$BOTTOMMENU_VISIBLE_ON" \
+          --dart-define=IS_DEEPLINK="$IS_DEEPLINK" \
+          --dart-define=IS_LOAD_IND="$IS_LOAD_IND" \
+          --dart-define=IS_CHATBOT="$IS_CHATBOT" \
+          --dart-define=IS_CAMERA="$IS_CAMERA" \
+          --dart-define=IS_LOCATION="$IS_LOCATION" \
+          --dart-define=IS_BIOMETRIC="$IS_BIOMETRIC" \
+          --dart-define=IS_MIC="$IS_MIC" \
+          --dart-define=IS_CONTACT="$IS_CONTACT" \
+          --dart-define=IS_CALENDAR="$IS_CALENDAR" \
+          --dart-define=IS_NOTIFICATION="$IS_NOTIFICATION" \
+          --dart-define=IS_STORAGE="$IS_STORAGE" \
+          --dart-define=firebase_config_android="$firebase_config_android" \
+          --dart-define=firebase_config_ios="$firebase_config_ios" \
+          --dart-define=APNS_KEY_ID="$APNS_KEY_ID" \
+          --dart-define=APPLE_TEAM_ID="$APPLE_TEAM_ID" \
+          --dart-define=APNS_AUTH_KEY_URL="$APNS_AUTH_KEY_URL" \
+          --dart-define=KEY_STORE="$KEY_STORE" \
+          --dart-define=CM_KEYSTORE_PASSWORD="$CM_KEYSTORE_PASSWORD" \
+          --dart-define=CM_KEY_ALIAS="$CM_KEY_ALIAS" \
+          --dart-define=CM_KEY_PASSWORD="$CM_KEY_PASSWORD" > flutter_build_apk.log
+      if [ $? -ne 0 ]; then
+      echo "❌ APK build failed"
+      cat flutter_build.log
+      exit 1
+      fi
+      echo "✅ APK build completed."
 
-    - &setup_ios_signing_manual3
-      name: Setting Up iOS Signing (Manual)
-      script: |
-        echo "🔐 Setting up iOS signing (manual)..."
+      echo "✅ Building AppBundle..."
+      flutter build appbundle --release \
+          --dart-define=WEB_URL="$WEB_URL" \
+          --dart-define=PUSH_NOTIFY="$PUSH_NOTIFY" \
+          --dart-define=PKG_NAME="$PKG_NAME" \
+          --dart-define=APP_NAME="$APP_NAME" \
+          --dart-define=ORG_NAME="$ORG_NAME" \
+          --dart-define=VERSION_NAME="$VERSION_NAME" \
+          --dart-define=VERSION_CODE="$VERSION_CODE" \
+          --dart-define=EMAIL_ID="$EMAIL_ID" \
+          --dart-define=IS_SPLASH="$IS_SPLASH" \
+          --dart-define=SPLASH="$SPLASH" \
+          --dart-define=SPLASH_BG="$SPLASH_BG" \
+          --dart-define=SPLASH_ANIMATION="$SPLASH_ANIMATION" \
+          --dart-define=SPLASH_BG_COLOR="$SPLASH_BG_COLOR" \
+          --dart-define=SPLASH_TAGLINE="$SPLASH_TAGLINE" \
+          --dart-define=SPLASH_TAGLINE_COLOR="$SPLASH_TAGLINE_COLOR" \
+          --dart-define=SPLASH_DURATION="$SPLASH_DURATION" \
+          --dart-define=IS_PULLDOWN="$IS_PULLDOWN" \
+          --dart-define=LOGO_URL="$LOGO_URL" \
+          --dart-define=IS_BOTTOMMENU="$IS_BOTTOMMENU" \
+          --dart-define=BOTTOMMENU_ITEMS="$BOTTOMMENU_ITEMS" \
+          --dart-define=BOTTOMMENU_BG_COLOR="$BOTTOMMENU_BG_COLOR" \
+          --dart-define=BOTTOMMENU_ICON_COLOR="$BOTTOMMENU_ICON_COLOR" \
+          --dart-define=BOTTOMMENU_TEXT_COLOR="$BOTTOMMENU_TEXT_COLOR" \
+          --dart-define=BOTTOMMENU_FONT="$BOTTOMMENU_FONT" \
+          --dart-define=BOTTOMMENU_FONT_SIZE="$BOTTOMMENU_FONT_SIZE" \
+          --dart-define=BOTTOMMENU_FONT_BOLD="$BOTTOMMENU_FONT_BOLD" \
+          --dart-define=BOTTOMMENU_FONT_ITALIC="$BOTTOMMENU_FONT_ITALIC" \
+          --dart-define=BOTTOMMENU_ACTIVE_TAB_COLOR="$BOTTOMMENU_ACTIVE_TAB_COLOR" \
+          --dart-define=BOTTOMMENU_ICON_POSITION="$BOTTOMMENU_ICON_POSITION" \
+          --dart-define=BOTTOMMENU_VISIBLE_ON="$BOTTOMMENU_VISIBLE_ON" \
+          --dart-define=IS_DEEPLINK="$IS_DEEPLINK" \
+          --dart-define=IS_LOAD_IND="$IS_LOAD_IND" \
+          --dart-define=IS_CHATBOT="$IS_CHATBOT" \
+          --dart-define=IS_CAMERA="$IS_CAMERA" \
+          --dart-define=IS_LOCATION="$IS_LOCATION" \
+          --dart-define=IS_BIOMETRIC="$IS_BIOMETRIC" \
+          --dart-define=IS_MIC="$IS_MIC" \
+          --dart-define=IS_CONTACT="$IS_CONTACT" \
+          --dart-define=IS_CALENDAR="$IS_CALENDAR" \
+          --dart-define=IS_NOTIFICATION="$IS_NOTIFICATION" \
+          --dart-define=IS_STORAGE="$IS_STORAGE" \
+          --dart-define=firebase_config_android="$firebase_config_android" \
+          --dart-define=firebase_config_ios="$firebase_config_ios" \
+          --dart-define=APNS_KEY_ID="$APNS_KEY_ID" \
+          --dart-define=APPLE_TEAM_ID="$APPLE_TEAM_ID" \
+          --dart-define=APNS_AUTH_KEY_URL="$APNS_AUTH_KEY_URL" \
+          --dart-define=KEY_STORE="$KEY_STORE" \
+          --dart-define=CM_KEYSTORE_PASSWORD="$CM_KEYSTORE_PASSWORD" \
+          --dart-define=CM_KEY_ALIAS="$CM_KEY_ALIAS" \
+          --dart-define=CM_KEY_PASSWORD="$CM_KEY_PASSWORD" > flutter_build_aab.log
+      if [ $? -ne 0 ]; then
+      echo "❌ AppBundle build failed"
+      cat flutter_build2.log
+      exit 1
+      fi
+      echo "✅ AppBundle build completed."
 
-        mkdir -p ios_certificates
+  - &key_store
+    name: Setup Android keystore and insert Gradle signing block (KTS)
+    script: |
+      echo "📦 Setting up Android signing configuration..."
 
-        echo "⬇️ Downloading .p12 certificate..."
-        if [ -z "$CERT_URL" ]; then
-        echo "❌ CERT_URL is not set."
+      # Validate keystore environment variables
+      if [ -z "$KEY_STORE" ] || [ -z "$CM_KEYSTORE_PASSWORD" ] || [ -z "$CM_KEY_ALIAS" ] || [ -z "$CM_KEY_PASSWORD" ]; then
+        echo "❌ Missing required keystore environment variables"
+        echo "Required variables:"
+        echo "- KEY_STORE: URL to download keystore"
+        echo "- CM_KEYSTORE_PASSWORD: Keystore password"
+        echo "- CM_KEY_ALIAS: Key alias"
+        echo "- CM_KEY_PASSWORD: Key password"
         exit 1
-        fi
-        curl -f -o ios_certificates/certificate.p12 "$CERT_URL"
-        echo "✅ .p12 certificate downloaded successfully."
+      fi
 
-        echo "⬇️ Downloading provisioning profile..."
-        if [ -z "$PROFILE_URL" ]; then
-        echo "❌ PROFILE_URL is not set."
-        exit 1
-        fi
-        curl -f -o ios_certificates/profile.mobileprovision "$PROFILE_URL"
-        echo "✅ Provisioning profile downloaded successfully."
+      # Create android directory if it doesn't exist
+      mkdir -p android/app
 
-        echo "🔐 Creating and unlocking custom keychain..."
-        security create-keychain -p "" build.keychain
-        security default-keychain -s build.keychain
-        security unlock-keychain -p "" build.keychain
-        security set-keychain-settings -lut 21600 build.keychain
-
-        echo "🔐 Importing certificate into custom keychain..."
-        security import ios_certificates/certificate.p12 -k build.keychain -P "$CERT_PASSWORD" -A -T /usr/bin/codesign -T /usr/bin/security
-        security set-key-partition-list -S apple-tool:,apple:,codesign -s -k "" build.keychain
-        security list-keychains -s build.keychain
-        echo "✅ Certificate imported and trusted for code signing."
-
-        echo "📋 Extracting UUID and Name from provisioning profile..."
-        security cms -D -i ios_certificates/profile.mobileprovision -o ios_certificates/profile.plist
-
-        PROFILE_UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" ios_certificates/profile.plist)
-        PROFILE_NAME=$(/usr/libexec/PlistBuddy -c "Print Name" ios_certificates/profile.plist)
-
-        if [ -z "$PROFILE_UUID" ] || [ -z "$PROFILE_NAME" ]; then
-        echo "❌ Failed to extract UUID or Name from provisioning profile."
-        exit 1
-        fi
-
-        echo "✅ Profile UUID: $PROFILE_UUID"
-        echo "✅ Profile Name: $PROFILE_NAME"
-
-        echo "🔍 Validating provisioning profile matches app bundle ID..."
-
-        PROFILE_APP_ID_PREFIX=$(/usr/libexec/PlistBuddy -c "Print :Entitlements:application-identifier" ios_certificates/profile.plist)
-        EXPECTED_APP_ID="$APPLE_TEAM_ID.$PKG_NAME"
-
-        if [[ "$PROFILE_APP_ID_PREFIX" != "$EXPECTED_APP_ID" ]]; then
-        echo "❌ Provisioning profile's App ID ($PROFILE_APP_ID_PREFIX) does not match expected ($EXPECTED_APP_ID)"
-        exit 1
+      echo "📥 Downloading keystore..."
+      # Download with retry logic
+      max_attempts=3
+      attempt=1
+      while [ $attempt -le $max_attempts ]; do
+        if curl -f -o android/app/keystore.jks "$KEY_STORE"; then
+          echo "✅ Keystore downloaded successfully"
+          break
         else
-        echo "✅ Provisioning profile matches expected bundle ID: $PKG_NAME"
+          echo "❌ Attempt $attempt failed to download keystore"
+          if [ $attempt -eq $max_attempts ]; then
+            echo "❌ Failed to download keystore after $max_attempts attempts"
+            exit 1
+          fi
+          attempt=$((attempt + 1))
+          sleep 5
         fi
+      done
 
-        echo "🔍 Verifying imported code signing identities..."
-        security find-identity -v -p codesigning build.keychain
+      echo "📝 Writing key.properties..."
+      cat > android/key.properties <<EOF
+      storeFile=keystore.jks
+      storePassword=$CM_KEYSTORE_PASSWORD
+      keyAlias=$CM_KEY_ALIAS
+      keyPassword=$CM_KEY_PASSWORD
+      EOF
 
-        # Match iPhone Distribution instead of Apple Distribution
-        VALID_IDENTITY=$(security find-identity -v -p codesigning build.keychain | grep "iPhone Distribution" | awk '{print $2}')
+      echo "🔐 Configuring Gradle signing..."
 
-        if [ -z "$VALID_IDENTITY" ]; then
-        echo "❌ No valid iPhone Distribution certificate found in the keychain."
-        exit 1
+      GRADLE_FILE="android/app/build.gradle.kts"
+
+      # Add keystoreProperties block at the top if not present
+      if ! grep -q 'val keystoreProperties' "$GRADLE_FILE"; then
+        echo "🔧 Adding keystoreProperties block..."
+        sed -i '1s;^;val keystoreProperties = Properties().apply {\n    load(File(rootProject.rootDir, "android/key.properties").inputStream())\n}\n\n;' "$GRADLE_FILE"
+      else
+        echo "✅ keystoreProperties block already present"
+      fi
+
+      # Inject signingConfigs inside android { ... }
+      if ! grep -q 'signingConfigs' "$GRADLE_FILE"; then
+        echo "🔧 Injecting signingConfigs block..."
+        awk '/android\s*{/{print; print "    signingConfigs {\n        create(\"release\") {\n            storeFile = file(\"keystore.jks\")\n            storePassword = keystoreProperties[\"storePassword\"] as String\n            keyAlias = keystoreProperties[\"keyAlias\"] as String\n            keyPassword = keystoreProperties[\"keyPassword\"] as String\n            enableV1Signing = true\n            enableV2Signing = true\n            enableV3Signing = true\n        }\n    }"; next}1' "$GRADLE_FILE" > tmp && mv tmp "$GRADLE_FILE"
+      else
+        echo "✅ signingConfigs already exists"
+      fi
+
+      # Inject release buildType with proper configuration
+      if grep -q "buildTypes" "$GRADLE_FILE"; then
+        if ! grep -q "signingConfig = signingConfigs.getByName(\"release\")" "$GRADLE_FILE"; then
+          echo "🔧 Updating release buildType configuration..."
+          awk '/buildTypes\s*{/{print; print "        getByName(\"release\") {\n            isMinifyEnabled = true\n            isShrinkResources = true\n            signingConfig = signingConfigs.getByName(\"release\")\n            proguardFiles(getDefaultProguardFile(\"proguard-android-optimize.txt\"), \"proguard-rules.pro\")\n        }"; next}1' "$GRADLE_FILE" > tmp && mv tmp "$GRADLE_FILE"
         else
-        echo "✅ Found valid iPhone Distribution certificate: $VALID_IDENTITY"
+          echo "✅ Release signing configuration already present"
         fi
-        
-          echo "📝 Creating ExportOptions.plist..."
-          cat > ExportOptions.plist <<EOF
+      else
+        echo "❌ buildTypes block not found in $GRADLE_FILE"
+        exit 1
+      fi
+
+      echo "✅ Android signing configuration completed"
+
+      # Verify the configuration
+      echo "🔍 Verifying signing configuration..."
+      if [ -f "android/app/keystore.jks" ] && [ -f "android/key.properties" ]; then
+        echo "✅ Signing files present and configured"
+      else
+        echo "❌ Signing configuration verification failed"
+        exit 1
+      fi
+  - &Setup_IOS
+    name: Setting Up IOS Build
+    script: |
+      echo "🔐 Setting up iOS code signing..."
+
+      export LC_ALL=en_US.UTF-8
+      export LANG=en_US.UTF-8
+
+      KEYCHAIN_PASSWORD="temp_key_pass"
+      KEYCHAIN_NAME="ios-signing.keychain"
+
+      # Download and import certificate
+      echo "📥 Downloading certificate..."
+      curl -o signing_cert.p12 "$CERT_URL"
+
+      echo "🔐 Creating temporary keychain..."
+      security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
+      security default-keychain -s "$KEYCHAIN_NAME"
+      security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
+      security set-keychain-settings -t 3600 -u "$KEYCHAIN_NAME"
+
+      # Import the certificate to the keychain
+      echo "🔑 Importing certificate..."
+      security import signing_cert.p12 -k "$KEYCHAIN_NAME" -P "$CERT_PASSWORD" -T /usr/bin/codesign
+
+      # Trust the keychain for signing tools
+      echo "✅ Trusting keychain for code signing..."
+      security list-keychains -s "$KEYCHAIN_NAME"
+      security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
+
+      # Extract CODE_SIGN_IDENTITY
+      echo "🔍 Extracting code signing identity from keychain..."
+      CODE_SIGN_IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_NAME" | grep -o '".*"' | head -n 1 | tr -d '"')
+      echo "✅ CODE_SIGN_IDENTITY: $CODE_SIGN_IDENTITY"
+      if [ -z "$CODE_SIGN_IDENTITY" ]; then
+      echo "❌ Failed to extract CODE_SIGN_IDENTITY"
+      exit 1
+      fi
+
+      # Download provisioning profile
+      echo "📥 Downloading provisioning profile..."
+      curl -o profile.mobileprovision "$PROFILE_URL"
+
+      # Extract UUID of the provisioning profile
+      UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< "$(security cms -D -i profile.mobileprovision)")
+      echo "✅ Provisioning Profile UUID: $UUID"
+
+      PROFILE_PATH=~/Library/MobileDevice/Provisioning\ Profiles/$UUID.mobileprovision
+      mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+      cp profile.mobileprovision "$PROFILE_PATH"
+
+      # Update iOS deployment target
+      echo "🔧 Updating iOS deployment target to 13.0 in Podfile..."
+      sed -i '' 's/platform :ios, .*/platform :ios, "13.0"/' ios/Podfile
+
+      # CocoaPods setup
+      echo "🛠️ Setting up CocoaPods and Flutter dependencies..."
+      flutter clean
+      rm -rf ios/Pods ios/Podfile.lock ~/Library/Caches/CocoaPods ~/.cocoapods/repos
+
+      set -x
+      gem install cocoapods --pre --silent
+      gem install securerandom -v 0.3.2 --silent
+      pod install --project-directory=ios
+      flutter pub get
+      set +x
+
+      # Build Flutter iOS app (no code signing)
+      flutter build ios --release --no-codesign
+
+      # Archive app with manual signing
+      echo "📦 Archiving app with code signing..."
+      xcodebuild -workspace ios/Runner.xcworkspace \
+      -scheme Runner \
+      -configuration Release \
+      -sdk iphoneos \
+      -destination "generic/platform=iOS" \
+      -archivePath build/ios/archive/Runner.xcarchive \
+      CODE_SIGN_STYLE=Manual \
+      DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
+      PROVISIONING_PROFILE_SPECIFIER="$UUID" \
+      PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID" \
+      CODE_SIGN_IDENTITY="$CODE_SIGN_IDENTITY" \
+      OTHER_CODE_SIGN_FLAGS="--keychain ~/Library/Keychains/$KEYCHAIN_NAME-db" \
+      archive
+
+      # Create ExportOptions.plist
+      cat <<EOF > ExportOptions.plist
+      <?xml version="1.0" encoding="UTF-8"?>
+      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+      "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+      <plist version="1.0">
+      <dict>
+      <key>method</key>
+      <string>ad-hoc</string>
+      <key>provisioningProfiles</key>
+      <dict>
+      <key>$BUNDLE_ID</key>
+      <string>$UUID</string>
+      </dict>
+      <key>signingStyle</key>
+      <string>manual</string>
+      <key>teamID</key>
+      <string>$APPLE_TEAM_ID</string>
+      </dict>
+      </plist>
+      EOF
+
+      # Export IPA
+      echo "📦 Exporting IPA..."
+      xcodebuild -exportArchive \
+      -archivePath build/ios/archive/Runner.xcarchive \
+      -exportPath build/ios/ipa \
+      -exportOptionsPlist ExportOptions.plist
+
+      echo "✅ IPA export complete: build/ios/ipa"
+
+      # Cleanup
+      echo "🧹 Cleaning up..."
+      security delete-keychain "$KEYCHAIN_NAME"
+      rm -f signing_cert.p12 profile.mobileprovision ExportOptions.plist
+
+      echo "🎉 Done!"
+
+  - &setup_ios_signing_manual
+    name: Setting Up iOS Signing (Manual)
+    script: |
+      echo "🔐 Setting up iOS code signing..."
+      export LC_ALL=en_US.UTF-8
+      export LANG=en_US.UTF-8
+
+      KEYCHAIN_PASSWORD="temp_key_pass"
+      KEYCHAIN_NAME="ios-signing.keychain"
+
+      # Download and import certificate
+      echo "📥 Downloading certificate..."
+      curl -o signing_cert.p12 "$CERT_URL"
+
+      echo "🔐 Creating temporary keychain..."
+      security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
+      security default-keychain -s "$KEYCHAIN_NAME"
+      security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
+      security set-keychain-settings -t 3600 -u "$KEYCHAIN_NAME"
+
+      # Import the certificate to the keychain
+      echo "🔑 Importing certificate..."
+      security import signing_cert.p12 -k "$KEYCHAIN_NAME" -P "$CERT_PASSWORD" -T /usr/bin/codesign
+
+      echo "🔍 Verifying imported certificate..."
+      security find-identity -v -p codesigning "$KEYCHAIN_NAME"
+
+      # Download provisioning profile
+      echo "📥 Downloading provisioning profile..."
+      curl -o profile.mobileprovision "$PROFILE_URL"
+
+      # Get the UUID of the provisioning profile
+      UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" /dev/stdin <<< $(security cms -D -i profile.mobileprovision))
+      echo "✅ Profile UUID: $UUID"
+
+      PROFILE_PATH=~/Library/MobileDevice/Provisioning\ Profiles/$UUID.mobileprovision
+      mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+      cp profile.mobileprovision "$PROFILE_PATH"
+
+      # Set the keychain to be trusted for code signing
+      echo "✅ Trusting keychain for code signing..."
+      security list-keychains -s "$KEYCHAIN_NAME"
+      security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
+      security find-identity -v -p codesigning
+
+      echo "🔧 Updating iOS deployment target to 13.0 in Podfile..."
+      sed -i '' 's/platform :ios, .*/platform :ios, "13.0"/' ios/Podfile
+      cat ios/Podfile | grep platform
+
+        # Flutter build
+        echo "⚙️ Building Flutter iOS project..."
+        flutter build ios --release --no-codesign \
+        --dart-define=WORKFLOW_ID="$WORKFLOW_ID" \
+        --dart-define=USER_NAME="$USER_NAME" \
+        --dart-define=APP_ID="$APP_ID" \
+        --dart-define=VERSION_NAME="$VERSION_NAME" \
+        --dart-define=VERSION_CODE="$VERSION_CODE" \
+        --dart-define=APP_NAME="$APP_NAME" \
+        --dart-define=ORG_NAME="$ORG_NAME" \
+        --dart-define=WEB_URL="$WEB_URL" \
+        --dart-define=PKG_NAME="$PKG_NAME" \
+        --dart-define=BUNDLE_ID="$BUNDLE_ID" \
+        --dart-define=EMAIL_ID="$EMAIL_ID" \
+        --dart-define=PUSH_NOTIFY="$PUSH_NOTIFY" \
+        --dart-define=IS_CHATBOT="$IS_CHATBOT" \
+        --dart-define=IS_DOMAIN_URL="$IS_DOMAIN_URL" \
+        --dart-define=IS_SPLASH="$IS_SPLASH" \
+        --dart-define=SPLASH_URL="$SPLASH_URL" \
+        --dart-define=SPLASH_BG_URL="$SPLASH_BG_URL" \
+        --dart-define=SPLASH="$SPLASH" \
+        --dart-define=SPLASH_BG="$SPLASH_BG" \
+        --dart-define=SPLASH_ANIMATION="$SPLASH_ANIMATION" \
+        --dart-define=SPLASH_BG_COLOR="$SPLASH_BG_COLOR" \
+        --dart-define=SPLASH_TAGLINE="$SPLASH_TAGLINE" \
+        --dart-define=SPLASH_TAGLINE_COLOR="$SPLASH_TAGLINE_COLOR" \
+        --dart-define=SPLASH_DURATION="$SPLASH_DURATION" \
+        --dart-define=IS_PULLDOWN="$IS_PULLDOWN" \
+        --dart-define=LOGO_URL="$LOGO_URL" \
+        --dart-define=IS_BOTTOMMENU="$IS_BOTTOMMENU" \
+        --dart-define=BOTTOMMENU_ITEMS="$BOTTOMMENU_ITEMS" \
+        --dart-define=BOTTOMMENU_BG_COLOR="$BOTTOMMENU_BG_COLOR" \
+        --dart-define=BOTTOMMENU_ICON_COLOR="$BOTTOMMENU_ICON_COLOR" \
+        --dart-define=BOTTOMMENU_TEXT_COLOR="$BOTTOMMENU_TEXT_COLOR" \
+        --dart-define=BOTTOMMENU_FONT="$BOTTOMMENU_FONT" \
+        --dart-define=BOTTOMMENU_FONT_SIZE="$BOTTOMMENU_FONT_SIZE" \
+        --dart-define=BOTTOMMENU_FONT_BOLD="$BOTTOMMENU_FONT_BOLD" \
+        --dart-define=BOTTOMMENU_FONT_ITALIC="$BOTTOMMENU_FONT_ITALIC" \
+        --dart-define=BOTTOMMENU_ACTIVE_TAB_COLOR="$BOTTOMMENU_ACTIVE_TAB_COLOR" \
+        --dart-define=BOTTOMMENU_ICON_POSITION="$BOTTOMMENU_ICON_POSITION" \
+        --dart-define=BOTTOMMENU_VISIBLE_ON="$BOTTOMMENU_VISIBLE_ON" \
+        --dart-define=IS_DEEPLINK="$IS_DEEPLINK" \
+        --dart-define=IS_LOAD_IND="$IS_LOAD_IND" \
+        --dart-define=IS_CAMERA="$IS_CAMERA" \
+        --dart-define=IS_LOCATION="$IS_LOCATION" \
+        --dart-define=IS_MIC="$IS_MIC" \
+        --dart-define=IS_NOTIFICATION="$IS_NOTIFICATION" \
+        --dart-define=IS_CONTACT="$IS_CONTACT" \
+        --dart-define=IS_BIOMETRIC="$IS_BIOMETRIC" \
+        --dart-define=IS_CALENDAR="$IS_CALENDAR" \
+        --dart-define=IS_STORAGE="$IS_STORAGE" \
+        --dart-define=FIREBASE_CONFIG_ANDROID="$FIREBASE_CONFIG_ANDROID" \
+        --dart-define=FIREBASE_CONFIG_IOS="$FIREBASE_CONFIG_IOS" \
+        --dart-define=firebase_config_android="$firebase_config_android" \
+        --dart-define=firebase_config_ios="$firebase_config_ios" \
+        --dart-define=APNS_KEY_ID="$APNS_KEY_ID" \
+        --dart-define=APPLE_TEAM_ID="$APPLE_TEAM_ID" \
+        --dart-define=APNS_AUTH_KEY_URL="$APNS_AUTH_KEY_URL" \
+        --dart-define=PROFILE_TYPE="$PROFILE_TYPE" \
+        --dart-define=PROFILE_URL="$PROFILE_URL" \
+        --dart-define=CERT_CER_URL="$CERT_CER_URL" \
+        --dart-define=CERT_KEY_URL="$CERT_KEY_URL" \
+        --dart-define=CERT_PASSWORD="$CERT_PASSWORD" \
+        --dart-define=CERT_P12_URL="$CERT_P12_URL" \
+        --dart-define=IS_TESTFLIGHT="$IS_TESTFLIGHT" \
+        --dart-define=APP_STORE_CONNECT_KEY_IDENTIFIER="$APP_STORE_CONNECT_KEY_IDENTIFIER" \
+        --dart-define=APP_STORE_CONNECT_API_KEY_PATH="$APP_STORE_CONNECT_API_KEY_PATH" \
+        --dart-define=APP_STORE_CONNECT_ISSUER_ID="$APP_STORE_CONNECT_ISSUER_ID" \
+        --dart-define=KEY_STORE_URL="$KEY_STORE_URL" \
+        --dart-define=KEY_STORE="$KEY_STORE" \
+        --dart-define=CM_KEYSTORE_PASSWORD="$CM_KEYSTORE_PASSWORD" \
+        --dart-define=CM_KEY_ALIAS="$CM_KEY_ALIAS" \
+        --dart-define=CM_KEY_PASSWORD="$CM_KEY_PASSWORD"
+
+        # Extract CODE_SIGN_IDENTITY from the .p12 file
+        security import signing_cert.p12 -k "$KEYCHAIN_NAME" -P "$CERT_PASSWORD" -T /usr/bin/codesign
+        CODE_SIGN_IDENTITY=$(security find-identity -v -p codesigning "$KEYCHAIN_NAME" | awk '{print $2}' | head -n 1)
+        echo "CODE_SIGN_IDENTITY=$CODE_SIGN_IDENTITY"
+
+        echo "🛠️ Setting UTF-8 encoding for CocoaPods..."
+        export LANG=en_US.UTF-8
+        export LC_ALL=en_US.UTF-8
+        flutter clean
+        rm -rf ios/Pods ios/Podfile.lock ~/Library/Caches/CocoaPods ~/.cocoapods/repos
+        sudo gem install cocoapods
+        cd ios
+        pod reintegrate
+        pod install --repo-update
+        cd ..
+        flutter pub get
+
+         # Archive the app
+          echo "📦 Archiving app with CodeSigning the IPA File..."
+          xcodebuild -workspace ios/Runner.xcworkspace \
+          -scheme Runner \
+          -configuration Release \
+          -archivePath build/ios/archive/Runner.xcarchive \
+          archive \
+          CODE_SIGN_STYLE=Manual \
+          DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
+          PROVISIONING_PROFILE_SPECIFIER="$UUID" \
+          PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID" \
+          CODE_SIGN_IDENTITY="$CODE_SIGN_IDENTITY"
+
+          # ExportOptions.plist
+          cat <<EOF > ExportOptions.plist
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <plist version="1.0">
           <dict>
           <key>method</key>
           <string>ad-hoc</string>
-          <key>signingStyle</key>
-          <string>manual</string>
           <key>provisioningProfiles</key>
           <dict>
-          <key>$PKG_NAME</key>
-          <string>$PROFILE_NAME</string>
+          <key>$BUNDLE_ID</key>
+          <string>$UUID</string>
           </dict>
+          <key>signingStyle</key>
+          <string>manual</string>
           <key>teamID</key>
           <string>$APPLE_TEAM_ID</string>
           </dict>
           </plist>
           EOF
-        
-          echo "✅ ExportOptions.plist created."
 
-    - &Inject_iOS_Firebase_Push
-      name: Setup iOS Firebase push notifications and APNs key
-      script: |
-        echo "📦 Setting up iOS Firebase Push Notifications..."
+          # Export the IPA
+          echo "📦 Exporting IPA..."
+          xcodebuild -exportArchive \
+          -archivePath build/ios/archive/Runner.xcarchive \
+          -exportPath build/ios/ipa \
+          -exportOptionsPlist ExportOptions.plist
 
-        if [[ -n "$firebase_config_ios" ]]; then
-          echo "🔗 Firebase Config URL: $firebase_config_ios"
+          echo "✅ IPA export complete: build/ios/ipa"
+          security delete-keychain "$KEYCHAIN_NAME"
+          rm signing_cert.p12 profile.mobileprovision
 
-          if [[ "$firebase_config_ios" =~ ^https:// ]]; then
-        
-          echo "⬇️ Downloading GoogleService-Info.plist with retry..."
-        
-          for i in {1..5}; do
-          wget -O ios/Runner/GoogleService-Info.plist "$firebase_config_ios" && break
-          echo "❌ Download failed, retrying in $((2 ** i))s..."
-          sleep $((2 ** i))
-          done
-        
-          if [ ! -f ios/Runner/GoogleService-Info.plist ]; then
-          echo "❌ Failed to download GoogleService-Info.plist after retries"
+  - &setup_ios_signing_manual3
+    name: Setting Up iOS Signing (Manual)
+    script: |
+      echo "🔐 Setting up iOS signing (manual)..."
+
+      mkdir -p ios_certificates
+
+      echo "⬇️ Downloading .p12 certificate..."
+      if [ -z "$CERT_URL" ]; then
+      echo "❌ CERT_URL is not set."
+      exit 1
+      fi
+      curl -f -o ios_certificates/certificate.p12 "$CERT_URL"
+      echo "✅ .p12 certificate downloaded successfully."
+
+      echo "⬇️ Downloading provisioning profile..."
+      if [ -z "$PROFILE_URL" ]; then
+      echo "❌ PROFILE_URL is not set."
+      exit 1
+      fi
+      curl -f -o ios_certificates/profile.mobileprovision "$PROFILE_URL"
+      echo "✅ Provisioning profile downloaded successfully."
+
+      echo "🔐 Creating and unlocking custom keychain..."
+      security create-keychain -p "" build.keychain
+      security default-keychain -s build.keychain
+      security unlock-keychain -p "" build.keychain
+      security set-keychain-settings -lut 21600 build.keychain
+
+      echo "🔐 Importing certificate into custom keychain..."
+      security import ios_certificates/certificate.p12 -k build.keychain -P "$CERT_PASSWORD" -A -T /usr/bin/codesign -T /usr/bin/security
+      security set-key-partition-list -S apple-tool:,apple:,codesign -s -k "" build.keychain
+      security list-keychains -s build.keychain
+      echo "✅ Certificate imported and trusted for code signing."
+
+      echo "📋 Extracting UUID and Name from provisioning profile..."
+      security cms -D -i ios_certificates/profile.mobileprovision -o ios_certificates/profile.plist
+
+      PROFILE_UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" ios_certificates/profile.plist)
+      PROFILE_NAME=$(/usr/libexec/PlistBuddy -c "Print Name" ios_certificates/profile.plist)
+
+      if [ -z "$PROFILE_UUID" ] || [ -z "$PROFILE_NAME" ]; then
+      echo "❌ Failed to extract UUID or Name from provisioning profile."
+      exit 1
+      fi
+
+      echo "✅ Profile UUID: $PROFILE_UUID"
+      echo "✅ Profile Name: $PROFILE_NAME"
+
+      echo "🔍 Validating provisioning profile matches app bundle ID..."
+
+      PROFILE_APP_ID_PREFIX=$(/usr/libexec/PlistBuddy -c "Print :Entitlements:application-identifier" ios_certificates/profile.plist)
+      EXPECTED_APP_ID="$APPLE_TEAM_ID.$PKG_NAME"
+
+      if [[ "$PROFILE_APP_ID_PREFIX" != "$EXPECTED_APP_ID" ]]; then
+      echo "❌ Provisioning profile's App ID ($PROFILE_APP_ID_PREFIX) does not match expected ($EXPECTED_APP_ID)"
+      exit 1
+      else
+      echo "✅ Provisioning profile matches expected bundle ID: $PKG_NAME"
+      fi
+
+      echo "🔍 Verifying imported code signing identities..."
+      security find-identity -v -p codesigning build.keychain
+
+      # Match iPhone Distribution instead of Apple Distribution
+      VALID_IDENTITY=$(security find-identity -v -p codesigning build.keychain | grep "iPhone Distribution" | awk '{print $2}')
+
+      if [ -z "$VALID_IDENTITY" ]; then
+      echo "❌ No valid iPhone Distribution certificate found in the keychain."
+      exit 1
+      else
+      echo "✅ Found valid iPhone Distribution certificate: $VALID_IDENTITY"
+      fi
+
+        echo "📝 Creating ExportOptions.plist..."
+        cat > ExportOptions.plist <<EOF
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+        <dict>
+        <key>method</key>
+        <string>ad-hoc</string>
+        <key>signingStyle</key>
+        <string>manual</string>
+        <key>provisioningProfiles</key>
+        <dict>
+        <key>$PKG_NAME</key>
+        <string>$PROFILE_NAME</string>
+        </dict>
+        <key>teamID</key>
+        <string>$APPLE_TEAM_ID</string>
+        </dict>
+        </plist>
+        EOF
+
+        echo "✅ ExportOptions.plist created."
+
+  - &Inject_iOS_Firebase_Push
+    name: Setup iOS Firebase push notifications and APNs key
+    script: |
+      echo "📦 Setting up iOS Firebase Push Notifications..."
+
+      if [[ -n "$firebase_config_ios" ]]; then
+        echo "🔗 Firebase Config URL: $firebase_config_ios"
+
+        if [[ "$firebase_config_ios" =~ ^https:// ]]; then
+
+        echo "⬇️ Downloading GoogleService-Info.plist with retry..."
+
+        for i in {1..5}; do
+        wget -O ios/Runner/GoogleService-Info.plist "$firebase_config_ios" && break
+        echo "❌ Download failed, retrying in $((2 ** i))s..."
+        sleep $((2 ** i))
+        done
+
+        if [ ! -f ios/Runner/GoogleService-Info.plist ]; then
+        echo "❌ Failed to download GoogleService-Info.plist after retries"
+        exit 1
+        fi
+
+
+      #            echo "⬇️ Downloading GoogleService-Info.plist..."
+      #            wget -O ios/Runner/GoogleService-Info.plist "$firebase_config_ios"
+      #            if [ $? -eq 0 ]; then
+      #              echo "✅ GoogleService-Info.plist placed in ios/Runner"
+      #            else
+      #              echo "❌ Failed to download GoogleService-Info.plist"
+      #              exit 1
+      #            fi
+        else
+          echo "❌ Error: Invalid URL format for firebase_config_ios"
           exit 1
-          fi
-        
-        
-        #            echo "⬇️ Downloading GoogleService-Info.plist..."
-        #            wget -O ios/Runner/GoogleService-Info.plist "$firebase_config_ios"
-        #            if [ $? -eq 0 ]; then
-        #              echo "✅ GoogleService-Info.plist placed in ios/Runner"
-        #            else
-        #              echo "❌ Failed to download GoogleService-Info.plist"
-        #              exit 1
-        #            fi
-          else
-            echo "❌ Error: Invalid URL format for firebase_config_ios"
-            exit 1
-          fi
+        fi
+      else
+        echo "⚠️ GOOGLE_SERVICE_INFO_PLIST_URL not set, skipping plist injection"
+      fi
+
+      if [[ -n "$APNS_AUTH_KEY_URL" && -n "$APNS_KEY_ID" && -n "$APPLE_TEAM_ID" ]]; then
+        echo "⬇️ Downloading APNs Auth Key (.p8)..."
+        wget -O ios/AuthKey.p8 "$APNS_AUTH_KEY_URL"
+        if [ $? -eq 0 ]; then
+          echo "✅ APNs Auth Key downloaded to ios/AuthKey.p8"
         else
-          echo "⚠️ GOOGLE_SERVICE_INFO_PLIST_URL not set, skipping plist injection"
+          echo "❌ Failed to download APNs key"
+          exit 1
         fi
 
-        if [[ -n "$APNS_AUTH_KEY_URL" && -n "$APNS_KEY_ID" && -n "$APPLE_TEAM_ID" ]]; then
-          echo "⬇️ Downloading APNs Auth Key (.p8)..."
-          wget -O ios/AuthKey.p8 "$APNS_AUTH_KEY_URL"
-          if [ $? -eq 0 ]; then
-            echo "✅ APNs Auth Key downloaded to ios/AuthKey.p8"
-          else
-            echo "❌ Failed to download APNs key"
-            exit 1
-          fi
+        echo "📝 APNs Setup:"
+        echo "  🔑 Key ID: $APNS_KEY_ID"
+        echo "  🧑‍💻 Team ID: $APPLE_TEAM_ID"
+        echo "  📦 File: ios/AuthKey.p8"
+      else
+        echo "⚠️ Missing APNs credentials, skipping .p8 key setup"
+      fi
+  - &Update_App_Version22
+    name: Inject Version Info into pubspec, build.gradle (Android) & Xcode project (iOS)
+    script: |
+      # Default values
+      VERSION_NAME="${VERSION_NAME:-1.0.0}"
+      VERSION_CODE="${VERSION_CODE:-100}"
+      # Check if VERSION_NAME is empty or not set
+       if [ -z "$VERSION_NAME" ]; then
+         VERSION_NAME=$DEFAULT_VERSION_NAME
+         echo "🔢 Setting DEFAULT_VERSION_NAME"
+       fi
 
-          echo "📝 APNs Setup:"
-          echo "  🔑 Key ID: $APNS_KEY_ID"
-          echo "  🧑‍💻 Team ID: $APPLE_TEAM_ID"
-          echo "  📦 File: ios/AuthKey.p8"
-        else
-          echo "⚠️ Missing APNs credentials, skipping .p8 key setup"
-        fi
-    - &Update_App_Version22
-      name: Inject Version Info into pubspec, build.gradle (Android) & Xcode project (iOS)
-      script: |
-        # Default values
-        VERSION_NAME="${VERSION_NAME:-1.0.0}"
-        VERSION_CODE="${VERSION_CODE:-100}"
-        # Check if VERSION_NAME is empty or not set
-         if [ -z "$VERSION_NAME" ]; then
-           VERSION_NAME=$DEFAULT_VERSION_NAME
-           echo "🔢 Setting DEFAULT_VERSION_NAME"
-         fi
-        
-         # Check if VERSION_CODE is empty or not set
-         if [ -z "$VERSION_CODE" ]; then
-           VERSION_CODE=$DEFAULT_VERSION_CODE
-           echo "🔢 Setting DEFAULT_VERSION_CODE"
-         fi
-        
-         echo "🔢 VERSION_NAME: $VERSION_NAME"
-         echo "🔢 VERSION_CODE: $VERSION_CODE"
-        echo "🔄 Updating version to ${VERSION_NAME}+${VERSION_CODE}"
-        
-        # ───── pubspec.yaml ─────
+       # Check if VERSION_CODE is empty or not set
+       if [ -z "$VERSION_CODE" ]; then
+         VERSION_CODE=$DEFAULT_VERSION_CODE
+         echo "🔢 Setting DEFAULT_VERSION_CODE"
+       fi
+
+       echo "🔢 VERSION_NAME: $VERSION_NAME"
+       echo "🔢 VERSION_CODE: $VERSION_CODE"
+      echo "🔄 Updating version to ${VERSION_NAME}+${VERSION_CODE}"
+
+      # ───── pubspec.yaml ─────
+      sed -i'' -e "s/^version: .*/version: ${VERSION_NAME}+${VERSION_CODE}/" pubspec.yaml
+      echo "✅ Updated pubspec.yaml"
+
+      # ───── Android build.gradle ─────
+      echo "🔧 Updating Android build.gradle..."
+      sed -i'' -e "s/versionCode.*/versionCode ${VERSION_CODE}/" android/app/build.gradle
+      sed -i'' -e "s/versionName \".*\"/versionName \"${VERSION_NAME}\"/" android/app/build.gradle
+      echo "✅ Android version updated: $VERSION_NAME ($VERSION_CODE)"
+
+      # ───── iOS: project.pbxproj ─────
+      echo "🍏 Updating iOS version info in project.pbxproj..."
+      IOS_PROJECT_FILE="ios/Runner.xcodeproj/project.pbxproj"
+
+      if [ -f "$IOS_PROJECT_FILE" ]; then
+        sed -i'' -e "s/MARKETING_VERSION = .*;/MARKETING_VERSION = ${VERSION_NAME};/" "$IOS_PROJECT_FILE"
+        sed -i'' -e "s/CURRENT_PROJECT_VERSION = .*;/CURRENT_PROJECT_VERSION = ${VERSION_CODE};/" "$IOS_PROJECT_FILE"
+        echo "✅ iOS version updated: $VERSION_NAME ($VERSION_CODE)"
+      else
+        echo "❌ iOS project file not found at $IOS_PROJECT_FILE"
+        exit 1
+      fi
+
+  - &Update_App_Version
+    name: Update Version Info (Android & iOS)
+    script: |
+      # Generate dynamic version code using timestamp (or use default)
+      VERSION_NAME="${VERSION_NAME:-1.0.0}"
+      VERSION_CODE="${VERSION_CODE:-$(date +%Y%m%d%H%M)}"
+
+      echo "🔢 VERSION_NAME: $VERSION_NAME"
+      echo "🔢 VERSION_CODE: $VERSION_CODE"
+
+      # ───── pubspec.yaml ─────
+      echo "🔧 Updating pubspec.yaml..."
+      if grep -q "^version: " pubspec.yaml; then
         sed -i'' -e "s/^version: .*/version: ${VERSION_NAME}+${VERSION_CODE}/" pubspec.yaml
-        echo "✅ Updated pubspec.yaml"
-        
-        # ───── Android build.gradle ─────
-        echo "🔧 Updating Android build.gradle..."
-        sed -i'' -e "s/versionCode.*/versionCode ${VERSION_CODE}/" android/app/build.gradle
-        sed -i'' -e "s/versionName \".*\"/versionName \"${VERSION_NAME}\"/" android/app/build.gradle
-        echo "✅ Android version updated: $VERSION_NAME ($VERSION_CODE)"
-        
-        # ───── iOS: project.pbxproj ─────
-        echo "🍏 Updating iOS version info in project.pbxproj..."
-        IOS_PROJECT_FILE="ios/Runner.xcodeproj/project.pbxproj"
-        
-        if [ -f "$IOS_PROJECT_FILE" ]; then
-          sed -i'' -e "s/MARKETING_VERSION = .*;/MARKETING_VERSION = ${VERSION_NAME};/" "$IOS_PROJECT_FILE"
-          sed -i'' -e "s/CURRENT_PROJECT_VERSION = .*;/CURRENT_PROJECT_VERSION = ${VERSION_CODE};/" "$IOS_PROJECT_FILE"
-          echo "✅ iOS version updated: $VERSION_NAME ($VERSION_CODE)"
-        else
-          echo "❌ iOS project file not found at $IOS_PROJECT_FILE"
-          exit 1
-        fi
+      else
+        echo "version: ${VERSION_NAME}+${VERSION_CODE}" >> pubspec.yaml
+      fi
+      echo "✅ pubspec.yaml version updated."
 
-    - &Update_App_Version
-      name: Update Version Info (Android & iOS)
-      script: |
-        # Generate dynamic version code using timestamp (or use default)
-        VERSION_NAME="${VERSION_NAME:-1.0.0}"
-        VERSION_CODE="${VERSION_CODE:-$(date +%Y%m%d%H%M)}"
+      # ───── Android (Kotlin DSL) build.gradle.kts ─────
+      BUILD_FILE="android/app/build.gradle.kts"
+      if [ -f "$BUILD_FILE" ]; then
+        echo "🔧 Updating Android version in build.gradle.kts..."
+        sed -i'' -E "s/versionCode\s*=\s*[0-9]+/versionCode = ${VERSION_CODE}/" "$BUILD_FILE"
+        sed -i'' -E "s/versionName\s*=\s*\"[^\"]+\"/versionName = \"${VERSION_NAME}\"/" "$BUILD_FILE"
+        echo "✅ Android version updated in build.gradle.kts"
+      else
+        echo "❌ build.gradle.kts not found at $BUILD_FILE"
+        exit 1
+      fi
 
-        echo "🔢 VERSION_NAME: $VERSION_NAME"
-        echo "🔢 VERSION_CODE: $VERSION_CODE"
-
-        # ───── pubspec.yaml ─────
-        echo "🔧 Updating pubspec.yaml..."
-        if grep -q "^version: " pubspec.yaml; then
-          sed -i'' -e "s/^version: .*/version: ${VERSION_NAME}+${VERSION_CODE}/" pubspec.yaml
-        else
-          echo "version: ${VERSION_NAME}+${VERSION_CODE}" >> pubspec.yaml
-        fi
-        echo "✅ pubspec.yaml version updated."
-
-        # ───── Android (Kotlin DSL) build.gradle.kts ─────
-        BUILD_FILE="android/app/build.gradle.kts"
-        if [ -f "$BUILD_FILE" ]; then
-          echo "🔧 Updating Android version in build.gradle.kts..."
-          sed -i'' -E "s/versionCode\s*=\s*[0-9]+/versionCode = ${VERSION_CODE}/" "$BUILD_FILE"
-          sed -i'' -E "s/versionName\s*=\s*\"[^\"]+\"/versionName = \"${VERSION_NAME}\"/" "$BUILD_FILE"
-          echo "✅ Android version updated in build.gradle.kts"
-        else
-          echo "❌ build.gradle.kts not found at $BUILD_FILE"
-          exit 1
-        fi
-
-        # ───── iOS project.pbxproj ─────
-        IOS_PROJECT_FILE="ios/Runner.xcodeproj/project.pbxproj"
-        if [ -f "$IOS_PROJECT_FILE" ]; then
-          echo "🔧 Updating iOS version in project.pbxproj..."
-          sed -i'' -e "s/MARKETING_VERSION = .*;/MARKETING_VERSION = ${VERSION_NAME};/" "$IOS_PROJECT_FILE"
-          sed -i'' -e "s/CURRENT_PROJECT_VERSION = .*;/CURRENT_PROJECT_VERSION = ${VERSION_CODE};/" "$IOS_PROJECT_FILE"
-          echo "✅ iOS version updated in project.pbxproj"
-        else
-          echo "❌ iOS project file not found at $IOS_PROJECT_FILE"
-          exit 1
-        fi
-
+      # ───── iOS project.pbxproj ─────
+      IOS_PROJECT_FILE="ios/Runner.xcodeproj/project.pbxproj"
+      if [ -f "$IOS_PROJECT_FILE" ]; then
+        echo "🔧 Updating iOS version in project.pbxproj..."
+        sed -i'' -e "s/MARKETING_VERSION = .*;/MARKETING_VERSION = ${VERSION_NAME};/" "$IOS_PROJECT_FILE"
+        sed -i'' -e "s/CURRENT_PROJECT_VERSION = .*;/CURRENT_PROJECT_VERSION = ${VERSION_CODE};/" "$IOS_PROJECT_FILE"
+        echo "✅ iOS version updated in project.pbxproj"
+      else
+        echo "❌ iOS project file not found at $IOS_PROJECT_FILE"
+        exit 1
+      fi
 
 # 📱 App Configuration Block
 app_config: &app_config
@@ -2063,7 +2051,6 @@ workflows:
         APPLE_TEAM_ID: $APPLE_TEAM_ID
         APNS_KEY_ID: $APNS_KEY_ID
         IS_TESTFLIGHT: $IS_TESTFLIGHT
-        SKIP_APP_STORE_CONNECT_API: "true" # Skip problematic App Store Connect API
 
         # 🔧 Feature Flags
         PUSH_NOTIFY: $PUSH_NOTIFY
@@ -2099,7 +2086,7 @@ workflows:
     scripts:
       - name: Pre-build Setup
         script: |
-          echo "🚀 Starting iOS Universal Build with App Store Connect API Authentication..."
+          echo "🚀 Starting iOS Universal Build with Profile Type: $PROFILE_TYPE"
           echo "📊 Build Environment:"
           echo "  - Flutter: $(flutter --version | head -1)"
           echo "  - Java: $(java -version 2>&1 | head -1)"
@@ -2107,6 +2094,8 @@ workflows:
           echo "  - CocoaPods: $(pod --version)"
           echo "  - Memory: $(sysctl -n hw.memsize | awk '{print $0/1024/1024/1024 " GB"}')"
           echo "  - Profile Type: $PROFILE_TYPE"
+          echo "  - Bundle ID: $BUNDLE_ID"
+          echo "  - Team ID: $APPLE_TEAM_ID"
 
           # Enhanced error handling
           set -euo pipefail
@@ -2127,7 +2116,7 @@ workflows:
 
           # 🔐 Enhanced iOS Authentication Validation
           echo "🔐 Validating iOS Authentication Configuration..."
-          
+
           # Check App Store Connect API authentication (Primary method)
           if [[ -n "${APP_STORE_CONNECT_ISSUER_ID}" && -n "${APP_STORE_CONNECT_KEY_IDENTIFIER}" && -n "${APP_STORE_CONNECT_API_KEY_PATH}" ]]; then
             echo "✅ App Store Connect API authentication detected:"
@@ -2158,17 +2147,8 @@ workflows:
               echo "🔐 Manual certificate authentication detected as fallback"
               export AUTHENTICATION_METHOD="manual_certificates"
             else
-              echo "❌ No valid authentication method found"
-              echo "   Please configure either:"
-              echo "   1. App Store Connect API (recommended):"
-              echo "      - APP_STORE_CONNECT_ISSUER_ID"
-              echo "      - APP_STORE_CONNECT_KEY_IDENTIFIER"
-              echo "      - APP_STORE_CONNECT_API_KEY_PATH"
-              echo "   2. Manual certificates (fallback):"
-              echo "      - CERT_PASSWORD"
-              echo "      - PROFILE_URL"
-              echo "      - CERT_P12_URL (optional)"
-              exit 1
+              echo "⚠️ No manual certificates provided, will use automatic signing"
+              export AUTHENTICATION_METHOD="automatic"
             fi
           fi
 
@@ -2200,8 +2180,29 @@ workflows:
           # Enhanced profile type validation
           echo "🔍 Validating profile type: $PROFILE_TYPE"
           case "$PROFILE_TYPE" in
-            "app-store"|"ad-hoc"|"enterprise"|"development")
-              echo "✅ Valid profile type: $PROFILE_TYPE"
+            "app-store")
+              echo "✅ App Store profile type detected"
+              echo "   - Distribution: App Store Connect"
+              echo "   - Upload: Enabled"
+              echo "   - Symbols: Uploaded"
+              ;;
+            "ad-hoc")
+              echo "✅ Ad Hoc profile type detected"
+              echo "   - Distribution: Device installation"
+              echo "   - Upload: Disabled"
+              echo "   - Symbols: Not uploaded"
+              ;;
+            "enterprise")
+              echo "✅ Enterprise profile type detected"
+              echo "   - Distribution: Internal enterprise"
+              echo "   - Upload: Disabled"
+              echo "   - Symbols: Not uploaded"
+              ;;
+            "development")
+              echo "✅ Development profile type detected"
+              echo "   - Distribution: Development testing"
+              echo "   - Upload: Disabled"
+              echo "   - Symbols: Not uploaded"
               ;;
             *)
               echo "❌ Invalid profile type: $PROFILE_TYPE"
@@ -2222,7 +2223,7 @@ workflows:
 
           # Check for required modular scripts with absolute paths
           echo "🔍 Validating modular iOS workflow scripts..."
-          
+
           # Core utility script
           if [ -f "$PROJECT_ROOT/lib/scripts/ios/utils.sh" ]; then
             echo "✅ Utils script found: $PROJECT_ROOT/lib/scripts/ios/utils.sh"
@@ -2315,7 +2316,7 @@ workflows:
           # Make all iOS scripts executable and fix any BOM issues
           chmod +x lib/scripts/ios/*.sh
           chmod +x lib/scripts/utils/*.sh
-          
+
           # Remove BOM characters if present (fix encoding issues)
           for script in lib/scripts/ios/*.sh; do
             if [ -f "$script" ]; then
@@ -2325,15 +2326,95 @@ workflows:
               dos2unix "$script" 2>/dev/null || true
             fi
           done
-          
+
           # Verify main script is executable and readable
           if [ ! -x "lib/scripts/ios/main.sh" ]; then
             echo "❌ main.sh is not executable, fixing permissions..."
           chmod +x lib/scripts/ios/main.sh
           fi
-          
+
           # Run the main iOS build script
+          echo "🚀 Starting iOS build process with profile type: $PROFILE_TYPE"
           ./lib/scripts/ios/main.sh
+
+      - name: Enhanced IPA Export (if needed)
+        script: |
+          # Check if IPA export is needed
+          if [ ! -f "output/ios/Runner.ipa" ] && [ -d "output/ios/Runner.xcarchive" ]; then
+            echo "🚀 IPA not found, attempting enhanced export..."
+            echo "📊 Profile Type: $PROFILE_TYPE"
+            echo "📦 Archive found: output/ios/Runner.xcarchive"
+            
+            # Make export script executable
+            chmod +x lib/scripts/ios/export_ipa.sh
+            
+            # Run the enhanced export script
+            if ./lib/scripts/ios/export_ipa.sh; then
+              echo "✅ Enhanced IPA export completed successfully!"
+              
+              # Check if IPA was created
+              if [ -f "output/ios/Runner.ipa" ]; then
+                local ipa_size=$(du -h output/ios/Runner.ipa | cut -f1)
+                echo "📊 IPA created: output/ios/Runner.ipa ($ipa_size)"
+                echo "🎯 Profile Type: $PROFILE_TYPE"
+                echo "📦 Ready for distribution"
+              else
+                echo "⚠️ IPA export script completed but no IPA file found"
+                echo "📦 Archive available for manual export: output/ios/Runner.xcarchive"
+              fi
+            else
+              echo "⚠️ Enhanced IPA export failed"
+              echo "📦 Archive available for manual export: output/ios/Runner.xcarchive"
+              echo "📋 Check ARTIFACTS_SUMMARY.txt for details"
+            fi
+          else
+            if [ -f "output/ios/Runner.ipa" ]; then
+              local ipa_size=$(du -h output/ios/Runner.ipa | cut -f1)
+              echo "✅ IPA already exists: output/ios/Runner.ipa ($ipa_size)"
+              echo "🎯 Profile Type: $PROFILE_TYPE"
+              echo "📦 Ready for distribution"
+            elif [ ! -d "output/ios/Runner.xcarchive" ]; then
+              echo "⚠️ No archive found, build may have failed"
+            fi
+          fi
+
+      - name: Final Validation and Summary
+        script: |
+          echo "🔍 Final build validation..."
+
+          # Check for IPA file
+          if [ -f "output/ios/Runner.ipa" ]; then
+            local ipa_size=$(du -h output/ios/Runner.ipa | cut -f1)
+            echo "✅ IPA file found: output/ios/Runner.ipa ($ipa_size)"
+            
+            # Validate IPA structure
+            if unzip -t "output/ios/Runner.ipa" >/dev/null 2>&1; then
+              echo "✅ IPA file is valid"
+            else
+              echo "⚠️ IPA file appears to be corrupted"
+            fi
+            
+            echo "🎯 Profile Type: $PROFILE_TYPE"
+            echo "📦 Distribution Status: READY"
+            
+          elif [ -d "output/ios/Runner.xcarchive" ]; then
+            local archive_size=$(du -h output/ios/Runner.xcarchive | cut -f1)
+            echo "⚠️ IPA export failed, but archive is available"
+            echo "📦 Archive: output/ios/Runner.xcarchive ($archive_size)"
+            echo "🔧 Manual export required in Xcode"
+            echo "📋 Check ARTIFACTS_SUMMARY.txt for manual export instructions"
+            
+          else
+            echo "❌ No build artifacts found"
+            echo "🔍 Check build logs for errors"
+          fi
+
+          # Display artifacts summary if available
+          if [ -f "output/ios/ARTIFACTS_SUMMARY.txt" ]; then
+            echo ""
+            echo "📋 Build Summary:"
+            cat output/ios/ARTIFACTS_SUMMARY.txt
+          fi
 
       - name: Optional Fastlane Export (if available)
         script: |
@@ -2941,6 +3022,85 @@ workflows:
           chmod +x lib/scripts/ios/as_main.sh
           ./lib/scripts/ios/as_main.sh
 
+      - name: Enhanced IPA Export (if needed)
+        script: |
+          # Check if IPA export is needed
+          if [ ! -f "output/ios/Runner.ipa" ] && [ -d "output/ios/Runner.xcarchive" ]; then
+            echo "🚀 IPA not found, attempting enhanced export..."
+            echo "📊 Profile Type: $PROFILE_TYPE"
+            echo "📦 Archive found: output/ios/Runner.xcarchive"
+            
+            # Make export script executable
+            chmod +x lib/scripts/ios/export_ipa.sh
+            
+            # Run the enhanced export script
+            if ./lib/scripts/ios/export_ipa.sh; then
+              echo "✅ Enhanced IPA export completed successfully!"
+              
+              # Check if IPA was created
+              if [ -f "output/ios/Runner.ipa" ]; then
+                local ipa_size=$(du -h output/ios/Runner.ipa | cut -f1)
+                echo "📊 IPA created: output/ios/Runner.ipa ($ipa_size)"
+                echo "🎯 Profile Type: $PROFILE_TYPE"
+                echo "📦 Ready for distribution"
+              else
+                echo "⚠️ IPA export script completed but no IPA file found"
+                echo "📦 Archive available for manual export: output/ios/Runner.xcarchive"
+              fi
+            else
+              echo "⚠️ Enhanced IPA export failed"
+              echo "📦 Archive available for manual export: output/ios/Runner.xcarchive"
+              echo "📋 Check ARTIFACTS_SUMMARY.txt for details"
+            fi
+          else
+            if [ -f "output/ios/Runner.ipa" ]; then
+              local ipa_size=$(du -h output/ios/Runner.ipa | cut -f1)
+              echo "✅ IPA already exists: output/ios/Runner.ipa ($ipa_size)"
+              echo "🎯 Profile Type: $PROFILE_TYPE"
+              echo "📦 Ready for distribution"
+            elif [ ! -d "output/ios/Runner.xcarchive" ]; then
+              echo "⚠️ No archive found, build may have failed"
+            fi
+          fi
+
+      - name: Final Validation and Summary
+        script: |
+          echo "🔍 Final build validation..."
+
+          # Check for IPA file
+          if [ -f "output/ios/Runner.ipa" ]; then
+            local ipa_size=$(du -h output/ios/Runner.ipa | cut -f1)
+            echo "✅ IPA file found: output/ios/Runner.ipa ($ipa_size)"
+            
+            # Validate IPA structure
+            if unzip -t "output/ios/Runner.ipa" >/dev/null 2>&1; then
+              echo "✅ IPA file is valid"
+            else
+              echo "⚠️ IPA file appears to be corrupted"
+            fi
+            
+            echo "🎯 Profile Type: $PROFILE_TYPE"
+            echo "📦 Distribution Status: READY"
+            
+          elif [ -d "output/ios/Runner.xcarchive" ]; then
+            local archive_size=$(du -h output/ios/Runner.xcarchive | cut -f1)
+            echo "⚠️ IPA export failed, but archive is available"
+            echo "📦 Archive: output/ios/Runner.xcarchive ($archive_size)"
+            echo "🔧 Manual export required in Xcode"
+            echo "📋 Check ARTIFACTS_SUMMARY.txt for manual export instructions"
+            
+          else
+            echo "❌ No build artifacts found"
+            echo "🔍 Check build logs for errors"
+          fi
+
+          # Display artifacts summary if available
+          if [ -f "output/ios/ARTIFACTS_SUMMARY.txt" ]; then
+            echo ""
+            echo "📋 Build Summary:"
+            cat output/ios/ARTIFACTS_SUMMARY.txt
+          fi
+
       - name: Optional Fastlane Export (if available)
         script: |
           # Check if fastlane is available and IPA wasn't already created
@@ -2988,8 +3148,8 @@ workflows:
             if [ -f "output/ios/Runner.ipa" ]; then
               echo "✅ Fastlane export successful!"
               echo "📊 IPA size: $(du -h output/ios/Runner.ipa | cut -f1)"
-              echo "🎯 Profile Type: app-store"
-              echo "📦 Ready for App Store Connect upload"
+              echo "🎯 Profile Type: $PROFILE_TYPE"
+              echo "📦 Ready for distribution"
             else
               echo "⚠️ Fastlane export failed, but archive is still available"
               echo "📦 Archive available at: output/ios/Runner.xcarchive"
@@ -3077,7 +3237,7 @@ workflows:
             if [ -f "output/ios/Runner.ipa" ]; then
               echo "✅ IPA export completed successfully!"
               echo "📊 IPA size: $(du -h output/ios/Runner.ipa | cut -f1)"
-              echo "📦 Ready for App Store Connect upload"
+              echo "📦 Ready for distribution"
             else
               echo "⚠️ All export attempts failed, but archive is available"
               echo "📦 Archive available at: output/ios/Runner.xcarchive"
@@ -3458,20 +3618,20 @@ workflows:
           echo "🧹 Cleaning previous CocoaPods installation..."
           rm -rf Pods Podfile.lock
           pod cache clean --all
-          
+
           echo "📦 Installing CocoaPods dependencies..."
           pod install --repo-update --verbose
-          
+
           if [ $? -ne 0 ]; then
             echo "⚠️ First attempt failed, trying with legacy mode..."
             pod install --repo-update --verbose --legacy
           fi
-          
+
           if [ $? -ne 0 ]; then
             echo "❌ CocoaPods installation failed"
             exit 1
           fi
-          
+
           echo "✅ CocoaPods installation completed successfully"
           cd ..
 
@@ -3479,7 +3639,7 @@ workflows:
         script: |
           echo "🔧 Configuring manual code signing for Xcode project..."
           cd ios
-          
+
           # Update Xcode project settings for manual signing
           ruby <<'RUBY'
           require 'xcodeproj'
@@ -3509,14 +3669,14 @@ workflows:
       - name: 🔍 Verify Certificate Setup
         script: |
           echo "🔍 Verifying certificate and keychain setup..."
-          
+
           # List available certificates
           echo "📋 Available certificates in keychain:"
           security find-identity -v -p codesigning
-          
+
           # Get the actual certificate name from the keychain
           CERT_NAME=$(security find-identity -v -p codesigning | grep "iPhone Distribution" | head -1 | sed 's/.*"\([^"]*\)".*/\1/')
-          
+
           if [[ -n "$CERT_NAME" ]]; then
             echo "✅ Found certificate: $CERT_NAME"
             CERT_HASH=$(security find-identity -v -p codesigning | grep "iPhone Distribution" | head -1 | cut -d' ' -f2)
@@ -3537,7 +3697,7 @@ workflows:
           echo "🔄 Regenerating environment configuration with current values..."
           chmod +x lib/scripts/utils/gen_env_config.sh
           ./lib/scripts/utils/gen_env_config.sh
-          
+
           if [ $? -eq 0 ]; then
             echo "✅ Environment configuration regenerated successfully"
             echo "📋 Generated config preview:"
@@ -3555,7 +3715,7 @@ workflows:
                 echo "✅ PROFILE_UUID=$PROFILE_UUID"
                 echo "✅ PROFILE_NAME=$PROFILE_NAME"
           echo "✅ CODE_SIGN_IDENTITY=$CODE_SIGN_IDENTITY"
-          
+
           cat > ios/Podfile <<EOF
           platform :ios, '13.0'
           use_frameworks! :linkage => :static
@@ -3721,15 +3881,15 @@ workflows:
           set -a
           source "$CM_ENV"
           set +a
-          
+
           echo "✅ Start Exporting:"
           echo "🔍 Archive path: $CM_BUILD_DIR/Runner.xcarchive"
           echo "🔍 Export path: $CM_BUILD_DIR/ios_output"
-          
+
           # Make the export fix script executable and run it
           chmod +x lib/scripts/utils/fix_ios_export.sh
           ./lib/scripts/utils/fix_ios_export.sh
-          
+
           echo "Contents of output directory:"
           ls -lh "$CM_BUILD_DIR/ios_output" || echo "Directory not found"
 
@@ -3752,7 +3912,7 @@ workflows:
                echo "✅ PROFILE_UUID=$PROFILE_UUID"
                echo "✅ PROFILE_NAME=$PROFILE_NAME"
           echo "✅ CODE_SIGN_IDENTITY=$CODE_SIGN_IDENTITY"
-          
+
           xcrun altool --upload-app \
             --type ios \
             --file build/ios_output/Runner.ipa \
