@@ -2264,6 +2264,14 @@ workflows:
             exit 1
           fi
 
+          # Flutter Launcher Icons script
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/generate_launcher_icons.sh" ]; then
+            echo "✅ Flutter Launcher Icons script found: $PROJECT_ROOT/lib/scripts/ios/generate_launcher_icons.sh"
+          else
+            echo "❌ Flutter Launcher Icons script not found at: $PROJECT_ROOT/lib/scripts/ios/generate_launcher_icons.sh"
+            exit 1
+          fi
+
           # Permission injection script
           if [ -f "$PROJECT_ROOT/lib/scripts/ios/inject_permissions.sh" ]; then
             echo "✅ Permission injection script found: $PROJECT_ROOT/lib/scripts/ios/inject_permissions.sh"

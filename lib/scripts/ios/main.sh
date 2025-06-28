@@ -86,6 +86,13 @@ main() {
         return 1
     fi
     
+    # Stage 4.5: Generate Flutter Launcher Icons (iOS-specific)
+    log_info "--- Stage 4.5: Generating Flutter Launcher Icons ---"
+    if ! "${SCRIPT_DIR}/generate_launcher_icons.sh"; then
+        send_email "build_failed" "iOS" "${CM_BUILD_ID:-unknown}" "Flutter Launcher Icons generation failed."
+        return 1
+    fi
+    
     # Stage 5: Dynamic Permission Injection
     log_info "--- Stage 5: Injecting Dynamic Permissions ---"
     if ! "${SCRIPT_DIR}/inject_permissions.sh"; then

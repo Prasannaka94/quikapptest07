@@ -39,3 +39,22 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/
+
+# Flutter Launcher Icons Configuration
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
+  min_sdk_android: 21
+  web:
+    generate: false
+  windows:
+    generate: false
+  macos:
+    generate: false
+  # iOS specific configuration
+  ios_content_mode: scaleAspectFit
+  remove_alpha_ios: true
+  # Ensure 1024x1024 icon is generated
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/images/logo.png"
