@@ -34,6 +34,9 @@ fix_ios_icons() {
     
     log "📱 Creating valid iOS app icons using Python..."
     
+    # Clean old icons before generating new ones
+    rm -f ios/Runner/Assets.xcassets/AppIcon.appiconset/*
+    
     # Create a Python script to generate proper PNG files
     cat > /tmp/generate_icons.py << 'EOF'
 #!/usr/bin/env python3

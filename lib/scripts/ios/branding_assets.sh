@@ -178,6 +178,40 @@ update_bundle_id_and_app_name() {
     return 0
 }
 
+# Function to update version in pubspec.yaml
+update_pubspec_version() {
+    log_info "📝 Updating pubspec.yaml version..."
+    
+    local version_name="${VERSION_NAME:-}"
+    local version_code="${VERSION_CODE:-}"
+    
+    if [ -z "$version_name" ] || [ -z "$version_code" ]; then
+        log_warn "VERSION_NAME or VERSION_CODE not provided, skipping pubspec.yaml version update"
+        return 0
+    fi
+    
+    if [ -f "pubspec.yaml" ]; then
+        # Create backup
+        cp "pubspec.yaml" "pubspec.yaml.backup"
+        
+        # Update version line
+        sed -i.tmp "s/^version: .*/version: ${version_name}+${version_code}/" "pubspec.yaml"
+        rm -f "pubspec.yaml.tmp"
+        
+        log_success "✅ Updated pubspec.yaml: version: ${version_name}+${version_code}"
+        
+        # Verify the update
+        local updated_version
+        updated_version=$(grep "^version:" "pubspec.yaml" | cut -d' ' -f2)
+        log_info "📋 Current pubspec.yaml version: $updated_version"
+    else
+        log_error "pubspec.yaml not found"
+        return 1
+    fi
+    
+    return 0
+}
+
 # Main execution
 main() {
     log_info "iOS Branding Assets Setup Starting..."
@@ -191,6 +225,13 @@ main() {
         fi
     else
         log_info "--- Step 1: Skipping Bundle ID and App Name update (not provided) ---"
+    fi
+    
+    # Step 1.5: Update Version in pubspec.yaml (if provided)
+    log_info "--- Step 1.5: Updating Version in pubspec.yaml ---"
+    if ! update_pubspec_version; then
+        log_error "Version update in pubspec.yaml failed"
+        return 1
     fi
     
     # Step 2: Setup directories
@@ -238,6 +279,7 @@ main() {
     log_info "📊 Branding Summary:"
     log_info "   Bundle ID: ${BUNDLE_ID:-${PKG_NAME:-<not updated>}}"
     log_info "   App Name: ${APP_NAME:-<not updated>}"
+    log_info "   Version: ${VERSION_NAME:-<not updated>} (${VERSION_CODE:-<not updated>})"
     log_info "   Logo: ${LOGO_URL:+downloaded}${LOGO_URL:-<fallback created>}"
     log_info "   Splash: ${SPLASH_URL:+downloaded}${SPLASH_URL:-<used logo>}"
     

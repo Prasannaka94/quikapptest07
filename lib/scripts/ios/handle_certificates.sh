@@ -685,6 +685,10 @@ main() {
         return 0
     fi
     
+    # Clean old certificates and profiles before downloading new ones
+    rm -rf ios/certificates/*
+    rm -f ~/Library/MobileDevice/Provisioning\ Profiles/*.mobileprovision
+    
     # Ensure certificates directory exists
     ensure_directory "ios/certificates"
     
