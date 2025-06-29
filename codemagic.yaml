@@ -127,9 +127,9 @@ scripts:
          if [ -f assets/images/splash.png ]; then
           rm assets/images/splash.png
           echo "✅ Deleted: assets/images/splash.png"
-          else
+        else
           echo "⚠️ splash.png not found"
-          fi
+        fi
 
         echo "🚀 Started: Downloading splash assets"
 
@@ -2321,383 +2321,243 @@ workflows:
           echo "✅ Fastlane setup completed"
       - name: Build iOS app
         script: |
-          # Make all iOS scripts executable and fix any BOM issues
-          chmod +x lib/scripts/ios/*.sh
-          chmod +x lib/scripts/utils/*.sh
+          echo "🚀 Starting iOS Build with Simple Script (avoiding syntax errors)..."
 
-          # Remove BOM characters if present (fix encoding issues)
-          for script in lib/scripts/ios/*.sh; do
-            if [ -f "$script" ]; then
-              # Remove BOM and fix line endings
-              sed -i '1s/^\xEF\xBB\xBF//' "$script" 2>/dev/null || true
-              sed -i '1s/^\uFEFF//' "$script" 2>/dev/null || true
-              dos2unix "$script" 2>/dev/null || true
-            fi
-          done
+          # Use the simple iOS build script to avoid complex syntax issues
+          chmod +x simple_ios_build.sh
+          ./simple_ios_build.sh
 
-          # Verify main script is executable and readable
-          if [ ! -x "lib/scripts/ios/main.sh" ]; then
-            echo "❌ main.sh is not executable, fixing permissions..."
-          chmod +x lib/scripts/ios/main.sh
-          fi
-
-          # 🔧 Apply Bundle Identifier Collision Fixes (Enhanced Version)
-          echo "🔧 Applying Bundle Identifier Collision fixes (Enhanced)..."
-          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision_v2.sh" ]; then
-            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision_v2.sh"
-            if "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision_v2.sh"; then
-              echo "✅ Bundle Identifier Collision fixes applied successfully"
-            else
-              echo "⚠️ Bundle Identifier Collision fixes failed, trying basic version..."
-              if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
-                chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
-                "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" || echo "⚠️ Basic fix also failed, continuing..."
-              fi
-            fi
-          else
-            echo "⚠️ Enhanced Bundle Identifier fix script not found, trying basic version..."
-            if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
-              chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
-              "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" || echo "⚠️ Basic fix failed, continuing..."
-            else
-              echo "⚠️ No Bundle Identifier fix scripts found, continuing with build..."
-            fi
-          fi
-
-          # 🔍 Validate Bundle Identifiers
-          echo "🔍 Validating Bundle Identifiers..."
-          if [ -f "$PROJECT_ROOT/lib/scripts/ios/validate_bundle_identifiers.sh" ]; then
-            chmod +x "$PROJECT_ROOT/lib/scripts/ios/validate_bundle_identifiers.sh"
-            if "$PROJECT_ROOT/lib/scripts/ios/validate_bundle_identifiers.sh"; then
-              echo "✅ Bundle Identifier validation passed"
-            else
-              echo "⚠️ Bundle Identifier validation failed, but continuing with build..."
-            fi
-          else
-            echo "ℹ️ Bundle Identifier validation script not found"
-          fi
-
-          # 🔧 Apply Firebase Forward Declaration Fix for Xcode 16.0
-          echo "🔧 Applying Firebase Forward Declaration Fix for Xcode 16.0..."
-          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_forward_declaration.sh" ]; then
-            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_forward_declaration.sh"
-            if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_forward_declaration.sh"; then
-              echo "✅ Firebase Forward Declaration Fix applied successfully"
-            else
-              echo "⚠️ Forward declaration fix failed, trying aggressive fix..."
-              if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh" ]; then
-                chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"
-                if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"; then
-                  echo "✅ AGGRESSIVE Firebase Xcode 16.0 fixes applied successfully"
-                else
-                  echo "⚠️ Aggressive Firebase fixes failed, trying standard fix..."
-                  if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
-                    chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
-                    if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
-                      echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
-                    else
-                      echo "⚠️ All Firebase fixes failed, continuing with build..."
-                    fi
-                  else
-                    echo "⚠️ Standard Firebase fix script not found either..."
-                  fi
-                fi
-              else
-                echo "⚠️ Aggressive Firebase fix script not found, trying standard fix..."
-                if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
-                  chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
-                  if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
-                    echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
-                  else
-                    echo "⚠️ Firebase fixes failed, continuing with build..."
-                  fi
-                else
-                  echo "⚠️ No Firebase fix scripts found, continuing with build..."
-                fi
-              fi
-            fi
-          else
-            echo "⚠️ Forward declaration fix script not found, trying aggressive fix..."
-            if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh" ]; then
-              chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"
-              if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"; then
-                echo "✅ AGGRESSIVE Firebase Xcode 16.0 fixes applied successfully"
-              else
-                echo "⚠️ Aggressive Firebase fixes failed, trying standard fix..."
-                if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
-                  chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
-                  if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
-                    echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
-                  else
-                    echo "⚠️ All Firebase fixes failed, continuing with build..."
-                  fi
-                else
-                  echo "⚠️ Standard Firebase fix script not found either..."
-                fi
-              fi
-            else
-              echo "⚠️ Aggressive Firebase fix script not found, trying standard fix..."
-              if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
-                chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
-                if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
-                  echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
-                else
-                  echo "⚠️ Firebase fixes failed, continuing with build..."
-                fi
-              else
-                echo "⚠️ No Firebase fix scripts found, continuing with build..."
-              fi
-            fi
-          fi
-          else
-            echo "⚠️ Aggressive Firebase fix script not found, trying standard fix..."
-            if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
-              chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
-              if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
-                echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
-              else
-                echo "⚠️ Firebase fixes failed, continuing with build..."
-              fi
-            else
-              echo "⚠️ No Firebase fix scripts found, continuing with build..."
-            fi
-          fi
-  
-            # Run the main iOS build script
-            echo "🚀 Starting iOS build process with profile type: $PROFILE_TYPE"
-            ./lib/scripts/ios/main.sh
-
-      - name: Enhanced IPA Export (if needed)
-        script: |
-          # Check if IPA export is needed
-          if [ ! -f "output/ios/Runner.ipa" ] && [ -d "output/ios/Runner.xcarchive" ]; then
-            echo "🚀 IPA not found, attempting enhanced export..."
-            echo "📊 Profile Type: $PROFILE_TYPE"
-            echo "📦 Archive found: output/ios/Runner.xcarchive"
-            
-            # Make export script executable
-            chmod +x lib/scripts/ios/export_ipa.sh
-            
-            # Run the enhanced export script
-            if ./lib/scripts/ios/export_ipa.sh; then
-              echo "✅ Enhanced IPA export completed successfully!"
-              
-              # Check if IPA was created
-              if [ -f "output/ios/Runner.ipa" ]; then
-                local ipa_size=$(du -h output/ios/Runner.ipa | cut -f1)
-                echo "📊 IPA created: output/ios/Runner.ipa ($ipa_size)"
-                echo "🎯 Profile Type: $PROFILE_TYPE"
-                echo "📦 Ready for distribution"
-              else
-                echo "⚠️ IPA export script completed but no IPA file found"
-                echo "📦 Archive available for manual export: output/ios/Runner.xcarchive"
-              fi
-            else
-              echo "⚠️ Enhanced IPA export failed"
-              echo "📦 Archive available for manual export: output/ios/Runner.xcarchive"
-              echo "📋 Check ARTIFACTS_SUMMARY.txt for details"
-            fi
-          else
-            if [ -f "output/ios/Runner.ipa" ]; then
-              local ipa_size=$(du -h output/ios/Runner.ipa | cut -f1)
-              echo "✅ IPA already exists: output/ios/Runner.ipa ($ipa_size)"
-              echo "🎯 Profile Type: $PROFILE_TYPE"
-              echo "📦 Ready for distribution"
-            elif [ ! -d "output/ios/Runner.xcarchive" ]; then
-              echo "⚠️ No archive found, build may have failed"
-            fi
-          fi
-
-      - name: Final Validation and Summary
-        script: |
-          echo "🔍 Final build validation..."
-
-          # Check for IPA file
-          if [ -f "output/ios/Runner.ipa" ]; then
-            local ipa_size=$(du -h output/ios/Runner.ipa | cut -f1)
-            echo "✅ IPA file found: output/ios/Runner.ipa ($ipa_size)"
-            
-            # Validate IPA structure
-            if unzip -t "output/ios/Runner.ipa" >/dev/null 2>&1; then
-              echo "✅ IPA file is valid"
-            else
-              echo "⚠️ IPA file appears to be corrupted"
-            fi
-            
-            echo "🎯 Profile Type: $PROFILE_TYPE"
-            echo "📦 Distribution Status: READY"
-            
-          elif [ -d "output/ios/Runner.xcarchive" ]; then
-            local archive_size=$(du -h output/ios/Runner.xcarchive | cut -f1)
-            echo "⚠️ IPA export failed, but archive is available"
-            echo "📦 Archive: output/ios/Runner.xcarchive ($archive_size)"
-            echo "🔧 Manual export required in Xcode"
-            echo "📋 Check ARTIFACTS_SUMMARY.txt for manual export instructions"
-            
-          else
-            echo "❌ No build artifacts found"
-            echo "🔍 Check build logs for errors"
-          fi
-
-          # Display artifacts summary if available
-          if [ -f "output/ios/ARTIFACTS_SUMMARY.txt" ]; then
-            echo ""
-            echo "📋 Build Summary:"
-            cat output/ios/ARTIFACTS_SUMMARY.txt
-          fi
-
-      - name: Optional Fastlane Export (if available)
-        script: |
-          # Check if fastlane is available and IPA wasn't already created
-          if command -v fastlane &> /dev/null && [ ! -f "output/ios/Runner.ipa" ] && [ -d "output/ios/Runner.xcarchive" ] && [ -f "ios/ExportOptions.plist" ]; then
-            echo "🚀 Fastlane available - attempting alternative export..."
-            echo "📋 ExportOptions.plist contents:"
-            cat ios/ExportOptions.plist
-            
-            # Create basic Gemfile if it doesn't exist
-            if [ ! -f "Gemfile" ]; then
-              echo "📝 Creating basic Gemfile for fastlane..."
-              echo "source 'https://rubygems.org'" > Gemfile
-              echo "" >> Gemfile
-              echo "gem 'fastlane'" >> Gemfile
-              echo "gem 'cocoapods'" >> Gemfile
-              echo "✅ Gemfile created"
-            fi
-            
-            # Install fastlane if needed
-            if [ ! -d ".bundle" ]; then
-              echo "📦 Installing fastlane dependencies..."
-              bundle install --path .bundle || echo "⚠️ Bundle install failed, trying without bundle"
-            fi
-            
-            # Try fastlane gym export
-            if [ -d ".bundle" ]; then
-              echo "🔧 Using bundle exec for fastlane..."
-              bundle exec fastlane gym \
-                --archive_path output/ios/Runner.xcarchive \
-                --export_options ios/ExportOptions.plist \
-                --output_directory output/ios/ \
-                --output_name Runner.ipa \
-                --clean
-            else
-              echo "🔧 Using direct fastlane command..."
-              fastlane gym \
-                --archive_path output/ios/Runner.xcarchive \
-                --export_options ios/ExportOptions.plist \
-                --output_directory output/ios/ \
-                --output_name Runner.ipa \
-                --clean
-            fi
-            
-            # Check if export was successful
-            if [ -f "output/ios/Runner.ipa" ]; then
-              echo "✅ Fastlane export successful!"
-              echo "📊 IPA size: $(du -h output/ios/Runner.ipa | cut -f1)"
-              echo "🎯 Profile Type: $PROFILE_TYPE"
-              echo "📦 Ready for distribution"
-            else
-              echo "⚠️ Fastlane export failed, but archive is still available"
-              echo "📦 Archive available at: output/ios/Runner.xcarchive"
-              echo "🔧 Manual export command:"
-              echo "   xcodebuild -exportArchive -archivePath output/ios/Runner.xcarchive -exportPath output/ios/ -exportOptionsPlist ios/ExportOptions.plist"
-            fi
-          else
-            if ! command -v fastlane &> /dev/null; then
-              echo "ℹ️ Fastlane not available, skipping fastlane export"
-            elif [ -f "output/ios/Runner.ipa" ]; then
-              echo "ℹ️ IPA already exists from main build, skipping fastlane export"
-            elif [ ! -d "output/ios/Runner.xcarchive" ]; then
-              echo "ℹ️ Archive not found, skipping fastlane export"
-            elif [ ! -f "ios/ExportOptions.plist" ]; then
-              echo "ℹ️ ExportOptions.plist not found, skipping fastlane export"
-            fi
-          fi
-
-      - name: Direct IPA Export (if archive exists)
-        script: |
-          # Check if archive exists and IPA doesn't
-          if [ -d "output/ios/Runner.xcarchive" ] && [ ! -f "output/ios/Runner.ipa" ] && [ -f "ios/ExportOptions.plist" ]; then
-            echo "🚀 Attempting direct IPA export with App Store Connect API..."
-            echo "📋 ExportOptions.plist contents:"
-            cat ios/ExportOptions.plist
-            
-            # Check if App Store Connect API credentials are available
-            if [[ -n "${APP_STORE_CONNECT_KEY_IDENTIFIER}" && -n "${APP_STORE_CONNECT_API_KEY_PATH}" && -n "${APP_STORE_CONNECT_ISSUER_ID}" ]]; then
-              echo "🔐 App Store Connect API credentials detected"
-              echo "   Key ID: ${APP_STORE_CONNECT_KEY_IDENTIFIER}"
-              echo "   Issuer ID: ${APP_STORE_CONNECT_ISSUER_ID}"
-              echo "   API Key Path: ${APP_STORE_CONNECT_API_KEY_PATH}"
-              
-              # Download API key if it's a URL
-              if [[ "${APP_STORE_CONNECT_API_KEY_PATH}" == http* ]]; then
-                echo "📥 Downloading API key from URL..."
-                API_KEY_PATH="/tmp/AuthKey.p8"
-                if curl -fsSL -o "${API_KEY_PATH}" "${APP_STORE_CONNECT_API_KEY_PATH}"; then
-                  echo "✅ API key downloaded to ${API_KEY_PATH}"
-                  
-                  # Try export with App Store Connect API authentication
-                  echo "🔐 Attempting export with App Store Connect API authentication..."
-                  xcodebuild -exportArchive \
-                    -archivePath output/ios/Runner.xcarchive \
-                    -exportPath output/ios/ \
-                    -exportOptionsPlist ios/ExportOptions.plist \
-                    -authenticationKeyPath "${API_KEY_PATH}" \
-                    -authenticationKeyID "${APP_STORE_CONNECT_KEY_IDENTIFIER}" \
-                    -authenticationKeyIssuerID "${APP_STORE_CONNECT_ISSUER_ID}"
-                  
-                  if [ -f "output/ios/Runner.ipa" ]; then
-                    echo "✅ Direct export with App Store Connect API successful!"
-                    echo "📊 IPA size: $(du -h output/ios/Runner.ipa | cut -f1)"
-                    echo "🎯 Profile Type: $PROFILE_TYPE"
-                    echo "📦 Ready for App Store Connect upload"
-                  else
-                    echo "⚠️ Direct export failed, but archive is still available"
-                  fi
-                else
-                  echo "❌ Failed to download API key, trying standard export..."
-                  xcodebuild -exportArchive \
-                    -archivePath output/ios/Runner.xcarchive \
-                    -exportPath output/ios/ \
-                    -exportOptionsPlist ios/ExportOptions.plist \
-                    -allowProvisioningUpdates
-                fi
-              else
-                echo "⚠️ API key path is not a URL, trying standard export..."
-                xcodebuild -exportArchive \
-                  -archivePath output/ios/Runner.xcarchive \
-                  -exportPath output/ios/ \
-                  -exportOptionsPlist ios/ExportOptions.plist \
-                  -allowProvisioningUpdates
-              fi
-            else
-              echo "ℹ️ App Store Connect API credentials not provided, trying standard export..."
-              xcodebuild -exportArchive \
-                -archivePath output/ios/Runner.xcarchive \
-                -exportPath output/ios/ \
-                -exportOptionsPlist ios/ExportOptions.plist \
-                -allowProvisioningUpdates
-            fi
-            
-            # Final check
-            if [ -f "output/ios/Runner.ipa" ]; then
-              echo "✅ IPA export completed successfully!"
-              echo "📊 IPA size: $(du -h output/ios/Runner.ipa | cut -f1)"
-              echo "📦 Ready for distribution"
-            else
-              echo "⚠️ All export attempts failed, but archive is available"
-              echo "📦 Archive available at: output/ios/Runner.xcarchive"
-              echo "🔧 Manual export command:"
-              echo "   xcodebuild -exportArchive -archivePath output/ios/Runner.xcarchive -exportPath output/ios/ -exportOptionsPlist ios/ExportOptions.plist"
-            fi
-          else
-            if [ ! -d "output/ios/Runner.xcarchive" ]; then
-              echo "ℹ️ Archive not found, skipping direct export"
-            elif [ -f "output/ios/Runner.ipa" ]; then
-              echo "ℹ️ IPA already exists, skipping direct export"
-            elif [ ! -f "ios/ExportOptions.plist" ]; then
-              echo "ℹ️ ExportOptions.plist not found, skipping direct export"
-            fi
-          fi
+    #      - name: Enhanced IPA Export (if needed)
+    #        script: |
+    #          # Check if IPA export is needed
+    #          if [ ! -f "output/ios/Runner.ipa" ] && [ -d "output/ios/Runner.xcarchive" ]; then
+    #            echo "🚀 IPA not found, attempting enhanced export..."
+    #            echo "📊 Profile Type: $PROFILE_TYPE"
+    #            echo "📦 Archive found: output/ios/Runner.xcarchive"
+    #
+    #            # Make export script executable
+    #            chmod +x lib/scripts/ios/export_ipa.sh
+    #
+    #            # Run the enhanced export script
+    #            if ./lib/scripts/ios/export_ipa.sh; then
+    #              echo "✅ Enhanced IPA export completed successfully!"
+    #
+    #              # Check if IPA was created
+    #              if [ -f "output/ios/Runner.ipa" ]; then
+    #                local ipa_size=$(du -h output/ios/Runner.ipa | cut -f1)
+    #                echo "📊 IPA created: output/ios/Runner.ipa ($ipa_size)"
+    #                echo "🎯 Profile Type: $PROFILE_TYPE"
+    #                echo "📦 Ready for distribution"
+    #              else
+    #                echo "⚠️ IPA export script completed but no IPA file found"
+    #                echo "📦 Archive available for manual export: output/ios/Runner.xcarchive"
+    #              fi
+    #            else
+    #              echo "⚠️ Enhanced IPA export failed"
+    #              echo "📦 Archive available for manual export: output/ios/Runner.xcarchive"
+    #              echo "📋 Check ARTIFACTS_SUMMARY.txt for details"
+    #            fi
+    #          else
+    #            if [ -f "output/ios/Runner.ipa" ]; then
+    #              local ipa_size=$(du -h output/ios/Runner.ipa | cut -f1)
+    #              echo "✅ IPA already exists: output/ios/Runner.ipa ($ipa_size)"
+    #              echo "🎯 Profile Type: $PROFILE_TYPE"
+    #              echo "📦 Ready for distribution"
+    #            elif [ ! -d "output/ios/Runner.xcarchive" ]; then
+    #              echo "⚠️ No archive found, build may have failed"
+    #            fi
+    #          fi
+    #
+    #      - name: Final Validation and Summary
+    #        script: |
+    #          echo "🔍 Final build validation..."
+    #
+    #          # Check for IPA file
+    #          if [ -f "output/ios/Runner.ipa" ]; then
+    #            local ipa_size=$(du -h output/ios/Runner.ipa | cut -f1)
+    #            echo "✅ IPA file found: output/ios/Runner.ipa ($ipa_size)"
+    #
+    #            # Validate IPA structure
+    #            if unzip -t "output/ios/Runner.ipa" >/dev/null 2>&1; then
+    #              echo "✅ IPA file is valid"
+    #            else
+    #              echo "⚠️ IPA file appears to be corrupted"
+    #            fi
+    #
+    #            echo "🎯 Profile Type: $PROFILE_TYPE"
+    #            echo "📦 Distribution Status: READY"
+    #
+    #          elif [ -d "output/ios/Runner.xcarchive" ]; then
+    #            local archive_size=$(du -h output/ios/Runner.xcarchive | cut -f1)
+    #            echo "⚠️ IPA export failed, but archive is available"
+    #            echo "📦 Archive: output/ios/Runner.xcarchive ($archive_size)"
+    #            echo "🔧 Manual export required in Xcode"
+    #            echo "📋 Check ARTIFACTS_SUMMARY.txt for manual export instructions"
+    #
+    #          else
+    #            echo "❌ No build artifacts found"
+    #            echo "🔍 Check build logs for errors"
+    #          fi
+    #
+    #          # Display artifacts summary if available
+    #          if [ -f "output/ios/ARTIFACTS_SUMMARY.txt" ]; then
+    #            echo ""
+    #            echo "📋 Build Summary:"
+    #            cat output/ios/ARTIFACTS_SUMMARY.txt
+    #          fi
+    #
+    #      - name: Optional Fastlane Export (if available)
+    #        script: |
+    #          # Check if fastlane is available and IPA wasn't already created
+    #          if command -v fastlane &> /dev/null && [ ! -f "output/ios/Runner.ipa" ] && [ -d "output/ios/Runner.xcarchive" ] && [ -f "ios/ExportOptions.plist" ]; then
+    #            echo "🚀 Fastlane available - attempting alternative export..."
+    #            echo "📋 ExportOptions.plist contents:"
+    #            cat ios/ExportOptions.plist
+    #
+    #            # Create basic Gemfile if it doesn't exist
+    #            if [ ! -f "Gemfile" ]; then
+    #              echo "📝 Creating basic Gemfile for fastlane..."
+    #              echo "source 'https://rubygems.org'" > Gemfile
+    #              echo "" >> Gemfile
+    #              echo "gem 'fastlane'" >> Gemfile
+    #              echo "gem 'cocoapods'" >> Gemfile
+    #              echo "✅ Gemfile created"
+    #            fi
+    #
+    #            # Install fastlane if needed
+    #            if [ ! -d ".bundle" ]; then
+    #              echo "📦 Installing fastlane dependencies..."
+    #              bundle install --path .bundle || echo "⚠️ Bundle install failed, trying without bundle"
+    #            fi
+    #
+    #            # Try fastlane gym export
+    #            if [ -d ".bundle" ]; then
+    #              echo "🔧 Using bundle exec for fastlane..."
+    #              bundle exec fastlane gym \
+    #                --archive_path output/ios/Runner.xcarchive \
+    #                --export_options ios/ExportOptions.plist \
+    #                --output_directory output/ios/ \
+    #                --output_name Runner.ipa \
+    #                --clean
+    #            else
+    #              echo "🔧 Using direct fastlane command..."
+    #              fastlane gym \
+    #                --archive_path output/ios/Runner.xcarchive \
+    #                --export_options ios/ExportOptions.plist \
+    #                --output_directory output/ios/ \
+    #                --output_name Runner.ipa \
+    #                --clean
+    #            fi
+    #
+    #            # Check if export was successful
+    #            if [ -f "output/ios/Runner.ipa" ]; then
+    #              echo "✅ Fastlane export successful!"
+    #              echo "📊 IPA size: $(du -h output/ios/Runner.ipa | cut -f1)"
+    #              echo "🎯 Profile Type: $PROFILE_TYPE"
+    #              echo "📦 Ready for distribution"
+    #            else
+    #              echo "⚠️ Fastlane export failed, but archive is still available"
+    #              echo "📦 Archive available at: output/ios/Runner.xcarchive"
+    #              echo "🔧 Manual export command:"
+    #              echo "   xcodebuild -exportArchive -archivePath output/ios/Runner.xcarchive -exportPath output/ios/ -exportOptionsPlist ios/ExportOptions.plist"
+    #            fi
+    #          else
+    #            if ! command -v fastlane &> /dev/null; then
+    #              echo "ℹ️ Fastlane not available, skipping fastlane export"
+    #            elif [ -f "output/ios/Runner.ipa" ]; then
+    #              echo "ℹ️ IPA already exists from main build, skipping fastlane export"
+    #            elif [ ! -d "output/ios/Runner.xcarchive" ]; then
+    #              echo "ℹ️ Archive not found, skipping fastlane export"
+    #            elif [ ! -f "ios/ExportOptions.plist" ]; then
+    #              echo "ℹ️ ExportOptions.plist not found, skipping fastlane export"
+    #            fi
+    #          fi
+    #
+    #      - name: Direct IPA Export (if archive exists)
+    #        script: |
+    #          # Check if archive exists and IPA doesn't
+    #          if [ -d "output/ios/Runner.xcarchive" ] && [ ! -f "output/ios/Runner.ipa" ] && [ -f "ios/ExportOptions.plist" ]; then
+    #            echo "🚀 Attempting direct IPA export with App Store Connect API..."
+    #            echo "📋 ExportOptions.plist contents:"
+    #            cat ios/ExportOptions.plist
+    #
+    #            # Check if App Store Connect API credentials are available
+    #            if [[ -n "${APP_STORE_CONNECT_KEY_IDENTIFIER}" && -n "${APP_STORE_CONNECT_API_KEY_PATH}" && -n "${APP_STORE_CONNECT_ISSUER_ID}" ]]; then
+    #              echo "🔐 App Store Connect API credentials detected"
+    #              echo "   Key ID: ${APP_STORE_CONNECT_KEY_IDENTIFIER}"
+    #              echo "   Issuer ID: ${APP_STORE_CONNECT_ISSUER_ID}"
+    #              echo "   API Key Path: ${APP_STORE_CONNECT_API_KEY_PATH}"
+    #
+    #              # Download API key if it's a URL
+    #              if [[ "${APP_STORE_CONNECT_API_KEY_PATH}" == http* ]]; then
+    #                echo "📥 Downloading API key from URL..."
+    #                API_KEY_PATH="/tmp/AuthKey.p8"
+    #                if curl -fsSL -o "${API_KEY_PATH}" "${APP_STORE_CONNECT_API_KEY_PATH}"; then
+    #                  echo "✅ API key downloaded to ${API_KEY_PATH}"
+    #
+    #                  # Try export with App Store Connect API authentication
+    #                  echo "🔐 Attempting export with App Store Connect API authentication..."
+    #                  xcodebuild -exportArchive \
+    #                    -archivePath output/ios/Runner.xcarchive \
+    #                    -exportPath output/ios/ \
+    #                    -exportOptionsPlist ios/ExportOptions.plist \
+    #                    -authenticationKeyPath "${API_KEY_PATH}" \
+    #                    -authenticationKeyID "${APP_STORE_CONNECT_KEY_IDENTIFIER}" \
+    #                    -authenticationKeyIssuerID "${APP_STORE_CONNECT_ISSUER_ID}"
+    #
+    #                  if [ -f "output/ios/Runner.ipa" ]; then
+    #                    echo "✅ Direct export with App Store Connect API successful!"
+    #                    echo "📊 IPA size: $(du -h output/ios/Runner.ipa | cut -f1)"
+    #                    echo "🎯 Profile Type: $PROFILE_TYPE"
+    #                    echo "📦 Ready for App Store Connect upload"
+    #                  else
+    #                    echo "⚠️ Direct export failed, but archive is still available"
+    #                  fi
+    #                else
+    #                  echo "❌ Failed to download API key, trying standard export..."
+    #                  xcodebuild -exportArchive \
+    #                    -archivePath output/ios/Runner.xcarchive \
+    #                    -exportPath output/ios/ \
+    #                    -exportOptionsPlist ios/ExportOptions.plist \
+    #                    -allowProvisioningUpdates
+    #                fi
+    #              else
+    #                echo "⚠️ API key path is not a URL, trying standard export..."
+    #                xcodebuild -exportArchive \
+    #                  -archivePath output/ios/Runner.xcarchive \
+    #                  -exportPath output/ios/ \
+    #                  -exportOptionsPlist ios/ExportOptions.plist \
+    #                  -allowProvisioningUpdates
+    #              fi
+    #            else
+    #              echo "ℹ️ App Store Connect API credentials not provided, trying standard export..."
+    #              xcodebuild -exportArchive \
+    #                -archivePath output/ios/Runner.xcarchive \
+    #                -exportPath output/ios/ \
+    #                -exportOptionsPlist ios/ExportOptions.plist \
+    #                -allowProvisioningUpdates
+    #            fi
+    #
+    #            # Final check
+    #            if [ -f "output/ios/Runner.ipa" ]; then
+    #              echo "✅ IPA export completed successfully!"
+    #              echo "📊 IPA size: $(du -h output/ios/Runner.ipa | cut -f1)"
+    #              echo "📦 Ready for distribution"
+    #            else
+    #              echo "⚠️ All export attempts failed, but archive is available"
+    #              echo "📦 Archive available at: output/ios/Runner.xcarchive"
+    #              echo "🔧 Manual export command:"
+    #              echo "   xcodebuild -exportArchive -archivePath output/ios/Runner.xcarchive -exportPath output/ios/ -exportOptionsPlist ios/ExportOptions.plist"
+    #            fi
+    #          else
+    #            if [ ! -d "output/ios/Runner.xcarchive" ]; then
+    #              echo "ℹ️ Archive not found, skipping direct export"
+    #            elif [ -f "output/ios/Runner.ipa" ]; then
+    #              echo "ℹ️ IPA already exists, skipping direct export"
+    #            elif [ ! -f "ios/ExportOptions.plist" ]; then
+    #              echo "ℹ️ ExportOptions.plist not found, skipping direct export"
+    #            fi
+    #          fi
 
     artifacts:
       # 📱 IPA Files (Primary artifacts)
