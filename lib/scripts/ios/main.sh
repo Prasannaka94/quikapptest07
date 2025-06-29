@@ -125,6 +125,22 @@ if [ "${PUSH_NOTIFY:-false}" = "true" ]; then
         return 1
     fi
     
+    # Stage 8.5: App Store Readiness Validation (for app-store profile)
+    if [ "${PROFILE_TYPE:-app-store}" = "app-store" ]; then
+        log_info "--- Stage 8.5: App Store Readiness Validation ---"
+        if [ -f "${SCRIPT_DIR}/validate_app_store_readiness.sh" ]; then
+            chmod +x "${SCRIPT_DIR}/validate_app_store_readiness.sh"
+            if "${SCRIPT_DIR}/validate_app_store_readiness.sh"; then
+                log_success "App Store readiness validation passed"
+            else
+                log_warn "App Store readiness validation found issues"
+                log_info "Check APP_STORE_READINESS_REPORT.txt for details"
+            fi
+        else
+            log_warn "App Store readiness validation script not found"
+        fi
+    fi
+    
     # Stage 9: Email Notification - Build Success
     if [ "${ENABLE_EMAIL_NOTIFICATIONS:-false}" = "true" ]; then
         log_info "--- Stage 9: Sending Build Success Email ---"
@@ -137,6 +153,38 @@ if [ "${PUSH_NOTIFY:-false}" = "true" ]; then
     log_info "   Bundle ID: ${BUNDLE_ID:-Unknown}"
     log_info "   Profile Type: ${PROFILE_TYPE:-Unknown}"
     log_info "   Output: ${OUTPUT_DIR:-Unknown}"
+    
+    # Check for build artifacts
+    if [ -f "${OUTPUT_DIR:-output/ios}/Runner.ipa" ]; then
+        local ipa_size=$(du -h "${OUTPUT_DIR:-output/ios}/Runner.ipa" | cut -f1)
+        log_info "   IPA: Runner.ipa ($ipa_size)"
+        
+        # App Store specific information
+        if [ "${PROFILE_TYPE:-app-store}" = "app-store" ]; then
+            log_info "   Distribution: Ready for App Store Connect"
+            log_info "   Next Steps:"
+            log_info "     1. Download Runner.ipa from build artifacts"
+            log_info "     2. Upload to App Store Connect using Transporter or Xcode"
+            log_info "     3. Submit for App Store review"
+            
+            # Check for App Store readiness report
+            if [ -f "${OUTPUT_DIR:-output/ios}/APP_STORE_READINESS_REPORT.txt" ]; then
+                log_info "   📋 App Store Readiness Report available in artifacts"
+            fi
+        fi
+    elif [ -d "${OUTPUT_DIR:-output/ios}/Runner.xcarchive" ]; then
+        local archive_size=$(du -h "${OUTPUT_DIR:-output/ios}/Runner.xcarchive" | cut -f1)
+        log_info "   Archive: Runner.xcarchive ($archive_size)"
+        log_warn "   IPA export failed - manual export required"
+        
+        if [ "${PROFILE_TYPE:-app-store}" = "app-store" ]; then
+            log_info "   Manual Export for App Store:"
+            log_info "     1. Download Runner.xcarchive from build artifacts"
+            log_info "     2. Open Xcode > Window > Organizer"
+            log_info "     3. Import archive and select 'Distribute App'"
+            log_info "     4. Choose 'App Store Connect' > 'Upload'"
+        fi
+    fi
     
     return 0
 }

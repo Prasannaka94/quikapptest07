@@ -2643,7 +2643,11 @@ workflows:
       - output/ios/ARTIFACTS_SUMMARY.txt
       - output/ios/TROUBLESHOOTING_GUIDE.txt
       - output/ios/PERMISSIONS_SUMMARY.txt
+      - output/ios/APP_STORE_READINESS_REPORT.txt
       - ios/ExportOptions.plist
+      - FIREBASE_XCODE16_TROUBLESHOOTING_GUIDE.md
+      - IOS_EXPORT_CONFIGURATION_GUIDE.md
+      - IOS_APP_STORE_COMPLIANCE_GUIDE.md
 
       # 📊 Build Logs
       - build/ios/logs/
@@ -2786,6 +2790,8 @@ workflows:
       - "*.xcarchive"
       - output/ios/ARTIFACTS_SUMMARY.txt
       - ios/ExportOptions.plist
+      - FIREBASE_XCODE16_TROUBLESHOOTING_GUIDE.md
+      - IOS_EXPORT_CONFIGURATION_GUIDE.md
       - build/ios/logs/
       - output/ios/logs/
       - output/ios/

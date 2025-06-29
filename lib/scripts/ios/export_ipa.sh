@@ -22,6 +22,8 @@ create_export_options() {
     local upload_symbols="true"
     local compile_bitcode="false"
     local signing_style="automatic"
+    local strip_swift_symbols="true"
+    local thinning="<none>"
     
     # Determine export method and settings based on profile type
     case "${PROFILE_TYPE:-app-store}" in
@@ -29,25 +31,37 @@ create_export_options() {
             method="app-store"
             upload_bitcode="false"
             upload_symbols="true"
+            compile_bitcode="false"
             signing_style="automatic"
+            strip_swift_symbols="true"
+            thinning="<none>"
             ;;
         "ad-hoc")
             method="ad-hoc"
             upload_bitcode="false"
             upload_symbols="false"
+            compile_bitcode="false"
             signing_style="automatic"
+            strip_swift_symbols="true"
+            thinning="<none>"
             ;;
         "enterprise")
             method="enterprise"
             upload_bitcode="false"
             upload_symbols="false"
+            compile_bitcode="false"
             signing_style="automatic"
+            strip_swift_symbols="true"
+            thinning="<none>"
             ;;
         "development")
             method="development"
             upload_bitcode="false"
             upload_symbols="false"
+            compile_bitcode="false"
             signing_style="automatic"
+            strip_swift_symbols="false"
+            thinning="<none>"
             ;;
         *)
             log_error "Invalid profile type: $PROFILE_TYPE"
@@ -62,8 +76,10 @@ create_export_options() {
     log_info "  - Signing Style: $signing_style"
     log_info "  - Upload Bitcode: $upload_bitcode"
     log_info "  - Upload Symbols: $upload_symbols"
+    log_info "  - Strip Swift Symbols: $strip_swift_symbols"
+    log_info "  - Thinning: $thinning"
     
-    # Create ExportOptions.plist
+    # Create ExportOptions.plist with App Store compliance settings
     cat > "$export_options_path" << EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -82,18 +98,48 @@ create_export_options() {
     <key>signingStyle</key>
     <string>$signing_style</string>
     <key>stripSwiftSymbols</key>
-    <true/>
+    <$strip_swift_symbols/>
     <key>thinning</key>
     <string>&lt;none&gt;</string>
     <key>generateAppStoreInformation</key>
     <true/>
+    <key>destination</key>
+    <string>export</string>
+    <key>signingCertificate</key>
+    <string>Apple Distribution</string>
 EOF
 
-    # Add profile-specific configurations
+    # Add App Store specific configurations
     if [ "$method" = "app-store" ]; then
         cat >> "$export_options_path" << EOF
     <key>uploadToAppStore</key>
     <false/>
+    <key>distributionBundleIdentifier</key>
+    <string>${BUNDLE_ID:-}</string>
+    <key>provisioningProfiles</key>
+    <dict>
+        <key>${BUNDLE_ID:-}</key>
+        <string>match AppStore ${BUNDLE_ID:-}</string>
+    </dict>
+    <key>iCloudContainerEnvironment</key>
+    <string>Production</string>
+    <key>embedOnDemandResourcesAssetPacksInBundle</key>
+    <true/>
+    <key>onDemandResourcesAssetPacksBaseURL</key>
+    <string></string>
+    <key>manageAppVersionAndBuildNumber</key>
+    <true/>
+EOF
+    fi
+
+    # Add profile-specific bundle identifier configurations
+    if [ -n "${BUNDLE_ID:-}" ]; then
+        cat >> "$export_options_path" << EOF
+    <key>provisioningProfiles</key>
+    <dict>
+        <key>${BUNDLE_ID}</key>
+        <string>match $method ${BUNDLE_ID}</string>
+    </dict>
 EOF
     fi
 
@@ -105,6 +151,20 @@ EOF
     if [ -f "$export_options_path" ]; then
         log_success "ExportOptions.plist created successfully"
         log_info "Export options saved to: $export_options_path"
+        
+        # Validate ExportOptions.plist syntax
+        if plutil -lint "$export_options_path" >/dev/null 2>&1; then
+            log_success "ExportOptions.plist syntax is valid"
+        else
+            log_warn "ExportOptions.plist syntax validation failed"
+        fi
+        
+        # Log the contents for debugging
+        log_info "ExportOptions.plist contents:"
+        cat "$export_options_path" | while IFS= read -r line; do
+            log_info "  $line"
+        done
+        
         return 0
     else
         log_error "Failed to create ExportOptions.plist"
@@ -299,7 +359,7 @@ export_with_manual_certificates() {
     fi
 }
 
-# Function to validate IPA file
+# Function to validate IPA file for App Store compliance
 validate_ipa() {
     local ipa_file="$1"
     
@@ -309,16 +369,179 @@ validate_ipa() {
     fi
     
     local file_size=$(du -h "$ipa_file" | cut -f1)
-    log_info "IPA file size: $file_size"
+    local file_size_bytes=$(du -b "$ipa_file" | cut -f1)
+    log_info "IPA file size: $file_size ($file_size_bytes bytes)"
     
     # Check if IPA is a valid zip file
-    if unzip -t "$ipa_file" >/dev/null 2>&1; then
-        log_success "IPA file is valid"
-        return 0
-    else
+    if ! unzip -t "$ipa_file" >/dev/null 2>&1; then
         log_error "IPA file is corrupted"
         return 1
     fi
+    
+    log_success "IPA file structure is valid"
+    
+    # App Store specific validations
+    if [ "${PROFILE_TYPE:-app-store}" = "app-store" ]; then
+        log_info "Performing App Store compliance validation..."
+        
+        # Check file size (App Store limit is 4GB)
+        local max_size_bytes=4294967296  # 4GB in bytes
+        if [ "$file_size_bytes" -gt "$max_size_bytes" ]; then
+            log_error "IPA file too large for App Store: $file_size (max 4GB)"
+            return 1
+        fi
+        
+        # Extract IPA to temporary directory for validation
+        local temp_dir="/tmp/ipa_validation_$$"
+        mkdir -p "$temp_dir"
+        
+        if unzip -q "$ipa_file" -d "$temp_dir"; then
+            log_info "IPA extracted for validation"
+        else
+            log_error "Failed to extract IPA for validation"
+            rm -rf "$temp_dir"
+            return 1
+        fi
+        
+        # Find the app bundle
+        local app_bundle=$(find "$temp_dir" -name "*.app" -type d | head -1)
+        if [ -z "$app_bundle" ]; then
+            log_error "No .app bundle found in IPA"
+            rm -rf "$temp_dir"
+            return 1
+        fi
+        
+        log_info "App bundle found: $(basename "$app_bundle")"
+        
+        # Validate Info.plist
+        local info_plist="$app_bundle/Info.plist"
+        if [ -f "$info_plist" ]; then
+            log_info "Validating Info.plist..."
+            
+            # Check bundle identifier
+            local bundle_id=$(plutil -extract CFBundleIdentifier raw "$info_plist" 2>/dev/null)
+            if [ -n "$bundle_id" ]; then
+                log_info "Bundle ID: $bundle_id"
+                if [ -n "${BUNDLE_ID:-}" ] && [ "$bundle_id" != "$BUNDLE_ID" ]; then
+                    log_warn "Bundle ID mismatch: expected $BUNDLE_ID, found $bundle_id"
+                fi
+            else
+                log_error "CFBundleIdentifier not found in Info.plist"
+            fi
+            
+            # Check app version
+            local version=$(plutil -extract CFBundleShortVersionString raw "$info_plist" 2>/dev/null)
+            local build=$(plutil -extract CFBundleVersion raw "$info_plist" 2>/dev/null)
+            if [ -n "$version" ] && [ -n "$build" ]; then
+                log_info "App Version: $version ($build)"
+            else
+                log_error "Missing version information in Info.plist"
+            fi
+            
+            # Check minimum iOS version
+            local min_ios=$(plutil -extract MinimumOSVersion raw "$info_plist" 2>/dev/null)
+            if [ -n "$min_ios" ]; then
+                log_info "Minimum iOS Version: $min_ios"
+            else
+                log_warn "MinimumOSVersion not specified in Info.plist"
+            fi
+            
+            # Check app name
+            local app_name=$(plutil -extract CFBundleDisplayName raw "$info_plist" 2>/dev/null)
+            if [ -z "$app_name" ]; then
+                app_name=$(plutil -extract CFBundleName raw "$info_plist" 2>/dev/null)
+            fi
+            if [ -n "$app_name" ]; then
+                log_info "App Name: $app_name"
+            else
+                log_error "App name not found in Info.plist"
+            fi
+            
+        else
+            log_error "Info.plist not found in app bundle"
+            rm -rf "$temp_dir"
+            return 1
+        fi
+        
+        # Check for required app icon
+        local app_icon_found=false
+        for icon_path in "$app_bundle/AppIcon60x60@3x.png" "$app_bundle/AppIcon60x60@2x.png" "$app_bundle/Icon-App-60x60@3x.png" "$app_bundle/Icon-App-60x60@2x.png"; do
+            if [ -f "$icon_path" ]; then
+                app_icon_found=true
+                log_info "App icon found: $(basename "$icon_path")"
+                break
+            fi
+        done
+        
+        if [ "$app_icon_found" = false ]; then
+            log_warn "No app icons found - this may cause App Store validation issues"
+        fi
+        
+        # Check for 1024x1024 icon in Assets.car or icon files
+        if find "$app_bundle" -name "*.png" | grep -q "1024"; then
+            log_info "1024x1024 icon found"
+        else
+            log_warn "1024x1024 app icon may be missing - required for App Store"
+        fi
+        
+        # Check code signing
+        log_info "Validating code signing..."
+        if codesign -v "$app_bundle" >/dev/null 2>&1; then
+            log_success "App bundle is properly code signed"
+            
+            # Get signing identity
+            local signing_identity=$(codesign -dv "$app_bundle" 2>&1 | grep "Authority=" | head -1 | cut -d'=' -f2)
+            if [ -n "$signing_identity" ]; then
+                log_info "Signing Identity: $signing_identity"
+                
+                # Check if it's a distribution certificate for App Store
+                if echo "$signing_identity" | grep -q "Apple Distribution\|iPhone Distribution"; then
+                    log_success "Using valid distribution certificate"
+                else
+                    log_warn "May not be using proper distribution certificate: $signing_identity"
+                fi
+            fi
+        else
+            log_error "App bundle code signing validation failed"
+            rm -rf "$temp_dir"
+            return 1
+        fi
+        
+        # Check for embedded provisioning profile
+        local provisioning_profile="$app_bundle/embedded.mobileprovision"
+        if [ -f "$provisioning_profile" ]; then
+            log_info "Embedded provisioning profile found"
+            
+            # Extract profile info
+            local profile_info=$(security cms -D -i "$provisioning_profile" 2>/dev/null)
+            if [ -n "$profile_info" ]; then
+                # Check profile type
+                if echo "$profile_info" | grep -q "get-task-allow.*false"; then
+                    log_success "Using distribution provisioning profile"
+                else
+                    log_warn "May be using development provisioning profile"
+                fi
+                
+                # Check expiration
+                local expiration=$(echo "$profile_info" | grep -A1 "ExpirationDate" | tail -1 | sed 's/.*<date>\(.*\)<\/date>.*/\1/')
+                if [ -n "$expiration" ]; then
+                    log_info "Profile expires: $expiration"
+                fi
+            fi
+        else
+            log_error "No embedded provisioning profile found"
+            rm -rf "$temp_dir"
+            return 1
+        fi
+        
+        # Clean up
+        rm -rf "$temp_dir"
+        
+        log_success "App Store compliance validation completed"
+    fi
+    
+    log_success "IPA validation passed"
+    return 0
 }
 
 # Function to create archive-only export

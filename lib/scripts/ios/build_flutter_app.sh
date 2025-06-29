@@ -94,11 +94,29 @@ handle_firebase_issues() {
     flutter clean
     flutter pub get
     
-    # Regenerate iOS files
-    flutter create --platforms ios .
+    # Regenerate iOS files with explicit organization to avoid ambiguity
+    log_info "Regenerating iOS files with explicit organization..."
+    if flutter create --platforms ios --org com.twinklub . 2>/dev/null; then
+        log_info "iOS files regenerated with com.twinklub organization"
+    elif flutter create --platforms ios --org com.example . 2>/dev/null; then
+        log_info "iOS files regenerated with com.example organization"
+    else
+        log_warn "Failed to regenerate iOS files, continuing with existing files"
+    fi
     
     cd ios
     rm -rf Pods Podfile.lock
+    
+    # Enhanced Firebase workaround in Podfile
+    log_info "Applying enhanced Firebase workaround to Podfile..."
+    
+    # Ensure FIREBASE_DISABLED flag is set in Podfile
+    if ! grep -q "FIREBASE_DISABLED.*true" Podfile; then
+        sed -i.tmp "s/FIREBASE_DISABLED = ENV\['FIREBASE_DISABLED'\] == 'true'/FIREBASE_DISABLED = true/" Podfile
+        rm -f Podfile.tmp
+        log_info "FIREBASE_DISABLED flag set to true in Podfile"
+    fi
+    
     pod install --repo-update --verbose
     cd ..
     
