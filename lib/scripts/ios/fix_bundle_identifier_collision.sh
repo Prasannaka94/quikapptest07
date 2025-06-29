@@ -105,34 +105,17 @@ else
     echo "ℹ️ No Frameworks directory found"
 fi
 
-# Fix 4: Update Podfile to ensure unique bundle identifiers for pods
-echo "🔧 Updating Podfile for unique bundle identifiers..."
+# Fix 4: Verify Podfile has unique bundle identifier logic
+echo "🔧 Verifying Podfile has unique bundle identifier logic..."
 
 PODFILE="$PROJECT_ROOT/ios/Podfile"
 
 if [ -f "$PODFILE" ]; then
-    # Add post_install hook to ensure unique bundle identifiers for pods
-    if ! grep -q "config.build_settings\['PRODUCT_BUNDLE_IDENTIFIER'\]" "$PODFILE"; then
-        # Add before the closing end
-        sed -i '' '/end$/i\
-  # Ensure unique bundle identifiers for all pods\
-  installer.pods_project.targets.each do |target|\
-    target.build_configurations.each do |config|\
-      # Skip the main app target\
-      next if target.name == "Runner"\
-      \
-      # Make pod bundle identifiers unique\
-      if config.build_settings["PRODUCT_BUNDLE_IDENTIFIER"]\
-        current_bundle_id = config.build_settings["PRODUCT_BUNDLE_IDENTIFIER"]\
-        if current_bundle_id == "'$MAIN_BUNDLE_ID'"\
-          config.build_settings["PRODUCT_BUNDLE_IDENTIFIER"] = current_bundle_id + ".pod"\
-        end\
-      end\
-    end\
-  end' "$PODFILE"
-        echo "✅ Added unique bundle identifier logic to Podfile"
+    # Check if Podfile already has bundle identifier logic
+    if grep -q "PRODUCT_BUNDLE_IDENTIFIER" "$PODFILE"; then
+        echo "✅ Podfile already has bundle identifier logic"
     else
-        echo "ℹ️ Podfile already has bundle identifier logic"
+        echo "⚠️ Podfile missing bundle identifier logic - this should be added manually"
     fi
 else
     echo "⚠️ Podfile not found"

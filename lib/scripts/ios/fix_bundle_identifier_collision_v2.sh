@@ -119,56 +119,18 @@ else
     echo "⚠️ Info.plist not found"
 fi
 
-# Fix 3: Update Podfile with enhanced bundle identifier logic
-echo "🔧 Updating Podfile with enhanced bundle identifier logic..."
+# Fix 3: Verify Podfile has proper bundle identifier logic
+echo "🔧 Verifying Podfile has proper bundle identifier logic..."
 
 PODFILE="$PROJECT_ROOT/ios/Podfile"
 
 if [ -f "$PODFILE" ]; then
-    # Remove any existing bundle identifier logic first
-    sed -i '' '/# Ensure unique bundle identifiers/,/end/d' "$PODFILE"
-    
-    # Add enhanced post_install hook
-    cat >> "$PODFILE" << 'EOF'
-
-# Enhanced bundle identifier collision prevention
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      # Fix modular headers issue (from Firebase fix)
-      config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
-      
-      # Ensure proper deployment target
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-      
-      # Ensure unique bundle identifiers for all pods
-      if config.build_settings['PRODUCT_BUNDLE_IDENTIFIER']
-        current_bundle_id = config.build_settings['PRODUCT_BUNDLE_IDENTIFIER']
-        
-        # Skip the main app target
-        next if target.name == 'Runner'
-        
-        # Make pod bundle identifiers unique by adding pod suffix
-        if current_bundle_id.include?('com.twinklub.twinklub') || current_bundle_id.include?('com.example.quikapptest07')
-          config.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = current_bundle_id + '.pod.' + target.name.downcase
-        end
-      end
-      
-      # Firebase specific fixes
-      if target.name.start_with?('Firebase') || target.name.start_with?('firebase')
-        config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
-        config.build_settings['DEFINES_MODULE'] = 'YES'
-        config.build_settings['SWIFT_INSTALL_OBJC_HEADER'] = 'NO'
-      end
-      
-      # Fix for Xcode 16.0
-      config.build_settings['ENABLE_USER_SCRIPT_SANDBOXING'] = 'NO'
-      config.build_settings['SWIFT_VERSION'] = '5.0'
-    end
-  end
-end
-EOF
-    echo "✅ Added enhanced bundle identifier logic to Podfile"
+    # Check if Podfile already has the enhanced post_install logic
+    if grep -q "Enhanced bundle identifier collision prevention" "$PODFILE"; then
+        echo "✅ Podfile already has enhanced bundle identifier logic"
+    else
+        echo "⚠️ Podfile missing enhanced bundle identifier logic - this should be added manually"
+    fi
 else
     echo "⚠️ Podfile not found"
 fi
