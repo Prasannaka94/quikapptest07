@@ -2377,17 +2377,37 @@ workflows:
             echo "ℹ️ Bundle Identifier validation script not found"
           fi
 
-          # 🔧 Apply Firebase Xcode 16.0 fixes
-          echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
-          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
-            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
-            if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
-              echo "✅ Firebase Xcode 16.0 fixes applied successfully"
+          # 🔧 Apply AGGRESSIVE Firebase Xcode 16.0 fixes
+          echo "🔧 Applying AGGRESSIVE Firebase Xcode 16.0 compatibility fixes..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"; then
+              echo "✅ AGGRESSIVE Firebase Xcode 16.0 fixes applied successfully"
             else
-              echo "⚠️ Firebase fixes failed, continuing with build..."
+              echo "⚠️ Aggressive Firebase fixes failed, trying standard fix..."
+              if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+                chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+                if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+                  echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+                else
+                  echo "⚠️ All Firebase fixes failed, continuing with build..."
+                fi
+              else
+                echo "⚠️ Standard Firebase fix script not found either..."
+              fi
             fi
           else
-            echo "⚠️ Firebase fix script not found, continuing with build..."
+            echo "⚠️ Aggressive Firebase fix script not found, trying standard fix..."
+            if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+              chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+              if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+                echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+              else
+                echo "⚠️ Firebase fixes failed, continuing with build..."
+              fi
+            else
+              echo "⚠️ No Firebase fix scripts found, continuing with build..."
+            fi
           fi
 
           # Run the main iOS build script
@@ -2646,6 +2666,7 @@ workflows:
       - output/ios/APP_STORE_READINESS_REPORT.txt
       - ios/ExportOptions.plist
       - FIREBASE_XCODE16_TROUBLESHOOTING_GUIDE.md
+      - FIREBASE_XCODE16_AGGRESSIVE_FIX_SUMMARY.md
       - IOS_EXPORT_CONFIGURATION_GUIDE.md
       - IOS_APP_STORE_COMPLIANCE_GUIDE.md
 
@@ -2763,17 +2784,37 @@ workflows:
             echo "ℹ️ Bundle Identifier validation script not found"
           fi
 
-          # 🔧 Apply Firebase Xcode 16.0 fixes
-          echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
-          if [ -f "lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
-            chmod +x lib/scripts/ios/fix_firebase_xcode16.sh
-            if lib/scripts/ios/fix_firebase_xcode16.sh; then
-              echo "✅ Firebase Xcode 16.0 fixes applied successfully"
+          # 🔧 Apply AGGRESSIVE Firebase Xcode 16.0 fixes
+          echo "🔧 Applying AGGRESSIVE Firebase Xcode 16.0 compatibility fixes..."
+          if [ -f "lib/scripts/ios/fix_firebase_xcode16_aggressive.sh" ]; then
+            chmod +x lib/scripts/ios/fix_firebase_xcode16_aggressive.sh
+            if lib/scripts/ios/fix_firebase_xcode16_aggressive.sh; then
+              echo "✅ AGGRESSIVE Firebase Xcode 16.0 fixes applied successfully"
             else
-              echo "⚠️ Firebase fixes failed, continuing with build..."
+              echo "⚠️ Aggressive Firebase fixes failed, trying standard fix..."
+              if [ -f "lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+                chmod +x lib/scripts/ios/fix_firebase_xcode16.sh
+                if lib/scripts/ios/fix_firebase_xcode16.sh; then
+                  echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+                else
+                  echo "⚠️ All Firebase fixes failed, continuing with build..."
+                fi
+              else
+                echo "⚠️ Standard Firebase fix script not found either..."
+              fi
             fi
           else
-            echo "⚠️ Firebase fix script not found, continuing with build..."
+            echo "⚠️ Aggressive Firebase fix script not found, trying standard fix..."
+            if [ -f "lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+              chmod +x lib/scripts/ios/fix_firebase_xcode16.sh
+              if lib/scripts/ios/fix_firebase_xcode16.sh; then
+                echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+              else
+                echo "⚠️ Firebase fixes failed, continuing with build..."
+              fi
+            else
+              echo "⚠️ No Firebase fix scripts found, continuing with build..."
+            fi
           fi
 
           # Run the auto iOS build script
@@ -2791,6 +2832,7 @@ workflows:
       - output/ios/ARTIFACTS_SUMMARY.txt
       - ios/ExportOptions.plist
       - FIREBASE_XCODE16_TROUBLESHOOTING_GUIDE.md
+      - FIREBASE_XCODE16_AGGRESSIVE_FIX_SUMMARY.md
       - IOS_EXPORT_CONFIGURATION_GUIDE.md
       - build/ios/logs/
       - output/ios/logs/
@@ -2943,16 +2985,36 @@ workflows:
           else
             echo "⚠️ Bundle Identifier Collision fix script not found, continuing with build..."
           fi
-                    echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
-          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
-            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
-            if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
-              echo "✅ Firebase Xcode 16.0 fixes applied successfully"
+                    echo "🔧 Applying AGGRESSIVE Firebase Xcode 16.0 compatibility fixes..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"; then
+              echo "✅ AGGRESSIVE Firebase Xcode 16.0 fixes applied successfully"
             else
-              echo "⚠️ Firebase fixes failed, continuing with build..."
+              echo "⚠️ Aggressive Firebase fixes failed, trying standard fix..."
+              if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+                chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+                if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+                  echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+                else
+                  echo "⚠️ All Firebase fixes failed, continuing with build..."
+                fi
+              else
+                echo "⚠️ Standard Firebase fix script not found either..."
+              fi
             fi
           else
-            echo "⚠️ Firebase fix script not found, continuing with build..."
+            echo "⚠️ Aggressive Firebase fix script not found, trying standard fix..."
+            if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+              chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+              if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+                echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+              else
+                echo "⚠️ Firebase fixes failed, continuing with build..."
+              fi
+            else
+              echo "⚠️ No Firebase fix scripts found, continuing with build..."
+            fi
           fi
                         echo "✅ Build completed successfully!"
               break
