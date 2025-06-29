@@ -2377,22 +2377,78 @@ workflows:
             echo "ℹ️ Bundle Identifier validation script not found"
           fi
 
-          # 🔧 Apply AGGRESSIVE Firebase Xcode 16.0 fixes
-          echo "🔧 Applying AGGRESSIVE Firebase Xcode 16.0 compatibility fixes..."
-          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh" ]; then
-            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"
-            if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"; then
-              echo "✅ AGGRESSIVE Firebase Xcode 16.0 fixes applied successfully"
+          # 🔧 Apply Firebase Forward Declaration Fix for Xcode 16.0
+          echo "🔧 Applying Firebase Forward Declaration Fix for Xcode 16.0..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_forward_declaration.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_forward_declaration.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_forward_declaration.sh"; then
+              echo "✅ Firebase Forward Declaration Fix applied successfully"
             else
-              echo "⚠️ Aggressive Firebase fixes failed, trying standard fix..."
+              echo "⚠️ Forward declaration fix failed, trying aggressive fix..."
+              if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh" ]; then
+                chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"
+                if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"; then
+                  echo "✅ AGGRESSIVE Firebase Xcode 16.0 fixes applied successfully"
+                else
+                  echo "⚠️ Aggressive Firebase fixes failed, trying standard fix..."
+                  if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+                    chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+                    if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+                      echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+                    else
+                      echo "⚠️ All Firebase fixes failed, continuing with build..."
+                    fi
+                  else
+                    echo "⚠️ Standard Firebase fix script not found either..."
+                  fi
+                fi
+              else
+                echo "⚠️ Aggressive Firebase fix script not found, trying standard fix..."
+                if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+                  chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+                  if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+                    echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+                  else
+                    echo "⚠️ Firebase fixes failed, continuing with build..."
+                  fi
+                else
+                  echo "⚠️ No Firebase fix scripts found, continuing with build..."
+                fi
+              fi
+            fi
+          else
+            echo "⚠️ Forward declaration fix script not found, trying aggressive fix..."
+            if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh" ]; then
+              chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"
+              if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"; then
+                echo "✅ AGGRESSIVE Firebase Xcode 16.0 fixes applied successfully"
+              else
+                echo "⚠️ Aggressive Firebase fixes failed, trying standard fix..."
+                if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+                  chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+                  if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+                    echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+                  else
+                    echo "⚠️ All Firebase fixes failed, continuing with build..."
+                  fi
+                else
+                  echo "⚠️ Standard Firebase fix script not found either..."
+                fi
+              fi
+            else
+              echo "⚠️ Aggressive Firebase fix script not found, trying standard fix..."
               if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
                 chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
                 if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
                   echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
                 else
-                  echo "⚠️ All Firebase fixes failed, continuing with build..."
+                  echo "⚠️ Firebase fixes failed, continuing with build..."
                 fi
               else
+                echo "⚠️ No Firebase fix scripts found, continuing with build..."
+              fi
+            fi
+          fi              else
                 echo "⚠️ Standard Firebase fix script not found either..."
               fi
             fi
@@ -2667,6 +2723,7 @@ workflows:
       - ios/ExportOptions.plist
       - FIREBASE_XCODE16_TROUBLESHOOTING_GUIDE.md
       - FIREBASE_XCODE16_AGGRESSIVE_FIX_SUMMARY.md
+      - FIREBASE_FORWARD_DECLARATION_FIX_GUIDE.md
       - IOS_EXPORT_CONFIGURATION_GUIDE.md
       - IOS_APP_STORE_COMPLIANCE_GUIDE.md
 
@@ -2784,22 +2841,78 @@ workflows:
             echo "ℹ️ Bundle Identifier validation script not found"
           fi
 
-          # 🔧 Apply AGGRESSIVE Firebase Xcode 16.0 fixes
-          echo "🔧 Applying AGGRESSIVE Firebase Xcode 16.0 compatibility fixes..."
-          if [ -f "lib/scripts/ios/fix_firebase_xcode16_aggressive.sh" ]; then
-            chmod +x lib/scripts/ios/fix_firebase_xcode16_aggressive.sh
-            if lib/scripts/ios/fix_firebase_xcode16_aggressive.sh; then
-              echo "✅ AGGRESSIVE Firebase Xcode 16.0 fixes applied successfully"
+          # 🔧 Apply Firebase Forward Declaration Fix for Xcode 16.0
+          echo "🔧 Applying Firebase Forward Declaration Fix for Xcode 16.0..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_forward_declaration.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_forward_declaration.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_forward_declaration.sh"; then
+              echo "✅ Firebase Forward Declaration Fix applied successfully"
             else
-              echo "⚠️ Aggressive Firebase fixes failed, trying standard fix..."
-              if [ -f "lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
-                chmod +x lib/scripts/ios/fix_firebase_xcode16.sh
-                if lib/scripts/ios/fix_firebase_xcode16.sh; then
-                  echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+              echo "⚠️ Forward declaration fix failed, trying aggressive fix..."
+              if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh" ]; then
+                chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"
+                if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"; then
+                  echo "✅ AGGRESSIVE Firebase Xcode 16.0 fixes applied successfully"
                 else
-                  echo "⚠️ All Firebase fixes failed, continuing with build..."
+                  echo "⚠️ Aggressive Firebase fixes failed, trying standard fix..."
+                  if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+                    chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+                    if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+                      echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+                    else
+                      echo "⚠️ All Firebase fixes failed, continuing with build..."
+                    fi
+                  else
+                    echo "⚠️ Standard Firebase fix script not found either..."
+                  fi
                 fi
               else
+                echo "⚠️ Aggressive Firebase fix script not found, trying standard fix..."
+                if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+                  chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+                  if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+                    echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+                  else
+                    echo "⚠️ Firebase fixes failed, continuing with build..."
+                  fi
+                else
+                  echo "⚠️ No Firebase fix scripts found, continuing with build..."
+                fi
+              fi
+            fi
+          else
+            echo "⚠️ Forward declaration fix script not found, trying aggressive fix..."
+            if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh" ]; then
+              chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"
+              if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16_aggressive.sh"; then
+                echo "✅ AGGRESSIVE Firebase Xcode 16.0 fixes applied successfully"
+              else
+                echo "⚠️ Aggressive Firebase fixes failed, trying standard fix..."
+                if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+                  chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+                  if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+                    echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+                  else
+                    echo "⚠️ All Firebase fixes failed, continuing with build..."
+                  fi
+                else
+                  echo "⚠️ Standard Firebase fix script not found either..."
+                fi
+              fi
+            else
+              echo "⚠️ Aggressive Firebase fix script not found, trying standard fix..."
+              if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+                chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
+                if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+                  echo "✅ Standard Firebase Xcode 16.0 fixes applied successfully"
+                else
+                  echo "⚠️ Firebase fixes failed, continuing with build..."
+                fi
+              else
+                echo "⚠️ No Firebase fix scripts found, continuing with build..."
+              fi
+            fi
+          fi              else
                 echo "⚠️ Standard Firebase fix script not found either..."
               fi
             fi
@@ -2833,6 +2946,7 @@ workflows:
       - ios/ExportOptions.plist
       - FIREBASE_XCODE16_TROUBLESHOOTING_GUIDE.md
       - FIREBASE_XCODE16_AGGRESSIVE_FIX_SUMMARY.md
+      - FIREBASE_FORWARD_DECLARATION_FIX_GUIDE.md
       - IOS_EXPORT_CONFIGURATION_GUIDE.md
       - build/ios/logs/
       - output/ios/logs/

@@ -219,11 +219,11 @@ export_with_app_store_connect_api() {
         
         log_success "App Store Connect API export successful!"
         rm -f "$api_key_path"
-        return 0
+            return 0
     else
         log_warn "App Store Connect API export failed"
         rm -f "$api_key_path"
-        return 1
+    return 1
     fi
 }
 
@@ -257,7 +257,7 @@ export_with_automatic_signing() {
         -allowProvisioningUpdates; then
         
         log_success "Automatic signing export successful!"
-        return 0
+            return 0
     else
         log_warn "Automatic signing export failed"
         log_info "Common causes:"
@@ -265,7 +265,7 @@ export_with_automatic_signing() {
         log_info "  2. Missing provisioning profiles for bundle ID: ${BUNDLE_ID:-unknown}"
         log_info "  3. Invalid team ID: ${APPLE_TEAM_ID:-unknown}"
         log_info "  4. App Store Connect API credentials required for app-store distribution"
-        return 1
+    return 1
     fi
 }
 
@@ -287,31 +287,31 @@ export_with_manual_certificates() {
         log_info "For manual certificate export, please provide all three variables"
         return 1
     fi
-    
-    # Download and install certificates
+        
+        # Download and install certificates
     local cert_dir="/tmp/certs_manual"
-    mkdir -p "$cert_dir"
-    
-    # Download provisioning profile
+        mkdir -p "$cert_dir"
+        
+        # Download provisioning profile
     log_info "Downloading provisioning profile from: ${PROFILE_URL}"
-    if curl -L -o "$cert_dir/profile.mobileprovision" "${PROFILE_URL}" 2>/dev/null; then
-        log_success "Provisioning profile downloaded"
-    else
+        if curl -L -o "$cert_dir/profile.mobileprovision" "${PROFILE_URL}" 2>/dev/null; then
+            log_success "Provisioning profile downloaded"
+        else
         log_error "Failed to download provisioning profile from: ${PROFILE_URL}"
         rm -rf "$cert_dir"
-        return 1
-    fi
-    
-    # Download certificate
+            return 1
+        fi
+        
+        # Download certificate
     log_info "Downloading certificate from: ${CERT_P12_URL}"
-    if curl -L -o "$cert_dir/certificate.p12" "${CERT_P12_URL}" 2>/dev/null; then
-        log_success "Certificate downloaded"
-    else
+        if curl -L -o "$cert_dir/certificate.p12" "${CERT_P12_URL}" 2>/dev/null; then
+            log_success "Certificate downloaded"
+        else
         log_error "Failed to download certificate from: ${CERT_P12_URL}"
         rm -rf "$cert_dir"
-        return 1
-    fi
-    
+            return 1
+        fi
+        
     # Install certificate in keychain
     local keychain_path="/Users/builder/Library/Keychains/ios-build.keychain-db"
     if [ ! -f "$keychain_path" ]; then
@@ -328,33 +328,33 @@ export_with_manual_certificates() {
         log_info "  2. Certificate file is valid"
         log_info "  3. Keychain permissions"
         rm -rf "$cert_dir"
-        return 1
-    fi
-    
-    # Install provisioning profile
-    local profile_dir="$HOME/Library/MobileDevice/Provisioning Profiles"
-    mkdir -p "$profile_dir"
-    cp "$cert_dir/profile.mobileprovision" "$profile_dir/"
-    log_success "Provisioning profile installed"
-    
+            return 1
+        fi
+        
+        # Install provisioning profile
+        local profile_dir="$HOME/Library/MobileDevice/Provisioning Profiles"
+        mkdir -p "$profile_dir"
+        cp "$cert_dir/profile.mobileprovision" "$profile_dir/"
+        log_success "Provisioning profile installed"
+        
     # Try export with manual certificates
     log_info "Running xcodebuild export with manual certificates..."
-    if xcodebuild -exportArchive \
-        -archivePath "$archive_path" \
-        -exportPath "$export_path" \
-        -exportOptionsPlist "$export_options_path" \
-        -allowProvisioningUpdates; then
+        if xcodebuild -exportArchive \
+            -archivePath "$archive_path" \
+            -exportPath "$export_path" \
+            -exportOptionsPlist "$export_options_path" \
+            -allowProvisioningUpdates; then
         
         log_success "Manual certificate export successful!"
-        rm -rf "$cert_dir"
-        return 0
-    else
+            rm -rf "$cert_dir"
+            return 0
+        else
         log_warn "Manual certificate export failed"
         log_info "Please check:"
         log_info "  1. Certificate matches provisioning profile"
         log_info "  2. Bundle ID matches provisioning profile"
         log_info "  3. Certificate is valid and not expired"
-        rm -rf "$cert_dir"
+            rm -rf "$cert_dir"
         return 1
     fi
 }
@@ -504,9 +504,9 @@ validate_ipa() {
         else
             log_error "App bundle code signing validation failed"
             rm -rf "$temp_dir"
-            return 1
-        fi
-        
+        return 1
+    fi
+    
         # Check for embedded provisioning profile
         local provisioning_profile="$app_bundle/embedded.mobileprovision"
         if [ -f "$provisioning_profile" ]; then
@@ -531,9 +531,9 @@ validate_ipa() {
         else
             log_error "No embedded provisioning profile found"
             rm -rf "$temp_dir"
-            return 1
-        fi
-        
+        return 1
+    fi
+    
         # Clean up
         rm -rf "$temp_dir"
         
@@ -771,8 +771,8 @@ export_ipa() {
         if validate_ipa "$ipa_file"; then
             log_success "IPA export completed successfully!"
             create_artifacts_summary
-            return 0
-        else
+        return 0
+    else
             log_error "IPA validation failed"
             return 1
         fi
@@ -981,10 +981,10 @@ main() {
     # Try to export IPA
     if export_ipa; then
         log_success "IPA export process completed successfully!"
-        return 0
-    else
+            return 0
+        else
         log_warn "IPA export failed, creating archive-only export"
-        create_archive_only_export
+            create_archive_only_export
         create_artifacts_summary
         return 0
     fi
