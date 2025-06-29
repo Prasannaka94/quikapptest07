@@ -2448,10 +2448,7 @@ workflows:
                 echo "⚠️ No Firebase fix scripts found, continuing with build..."
               fi
             fi
-          fi              else
-                echo "⚠️ Standard Firebase fix script not found either..."
-              fi
-            fi
+          fi
           else
             echo "⚠️ Aggressive Firebase fix script not found, trying standard fix..."
             if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
@@ -2465,10 +2462,10 @@ workflows:
               echo "⚠️ No Firebase fix scripts found, continuing with build..."
             fi
           fi
-
-          # Run the main iOS build script
-          echo "🚀 Starting iOS build process with profile type: $PROFILE_TYPE"
-          ./lib/scripts/ios/main.sh
+  
+            # Run the main iOS build script
+            echo "🚀 Starting iOS build process with profile type: $PROFILE_TYPE"
+            ./lib/scripts/ios/main.sh
 
       - name: Enhanced IPA Export (if needed)
         script: |
@@ -2912,10 +2909,7 @@ workflows:
                 echo "⚠️ No Firebase fix scripts found, continuing with build..."
               fi
             fi
-          fi              else
-                echo "⚠️ Standard Firebase fix script not found either..."
-              fi
-            fi
+          fi
           else
             echo "⚠️ Aggressive Firebase fix script not found, trying standard fix..."
             if [ -f "lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
