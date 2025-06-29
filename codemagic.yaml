@@ -2341,33 +2341,44 @@ workflows:
           chmod +x lib/scripts/ios/main.sh
           fi
 
-          # Run the main iOS build script
+          # 🔧 Apply Bundle Identifier Collision Fixes (Enhanced Version)
+          echo "🔧 Applying Bundle Identifier Collision fixes (Enhanced)..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision_v2.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision_v2.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision_v2.sh"; then
+              echo "✅ Bundle Identifier Collision fixes applied successfully"
+            else
+              echo "⚠️ Bundle Identifier Collision fixes failed, trying basic version..."
+              if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
+                chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
+                "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" || echo "⚠️ Basic fix also failed, continuing..."
+              fi
+            fi
+          else
+            echo "⚠️ Enhanced Bundle Identifier fix script not found, trying basic version..."
+            if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
+              chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
+              "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" || echo "⚠️ Basic fix failed, continuing..."
+            else
+              echo "⚠️ No Bundle Identifier fix scripts found, continuing with build..."
+            fi
+          fi
+
+          # 🔍 Validate Bundle Identifiers
+          echo "🔍 Validating Bundle Identifiers..."
+          if [ -f "$PROJECT_ROOT/lib/scripts/ios/validate_bundle_identifiers.sh" ]; then
+            chmod +x "$PROJECT_ROOT/lib/scripts/ios/validate_bundle_identifiers.sh"
+            if "$PROJECT_ROOT/lib/scripts/ios/validate_bundle_identifiers.sh"; then
+              echo "✅ Bundle Identifier validation passed"
+            else
+              echo "⚠️ Bundle Identifier validation failed, but continuing with build..."
+            fi
+          else
+            echo "ℹ️ Bundle Identifier validation script not found"
+          fi
+
           # 🔧 Apply Firebase Xcode 16.0 fixes
-          # 🔧 Apply Bundle Identifier Collision Fixes
-          echo "🔧 Applying Bundle Identifier Collision fixes..."
-          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
-            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
-            if "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"; then
-              echo "✅ Bundle Identifier Collision fixes applied successfully"
-            else
-              echo "⚠️ Bundle Identifier Collision fixes failed, continuing with build..."
-            fi
-          else
-            echo "⚠️ Bundle Identifier Collision fix script not found, continuing with build..."
-          fi
-                    # 🔧 Apply Bundle Identifier Collision Fixes
-          echo "🔧 Applying Bundle Identifier Collision fixes..."
-          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
-            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
-            if "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"; then
-              echo "✅ Bundle Identifier Collision fixes applied successfully"
-            else
-              echo "⚠️ Bundle Identifier Collision fixes failed, continuing with build..."
-            fi
-          else
-            echo "⚠️ Bundle Identifier Collision fix script not found, continuing with build..."
-          fi
-                    echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
+          echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
           if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
             chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
             if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
@@ -2378,7 +2389,9 @@ workflows:
           else
             echo "⚠️ Firebase fix script not found, continuing with build..."
           fi
-                    echo "🚀 Starting iOS build process with profile type: $PROFILE_TYPE"
+
+          # Run the main iOS build script
+          echo "🚀 Starting iOS build process with profile type: $PROFILE_TYPE"
           ./lib/scripts/ios/main.sh
 
       - name: Enhanced IPA Export (if needed)
@@ -2708,35 +2721,49 @@ workflows:
 
           # Make scripts executable
           chmod +x lib/scripts/ios/auto_main.sh
+          chmod +x lib/scripts/utils/*.sh
+
+          # 🔧 Apply Bundle Identifier Collision Fixes (Enhanced Version)
+          echo "🔧 Applying Bundle Identifier Collision fixes (Enhanced)..."
+          if [ -f "lib/scripts/ios/fix_bundle_identifier_collision_v2.sh" ]; then
+            chmod +x lib/scripts/ios/fix_bundle_identifier_collision_v2.sh
+            if lib/scripts/ios/fix_bundle_identifier_collision_v2.sh; then
+              echo "✅ Bundle Identifier Collision fixes applied successfully"
+            else
+              echo "⚠️ Bundle Identifier Collision fixes failed, trying basic version..."
+              if [ -f "lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
+                chmod +x lib/scripts/ios/fix_bundle_identifier_collision.sh
+                lib/scripts/ios/fix_bundle_identifier_collision.sh || echo "⚠️ Basic fix also failed, continuing..."
+              fi
+            fi
+          else
+            echo "⚠️ Enhanced Bundle Identifier fix script not found, trying basic version..."
+            if [ -f "lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
+              chmod +x lib/scripts/ios/fix_bundle_identifier_collision.sh
+              lib/scripts/ios/fix_bundle_identifier_collision.sh || echo "⚠️ Basic fix failed, continuing..."
+            else
+              echo "⚠️ No Bundle Identifier fix scripts found, continuing with build..."
+            fi
+          fi
+
+          # 🔍 Validate Bundle Identifiers
+          echo "🔍 Validating Bundle Identifiers..."
+          if [ -f "lib/scripts/ios/validate_bundle_identifiers.sh" ]; then
+            chmod +x lib/scripts/ios/validate_bundle_identifiers.sh
+            if lib/scripts/ios/validate_bundle_identifiers.sh; then
+              echo "✅ Bundle Identifier validation passed"
+            else
+              echo "⚠️ Bundle Identifier validation failed, but continuing with build..."
+            fi
+          else
+            echo "ℹ️ Bundle Identifier validation script not found"
+          fi
+
           # 🔧 Apply Firebase Xcode 16.0 fixes
-          # 🔧 Apply Bundle Identifier Collision Fixes
-          echo "🔧 Applying Bundle Identifier Collision fixes..."
-          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
-            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
-            if "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"; then
-              echo "✅ Bundle Identifier Collision fixes applied successfully"
-            else
-              echo "⚠️ Bundle Identifier Collision fixes failed, continuing with build..."
-            fi
-          else
-            echo "⚠️ Bundle Identifier Collision fix script not found, continuing with build..."
-          fi
-                    # 🔧 Apply Bundle Identifier Collision Fixes
-          echo "🔧 Applying Bundle Identifier Collision fixes..."
-          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh" ]; then
-            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"
-            if "$PROJECT_ROOT/lib/scripts/ios/fix_bundle_identifier_collision.sh"; then
-              echo "✅ Bundle Identifier Collision fixes applied successfully"
-            else
-              echo "⚠️ Bundle Identifier Collision fixes failed, continuing with build..."
-            fi
-          else
-            echo "⚠️ Bundle Identifier Collision fix script not found, continuing with build..."
-          fi
-                    echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
-          if [ -f "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
-            chmod +x "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"
-            if "$PROJECT_ROOT/lib/scripts/ios/fix_firebase_xcode16.sh"; then
+          echo "🔧 Applying Firebase Xcode 16.0 compatibility fixes..."
+          if [ -f "lib/scripts/ios/fix_firebase_xcode16.sh" ]; then
+            chmod +x lib/scripts/ios/fix_firebase_xcode16.sh
+            if lib/scripts/ios/fix_firebase_xcode16.sh; then
               echo "✅ Firebase Xcode 16.0 fixes applied successfully"
             else
               echo "⚠️ Firebase fixes failed, continuing with build..."
@@ -2744,7 +2771,6 @@ workflows:
           else
             echo "⚠️ Firebase fix script not found, continuing with build..."
           fi
-                    chmod +x lib/scripts/utils/*.sh
 
           # Run the auto iOS build script
           bash lib/scripts/ios/auto_main.sh
