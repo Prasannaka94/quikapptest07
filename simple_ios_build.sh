@@ -16,6 +16,19 @@ echo "🔧 Making scripts executable..."
 chmod +x lib/scripts/ios/*.sh 2>/dev/null || true
 chmod +x lib/scripts/utils/*.sh 2>/dev/null || true
 
+# Apply Flutter Build Script Fix (Critical for Xcode archive success)
+echo "🔧 Applying Flutter Build Script Fix..."
+if [ -f "lib/scripts/ios/fix_flutter_build_script.sh" ]; then
+    chmod +x lib/scripts/ios/fix_flutter_build_script.sh
+    if ./lib/scripts/ios/fix_flutter_build_script.sh; then
+        echo "✅ Flutter Build Script Fix applied successfully"
+    else
+        echo "⚠️ Flutter build script fix failed, continuing anyway..."
+    fi
+else
+    echo "⚠️ Flutter build script fix not found, continuing..."
+fi
+
 # Apply Firebase Forward Declaration Fix
 echo "🔧 Applying Firebase Forward Declaration Fix..."
 if [ -f "lib/scripts/ios/fix_firebase_forward_declaration.sh" ]; then

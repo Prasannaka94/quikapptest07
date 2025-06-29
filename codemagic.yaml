@@ -2583,6 +2583,7 @@ workflows:
       - FIREBASE_FORWARD_DECLARATION_FIX_GUIDE.md
       - IOS_EXPORT_CONFIGURATION_GUIDE.md
       - IOS_APP_STORE_COMPLIANCE_GUIDE.md
+      - IOS_ARCHIVE_FAILURE_FIX_GUIDE.md
 
       # 📊 Build Logs
       - build/ios/logs/
@@ -2802,6 +2803,7 @@ workflows:
       - FIREBASE_XCODE16_AGGRESSIVE_FIX_SUMMARY.md
       - FIREBASE_FORWARD_DECLARATION_FIX_GUIDE.md
       - IOS_EXPORT_CONFIGURATION_GUIDE.md
+      - IOS_ARCHIVE_FAILURE_FIX_GUIDE.md
       - build/ios/logs/
       - output/ios/logs/
       - output/ios/
